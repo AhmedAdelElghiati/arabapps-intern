@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             ExamSubmissionSeeder::class,
             StudentAnswerSeeder::class,
             EnrollmentSeeder::class,
+            CompletedItemSeeder::class,
         ]);
     }
 }
