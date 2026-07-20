@@ -2,20 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
+use App\Models\Student;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class DatabaseSeeder extends Seeder
+class StudentSeeder extends Seeder
 {
-    use WithoutModelEvents;
-
     /**
-     * Seed the application's database.
+     * Run the database seeds.
      */
     public function run(): void
     {
-        AdminSeeder::class;
-        StudentSeeder::class;
+        Student::factory(50)->create();
     }
 }
