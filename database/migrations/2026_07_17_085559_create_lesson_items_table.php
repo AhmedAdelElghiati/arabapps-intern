@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('type');
             $table->integer('display_order');
             $table->string('url')->nullable();
-            $table->foreignId('exam_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('exam_id')->nullable()->constrained()->cascadeOnDelete();
             $table->boolean('is_free');
             $table->dateTime('publish_date')->nullable();
             $table->foreignId('created_by')->nullable()->constrained('admins')->nullOnDelete();
