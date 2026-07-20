@@ -15,13 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('image_url');
-            $table->string('description');
+            $table->text('description');
             $table->boolean('is_free')->default(False);
             $table->decimal('price')->default(0);
             $table->decimal('discount')->default(0);
             $table->string('level');
-            $table->string('duration');
-            $table->string('display_order');
+            $table->integer('duration');
+            $table->integer('display_order');
             $table->boolean('is_desmos_enabled')->default(false);
             $table->boolean('show_at_home')->default(false);
             $table->boolean('is_published')->default(false);
@@ -29,7 +29,7 @@ return new class extends Migration
             $table->dateTime('publish_date')->nullable();
             $table->timestamps();
         });
-      
+
     }
 
     /**
