@@ -23,6 +23,10 @@ class DatabaseSeeder extends Seeder
             ExamSeeder::class,
             CourseMaterialSeeder::class,
             LessonItemSeeder::class,
+            QuestionSeeder::class,
+            ExamOptionSeeder::class,
+            ExamSubmissionSeeder::class,
+            StudentAnswerSeeder::class,
         ]);
     }
 }
