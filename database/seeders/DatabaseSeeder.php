@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
             StudentAnswerSeeder::class,
             EnrollmentSeeder::class,
             CompletedItemSeeder::class,
+            PaymentSeeder::class,
         ]);
     }
 }
