@@ -30,6 +30,11 @@ class DatabaseSeeder extends Seeder
             EnrollmentSeeder::class,
             CompletedItemSeeder::class,
             PaymentSeeder::class,
+            FaqSeeder::class,
+            SuccessStorySeeder::class,
+            GallerySeeder::class,
+            ContactSeeder::class,
+            SettingSeeder::class,
         ]);
     }
 }
