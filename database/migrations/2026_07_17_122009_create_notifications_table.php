@@ -17,7 +17,7 @@ return new class extends Migration
             $table->morphs('notifiable');
             $table->string('title');
             $table->string('message');
-            $table->dateTime('date')->nullable();
+            $table->dateTime('read_at')->nullable();
             $table->timestamps();
         });
     }
