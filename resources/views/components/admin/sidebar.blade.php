@@ -20,55 +20,55 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url('/admin/students') }}" class="nav-link {{ request()->is('admin/students*') ? 'active' : '' }}">
+                    <a href="{{ url('//students') }}" class="nav-link {{ request()->is('/students*') ? 'active' : '' }}">
                         <i class="nav-icon bi bi-people"></i>
                         <p>Students</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url('/admin/courses') }}" class="nav-link {{ request()->is('admin/courses*') ? 'active' : '' }}">
+                    <a href="{{ url('//courses') }}" class="nav-link {{ request()->is('/courses*') ? 'active' : '' }}">
                         <i class="nav-icon bi bi-journal-bookmark"></i>
                         <p>Courses</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url('/admin/exams') }}" class="nav-link {{ request()->is('admin/exams*') ? 'active' : '' }}">
+                    <a href="{{ url('//exams') }}" class="nav-link {{ request()->is('/exams*') ? 'active' : '' }}">
                         <i class="nav-icon bi bi-file-earmark-text"></i>
                         <p>Exams</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url('/admin/enrollments') }}" class="nav-link {{ request()->is('admin/enrollments*') ? 'active' : '' }}">
+                    <a href="{{ url('//enrollments') }}" class="nav-link {{ request()->is('/enrollments*') ? 'active' : '' }}">
                         <i class="nav-icon bi bi-person-check"></i>
                         <p>Enrollments</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url('/admin/faqs') }}" class="nav-link {{ request()->is('admin/faqs*') ? 'active' : '' }}">
+                    <a href="{{ url('//faqs') }}" class="nav-link {{ request()->is('/faqs*') ? 'active' : '' }}">
                         <i class="nav-icon bi bi-question-circle"></i>
                         <p>FAQs</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url('/admin/success-stories') }}" class="nav-link {{ request()->is('admin/success-stories*') ? 'active' : '' }}">
+                    <a href="{{ url('//success-stories') }}" class="nav-link {{ request()->is('/success-stories*') ? 'active' : '' }}">
                         <i class="nav-icon bi bi-trophy"></i>
                         <p>Success Stories</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url('/admin/gallery') }}" class="nav-link {{ request()->is('admin/gallery*') ? 'active' : '' }}">
+                    <a href="{{ url('//gallery') }}" class="nav-link {{ request()->is('/gallery*') ? 'active' : '' }}">
                         <i class="nav-icon bi bi-images"></i>
                         <p>Gallery</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url('/admin/push-notifications') }}" class="nav-link {{ request()->is('admin/push-notifications*') ? 'active' : '' }}">
+                    <a href="{{ url('//push-notifications') }}" class="nav-link {{ request()->is('/push-notifications*') ? 'active' : '' }}">
                         <i class="nav-icon bi bi-bell"></i>
                         <p>Push Notifications</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url('/admin/settings') }}" class="nav-link {{ request()->is('admin/settings*') ? 'active' : '' }}">
+                    <a href="{{ url('//settings') }}" class="nav-link {{ request()->is('/settings*') ? 'active' : '' }}">
                         <i class="nav-icon bi bi-gear"></i>
                         <p>Settings</p>
                     </a>
