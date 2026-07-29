@@ -29,6 +29,7 @@
     <!-- Skip links will be dynamically added by accessibility.js -->
     <meta name="supported-color-schemes" content="light dark" />
     <link rel="preload" href="{{ asset('adminlte/dist/css/adminlte.css') }}" as="style" />
+    @stack('styles')
     <!--end::Accessibility Features-->
 
     <!--begin::Fonts-->
