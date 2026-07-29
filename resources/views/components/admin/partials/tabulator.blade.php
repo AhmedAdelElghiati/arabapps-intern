@@ -1,12 +1,12 @@
 @push('styles')
     <style>
-        #studentsTable.tabulator {
+        tabulator {
             border: none !important;
             background-color: transparent !important;
             font-family: inherit;
         }
 
-        #studentsTable .tabulator-header {
+        .tabulator-header {
             background-color: #f8f9fa !important;
             border-bottom: 1px solid #e9ecef !important;
             border-top: none !important;
@@ -16,31 +16,31 @@
             font-size: 0.85rem;
             letter-spacing: 0.5px;
         }
-        #studentsTable .tabulator-header .tabulator-col {
+        .tabulator-header .tabulator-col {
             background-color: transparent !important;
             border-right: none !important;
         }
 
-        #studentsTable .tabulator-row {
+        .tabulator-row {
             border-bottom: 1px solid #f1f3f5 !important;
             background-color: #ffffff !important;
             transition: background-color 0.2s ease;
         }
 
-        #studentsTable .tabulator-row.tabulator-row-even {
+        .tabulator-row.tabulator-row-even {
             background-color: #fafbfc !important;
         }
 
-        #studentsTable .tabulator-row:hover {
+        .tabulator-row:hover {
             background-color: #f1f5f9 !important;
         }
 
-        #studentsTable .tabulator-footer {
+        .tabulator-footer {
             background-color: #ffffff !important;
             border-top: 1px solid #e9ecef !important;
             padding: 12px 20px !important;
         }
-        #studentsTable .tabulator-footer .tabulator-page {
+        .tabulator-footer .tabulator-page {
             border: 1px solid #dee2e6 !important;
             background: #fff !important;
             color: #495057 !important;
@@ -50,12 +50,12 @@
             font-weight: 500;
             transition: all 0.2s ease;
         }
-        #studentsTable .tabulator-footer .tabulator-page.active {
+        .tabulator-footer .tabulator-page.active {
             background-color: #0d6efd !important;
             border-color: #0d6efd !important;
             color: #ffffff !important;
         }
-        #studentsTable .tabulator-footer .tabulator-page:hover:not(.active) {
+        .tabulator-footer .tabulator-page:hover:not(.active) {
             background-color: #e9ecef !important;
         }
 
@@ -66,6 +66,7 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 6px rgba(0,0,0,0.1) !important;
         }
+
     </style>
     <link
         rel="stylesheet"

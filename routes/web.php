@@ -17,3 +17,16 @@ Route::get('/students/create', function () {
 Route::get('/students/edit/{id}', function () {
     return view('students.edit');
 })->name('students.edit');
+
+
+Route::get('/courses', function () {
+    return view('courses.index');
+})->name('courses.index');
+
+Route::get('/courses/create', function () {
+    return view('courses.create');
+})->name('courses.create');
+
+Route::get('/courses/edit/{id}', function () {
+    return view('courses.edit');
+})->name('courses.edit');
