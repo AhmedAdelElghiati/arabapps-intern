@@ -30,3 +30,15 @@ Route::get('/courses/create', function () {
 Route::get('/courses/edit/{id}', function () {
     return view('courses.edit');
 })->name('courses.edit');
+
+Route::get('/exams', function () {
+    return view('exams.index');
+})->name('exams.index');
+
+Route::get('/exams/create', function () {
+    return view('exams.create');
+})->name('exams.create');
+
+Route::get('/exams/edit/{id}', function () {
+    return view('exams.edit', ['exam' => (object) []]);
+})->name('exams.edit');
