@@ -42,3 +42,4 @@ Route::get('/exams/create', function () {
 Route::get('/exams/edit/{id}', function () {
     return view('exams.edit', ['exam' => (object) []]);
 })->name('exams.edit');
+
