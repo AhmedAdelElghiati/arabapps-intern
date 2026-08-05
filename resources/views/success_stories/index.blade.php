@@ -5,7 +5,7 @@
         <h1>Success Stories</h1>
         <a href="{{ route('success-stories.create') }}" class="btn btn-primary">Add Story</a>
     </div>
-
+ 
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
