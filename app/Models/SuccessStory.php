@@ -25,7 +25,7 @@ class SuccessStory extends Model
 
     public function creator(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(Admin::class, 'created_by');
     }
 
     public function course(): BelongsTo
@@ -41,6 +41,6 @@ class SuccessStory extends Model
     {
         return $query->orderBy('display_order', 'asc')->latest();
     }
-    
+
 
 }

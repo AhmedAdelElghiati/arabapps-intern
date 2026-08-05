@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SuccessStoryController;
+
 
 Route::get('/', function () {
     return view('dashboard');
@@ -43,3 +45,12 @@ Route::get('/exams/edit/{id}', function () {
     return view('exams.edit', ['exam' => (object) []]);
 })->name('exams.edit');
 
+Route::get('/success-stories', function () {
+    return view('success_stories.index');
+})->name('success-stories.index');
+Route::get('/success-stories/create', function () {
+    return view('success_stories.create');
+})->name('success-stories.create');
+Route::get('/success-stories/edit/{id}', function () {
+    return view('success_stories.edit');
+})->name('success-stories.edit');
