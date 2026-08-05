@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminControllers\GalleryController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -42,3 +43,6 @@ Route::get('/exams/create', function () {
 Route::get('/exams/edit/{id}', function () {
     return view('exams.edit', ['exam' => (object) []]);
 })->name('exams.edit');
+
+// Gallery routes
+Route::resource('galleries', GalleryController::class);
