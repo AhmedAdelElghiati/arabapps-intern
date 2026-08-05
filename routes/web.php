@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\FaqsController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -42,3 +43,13 @@ Route::get('/exams/create', function () {
 Route::get('/exams/edit/{id}', function () {
     return view('exams.edit', ['exam' => (object) []]);
 })->name('exams.edit');
+
+Route::controller(FaqsController::class)->prefix('faqs')->as('faqs.')->group(function () {
+    Route::get('/', 'index')->name('index');
+    Route::get('/create', 'create')->name('create');
+    Route::post('/insert', 'store')->name('store');
+    Route::get('/show/{id}', 'show')->name('show');
+    Route::get('/edit/{id}', 'edit')->name('edit');
+    Route::put('/updated/{id}', 'update')->name('update');
+    Route::delete('/delete/{id}', 'destroy')->name('delete');
+});
