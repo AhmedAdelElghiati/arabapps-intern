@@ -41,34 +41,6 @@ class SuccessStory extends Model
     {
         return $query->orderBy('display_order', 'asc')->latest();
     }
-        public static function createStory(array $data): self
-    {
-        return static::create($data);
-    }
-    public function updateStory(array $data): bool
-    {
-        return $this->update($data);
-    }
-    public function updateStoryById(int $id, array $data): bool
-    {
-        $story = static::find($id);
-        return $story? $story->update($data) : false;
-    }
-    public function deleteStoryById(int $id): bool
-    {
-        return static::delete();
-    }
-    public function getAllStories()
-    {
-        return static::all();
-    }
-    public function getAllStoriesActive()
-    {
-        return static::topScored()->get();
-    }
-    public function getStoryByID(int $id)
-    {
-        return static::find($id);
-    }
+    
 
 }

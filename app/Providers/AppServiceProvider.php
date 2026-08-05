@@ -4,21 +4,28 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
+// Repositories
+use App\Repositories\Contracts\SuccessStoryRepositoryInterface;
+use App\Repositories\Eloquent\SuccessStoryRepository;
+
+// Services
+use App\Services\Interfaces\SuccessStoryServiceInterface;
+use App\Services\SuccessStoryService;
+
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
     public function register(): void
     {
-        //
-    }
+        // Repository Binding
+        $this->app->bind(
+            SuccessStoryRepositoryInterface::class,
+            SuccessStoryRepository::class
+        );
 
-    /**
-     * Bootstrap any application services.
-     */
-    public function boot(): void
-    {
-        //
+        // Service Binding
+        $this->app->bind(
+            SuccessStoryServiceInterface::class,
+            SuccessStoryService::class
+        );
     }
 }
