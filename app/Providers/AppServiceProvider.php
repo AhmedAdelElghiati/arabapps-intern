@@ -3,7 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-
+use App\Repositories\Interfaces\FaqsInterface;
+use App\Repositories\Eloquent\FaqsRepositories;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -12,6 +13,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         //
+        $this->app->bind(FaqsInterface::class, FaqsRepositories::class);
     }
 
     /**
