@@ -1,94 +1,67 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\SuccessStory;
-use App\Models\Course;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreSuccessStoryRequest;
 use App\Http\Requests\UpdateSuccessStoryRequest;
-use Illuminate\View\View;
+use App\Models\Course;
+use App\Models\SuccessStory;
+use App\Services\SuccessStoryService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
-class SuccessStoryController extends Controller
+class SuccessStoriesController extends Controller
 {
-    /**
-     * Display a paginated listing of success stories.
-     */
-    public function index(): View
-    {
-    $stories = SuccessStory::with('course')
-        ->ordered()
-        ->paginate(10);
-
-    return view('success_stories.index', compact('stories'));
+    public function __construct(
+        protected SuccessStoryService $successStoryService
+    ) {
     }
 
-    /**
-     * Show the form for creating a new success story.
-     */
+    public function index(): View
+    {
+        $stories = $this->successStoryService->getPaginatedStories(15);
+
+        return view('admin.success_stories.index', compact('stories'));
+    }
+
     public function create(): View
     {
-        $courses = Course::pluck('name', 'id');
+        $courses = Course::pluck('title', 'id');
 
-        return view('success_stories.create', compact('courses'));
+        return view('admin.success_stories.create', compact('courses'));
     }
 
     public function store(StoreSuccessStoryRequest $request): RedirectResponse
-    {
-        $data = $request->validated();
-        $data['is_top_scored'] = $request->has('is_top_scored');
+{
+    $this->successStoryService->createStory($request->validated());
 
-        SuccessStory::create($data);
-
-        return redirect()
-            ->route('success-stories.index')
-            ->with('success', 'Success story created successfully.');
-    }
-
-    /**
-     * Display the specified success story.
-     */
-    public function show(SuccessStory $successStory): View
-    {
-        $successStory->load(['course', 'creator']);
-
-        return view('success_stories.show', compact('successStory'));
-    }
-
-    /**
-     * Show the form for editing the specified success story.
-     */
+    return redirect()
+        ->route('success-stories.index')
+        ->with('success', 'Success story created successfully.');
+}
     public function edit(SuccessStory $successStory): View
     {
-        $courses = Course::pluck('name', 'id');
+        $courses = Course::pluck('title', 'id');
 
-        return view('success_stories.edit', compact('successStory', 'courses'));
+        return view('admin.success_stories.edit', compact('successStory', 'courses'));
     }
 
-    /**
-     * Update the specified success story in storage.
-     */
     public function update(UpdateSuccessStoryRequest $request, SuccessStory $successStory): RedirectResponse
-    {
-        $data = $request->validated();
-        $data['is_top_scored'] = $request->has('is_top_scored');
+{
+    $this->successStoryService->updateStory($successStory, $request->validated());
 
-        $successStory->update($data);
+    return redirect()
+        ->route('success-stories.index')
+        ->with('success', 'Success story updated successfully.');
+}
 
-        return redirect()
-            ->route('success-stories.index')
-            ->with('success', 'Success story updated successfully.');
-    }
+   public function destroy(SuccessStory $successStory): RedirectResponse
+{
+    $this->successStoryService->deleteStory($successStory);
 
-    /**
-     * Remove the specified success story from storage.
-     */
-    public function destroy(SuccessStory $successStory): RedirectResponse
-    {
-        $successStory->delete();
-
-        return redirect()
-            ->route('success-stories.index')
-            ->with('success', 'Success story deleted successfully.');
-    }
+    return redirect()
+        ->route('success-stories.index')
+        ->with('success', 'Success story deleted successfully.');
+}
 }

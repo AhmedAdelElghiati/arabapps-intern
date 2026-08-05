@@ -3,57 +3,29 @@
 namespace App\Services;
 
 use App\Models\SuccessStory;
-use App\Repositories\Contracts\SuccessStoryRepositoryInterface;
-use App\Services\Interfaces\SuccessStoryServiceInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Collection;
 
-class SuccessStoryService implements SuccessStoryServiceInterface
+class SuccessStoryService
 {
-    public function __construct(
-        protected SuccessStoryRepositoryInterface $storyRepository
-    ) {}
-
-    public function listPaginated(int $perPage = 15): LengthAwarePaginator
+    public function getPaginatedStories(int $perPage = 15): LengthAwarePaginator
     {
-        return $this->storyRepository->getPaginated($perPage);
+        return SuccessStory::with('course')
+            ->orderBy('display_order', 'asc')
+            ->paginate($perPage);
     }
 
-    public function listTopScored(): Collection
+    public function createStory(array $data): SuccessStory
     {
-        return $this->storyRepository->getTopScored();
+        return SuccessStory::create($data);
     }
 
-    public function findById(int $id): SuccessStory
+    public function updateStory(SuccessStory $successStory, array $data): bool
     {
-        $story = $this->storyRepository->findById($id);
-
-        if (!$story) {
-            abort(404, 'Success Story not found.');
-        }
-
-        return $story;
+        return $successStory->update($data);
     }
 
-    public function createStory(array $data, int $authorId): SuccessStory
+    public function deleteStory(SuccessStory $successStory): ?bool
     {
-        $data['created_by'] = $authorId;
-
-        return $this->storyRepository->create($data);
-    }
-
-    public function updateStory(int $id, array $data): SuccessStory
-    {
-        $story = $this->findById($id);
-        $this->storyRepository->update($story, $data);
-
-        return $story;
-    }
-
-    public function deleteStory(int $id): bool
-    {
-        $story = $this->findById($id);
-
-        return $this->storyRepository->delete($story);
+        return $successStory->delete();
     }
 }
