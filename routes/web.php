@@ -44,12 +44,12 @@ Route::get('/exams/edit/{id}', function () {
     return view('exams.edit', ['exam' => (object) []]);
 })->name('exams.edit');
 
-Route::controller(FaqsController::class)->prefix('faqs')->as('faqs.')->group(function () {
-    Route::get('/', 'index')->name('index');
-    Route::get('/create', 'create')->name('create');
-    Route::post('/insert', 'store')->name('store');
-    Route::get('/show/{id}', 'show')->name('show');
-    Route::get('/edit/{id}', 'edit')->name('edit');
-    Route::put('/updated/{id}', 'update')->name('update');
-    Route::delete('/delete/{id}', 'destroy')->name('delete');
+Route::prefix('faqs')->as('faqs.')->group(function () {
+    Route::get('/', [FaqsController::class, 'index'])->name('index');
+    Route::get('/create', [FaqsController::class, 'create'])->name('create');
+    Route::post('/insert', [FaqsController::class, 'store'])->name('store');
+    Route::get('/show/{id}', [FaqsController::class, 'show'])->name('show');
+    Route::get('/edit/{id}', [FaqsController::class, 'edit'])->name('edit');
+    Route::put('/updated/{id}', [FaqsController::class, 'update'])->name('update');
+    Route::delete('/delete/{id}', [FaqsController::class, 'delete'])->name('delete');
 });
