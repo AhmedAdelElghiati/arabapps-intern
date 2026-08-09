@@ -11,7 +11,11 @@ class FaqsRepositories implements FaqsInterface
     }
     public function getFaqById($id)
     {
+        if (!Faq::find($id)) {
+            return null; 
+        }
         return Faq::find($id);
+
     }
     public function createFaq(array $data)
     {
@@ -20,6 +24,9 @@ class FaqsRepositories implements FaqsInterface
     public function updateFaq($id, array $data)
     {
         $faq = Faq::find($id);
+        if (!$faq) {
+            return null; 
+        }
         $faq->update($data);
         return $faq;
 
@@ -27,7 +34,9 @@ class FaqsRepositories implements FaqsInterface
     public function deleteFaq($id)
     {
         $faq = Faq::find($id);
-      
+        if (!$faq) {
+            return null; 
+        }
         return $faq->delete();
     }
 }
