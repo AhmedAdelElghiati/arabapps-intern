@@ -5,11 +5,13 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\FaqsResource;
 use Illuminate\Http\Request;
+use App\Traits\ApiResponder;
 
 use App\Services\FaqsService;
 class FaqsController extends Controller
 {
     //
+    use ApiResponder;
     private $faqservice;
     public function __construct(FaqsService $faqservice)
     {
@@ -17,12 +19,19 @@ class FaqsController extends Controller
     }
     public function show($id)
     {
-        $faqs=$this->faqservice->getFaqById($id);
-        return response()->json(['faqs' =>new FaqsResource($faqs)], 200);
+        $faqs = $this->faqservice->getFaqById($id);
+        if (!$faqs) {
+            return $this->respondNotFound('FAQ not found');
+        }
+        return $this->respondResource(
+            new FaqsResource($faqs)
+        );
     }
     public function index()
     {
-        $faqs=$this->faqservice->getAllFaqs();
-        return response()->json(['faqs' => FaqsResource::collection($faqs)], 200);
+        $faqs = $this->faqservice->getAllFaqs();
+        return $this->respondResource(
+            FaqsResource::collection($faqs)
+        );
     }
 }
