@@ -37,7 +37,7 @@ class FaqsController extends Controller
         return redirect()->route('faqs.index')->with('success', 'Faq created successfully');
     }
     public function edit($id){
-        $faq=Faq::find($id);
+        $faq=$this->faqsService->getFaqById($id);
         return view('faqs.update',compact('faq'));
     }
     public function update(UpdateFaqsRequest $request, $id)
