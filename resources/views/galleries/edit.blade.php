@@ -25,16 +25,16 @@
 
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('galleries.update', $gallery->id) }}" method="POST">
+                    <form action="{{ route('galleries.update', $gallery->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
 
                         <div class="mb-3">
                             <label for="title" class="form-label">Title <span class="text-danger">*</span></label>
-                            <input 
-                                type="text" 
-                                id="title" 
-                                name="title" 
+                            <input
+                                type="text"
+                                id="title"
+                                name="title"
                                 class="form-control @error('title') is-invalid @enderror"
                                 value="{{ old('title', $gallery->title) }}"
                                 required
@@ -45,30 +45,29 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="img_url" class="form-label">Image URL <span class="text-danger">*</span></label>
-                            <input 
-                                type="url" 
-                                id="img_url" 
-                                name="img_url" 
-                                class="form-control @error('img_url') is-invalid @enderror"
-                                value="{{ old('img_url', $gallery->img_url) }}"
-                                required
+                            <label for="image" class="form-label">Image</label>
+                            <input
+                                type="file"
+                                id="image"
+                                name="image"
+                                accept="image/jpeg,image/png,image/jpg,image/webp"
+                                class="form-control @error('image') is-invalid @enderror"
                             >
-                            @error('img_url')
+                            @error('image')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
-                            <small class="form-text text-muted">Enter a valid URL to an image file</small>
+                            <small class="form-text text-muted">Upload an image (JPG, JPEG, PNG, or WEBP). Leave empty to keep existing image.</small>
                         </div>
 
-                        <div class="mb-3">
+                        <div class="mb-3" id="preview-container" style="{{ $gallery->image ? 'display:block;' : 'display:none;' }}">
                             <label class="form-label">Preview</label>
                             <br>
-                            <img id="preview-image" src="{{ old('img_url', $gallery->img_url) }}" alt="Preview" class="img-thumbnail" style="max-width: 200px;">
+                            <img id="preview-image" src="{{ $gallery->image ? asset('storage/' . $gallery->image) : '' }}" alt="Preview" class="img-thumbnail" style="max-width: 200px;">
                         </div>
 
                         <div class="d-flex gap-2">
-                            <button 
-                                type="submit" 
+                            <button
+                                type="submit"
                                 class="btn btn-primary"
                             >
                                 <i class="bi bi-check-circle me-2"></i> Update Gallery Item
@@ -84,14 +83,24 @@
     </div>
 
     <script>
-        document.getElementById('img_url').addEventListener('change', function(e) {
-            const url = e.target.value;
-            const preview = document.getElementById('preview-image');
-            
-            if (url) {
-                preview.src = url;
-                preview.onerror = function() { this.style.display = 'none'; };
-                preview.style.display = 'block';
+        document.getElementById('image').addEventListener('change', function (event) {
+            const file = event.target.files[0];
+
+            const previewContainer = document.getElementById('preview-container');
+            const previewImage = document.getElementById('preview-image');
+
+            if (file) {
+                previewImage.src = URL.createObjectURL(file);
+                previewContainer.style.display = 'block';
+            } else {
+                const existing = "{{ $gallery->image ? asset('storage/' . $gallery->image) : '' }}";
+                if (existing) {
+                    previewImage.src = existing;
+                    previewContainer.style.display = 'block';
+                } else {
+                    previewImage.src = '';
+                    previewContainer.style.display = 'none';
+                }
             }
         });
     </script>
