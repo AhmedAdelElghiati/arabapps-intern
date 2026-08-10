@@ -31,7 +31,6 @@ class GalleryService
     {
         if($data['image'] instanceof UploadedFile) {
             $data['image'] = $data['image']->store('galleries');
-            dd($data);
         }
         return $this->repository->create($data);
     }
