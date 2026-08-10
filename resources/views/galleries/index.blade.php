@@ -29,12 +29,6 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
             @endif
-
-            @if ($galleries->isEmpty())
-                <div class="alert alert-info" role="alert">
-                    <p>No gallery items found. <a href="{{ route('galleries.create') }}" class="alert-link">Create one now</a></p>
-                </div>
-            @else
                 <div class="card">
                     <div class="card-body">
                         <div class="table-responsive">
@@ -48,7 +42,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($galleries as $gallery)
+                                    @forelse ($galleries as $gallery)
                                         <tr>
                                             <td>{{ $gallery->title }}</td>
                                             <td>
@@ -69,7 +63,11 @@
                                                 </form>
                                             </td>
                                         </tr>
-                                    @endforeach
+                                    @empty
+                                        <tr>
+                                            <td colspan="4" class="text-center">No gallery items found.</td>
+                                        </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
@@ -79,7 +77,6 @@
                 <div class="mt-4 d-flex justify-content-center">
                     {{ $galleries->links('pagination::bootstrap-4') }}
                 </div>
-            @endif
         </div>
     </div>
 </x-admin-layout>
