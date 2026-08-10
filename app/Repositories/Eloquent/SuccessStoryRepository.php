@@ -7,7 +7,7 @@ use App\Repositories\Contracts\SuccessStoryRepositoryInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 
-class SuccessStoryRepository implements SuccessStoryRepositoryInterface
+class SuccessStoryRepository
 {
     public function __construct(
         protected SuccessStory $model

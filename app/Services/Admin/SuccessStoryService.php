@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Admin;
 
 use App\Models\SuccessStory;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -9,9 +9,12 @@ class SuccessStoryService
 {
     public function getPaginatedStories(int $perPage = 15): LengthAwarePaginator
     {
-        return SuccessStory::with('course')
-            ->orderBy('display_order', 'asc')
-            ->paginate($perPage);
+        return SuccessStory::orderBy("created_at","desc")->paginate($perPage);
+    }
+
+    public function getAll(): \Illuminate\Database\Eloquent\Collection
+    {
+        return SuccessStory::get();
     }
 
     public function createStory(array $data): SuccessStory
