@@ -12,19 +12,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('success_stories', function (Blueprint $table) {
-            // score - course_name - total_score - display_order - description(comment or quote)
-            $table->float('score')->nullable();
-            $table->string('course_name')->nullable();
-            $table->integer('total_score')->nullable();
+            // track - display_order - description(comment or quote) - is_active
+            $table->string('track')->nullable();
             $table->integer('display_order')->nullable();
             $table->text('description')->nullable();
+            $table->boolean('is_active')->nullable()->default(true);
+
         });
     }
 
     public function down(): void
     {
         Schema::table('success_stories', function (Blueprint $table) {
-            $table->dropColumn(['score', 'course_name', 'total_score', 'display_order', 'description']);
+            $table->dropColumn([ 'track', 'display_order', 'description', 'is_active' ]);
         });
     }
 };
