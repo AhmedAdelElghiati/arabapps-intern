@@ -13,8 +13,8 @@ class GalleryResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'img_url' => $this->img_url,
-            'created_at' => $this->created_at->toIso8601String(),
-            'updated_at' => $this->updated_at->toIso8601String(),
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ];
     }
 }
