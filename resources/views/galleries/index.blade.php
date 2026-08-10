@@ -52,7 +52,7 @@
                                         <tr>
                                             <td>{{ $gallery->title }}</td>
                                             <td>
-                                                <img src="{{ $gallery->img_url }}" alt="{{ $gallery->title }}" class="img-thumbnail" style="max-width: 50px; max-height: 50px;">
+                                                <img src="{{ asset('storage/' . $gallery->image) }}" alt="{{ $gallery->title }}" class="img-thumbnail" style="max-width: 50px; max-height: 50px;">
                                             </td>
                                             <td>{{ $gallery->created_at->format('Y-m-d H:i') }}</td>
                                             <td>

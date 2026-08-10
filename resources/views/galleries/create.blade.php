@@ -11,103 +11,147 @@
 
     <div class="app-content">
         <div class="container-fluid">
+
             @if ($errors->any())
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <h4 class="alert-heading">Validation Errors</h4>
+
                     <ul class="mb-0">
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
                         @endforeach
                     </ul>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                    ></button>
                 </div>
             @endif
 
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('galleries.store') }}" method="POST">
+
+                    <form
+                        action="{{ route('galleries.store') }}"
+                        method="POST"
+                        enctype="multipart/form-data"
+                    >
                         @csrf
 
+                        {{-- Title --}}
                         <div class="mb-3">
-                            <label for="title" class="form-label">Title <span class="text-danger">*</span></label>
-                            <input 
-                                type="text" 
-                                id="title" 
-                                name="title" 
+                            <label for="title" class="form-label">
+                                Title <span class="text-danger">*</span>
+                            </label>
+
+                            <input
+                                type="text"
+                                id="title"
+                                name="title"
                                 class="form-control @error('title') is-invalid @enderror"
                                 value="{{ old('title') }}"
                                 required
                             >
+
                             @error('title')
-                                <div class="invalid-feedback">{{ $message }}</div>
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
                             @enderror
                         </div>
 
+                        {{-- Image --}}
                         <div class="mb-3">
-                            <label for="img_url" class="form-label">Image URL <span class="text-danger">*</span></label>
-                            <input 
-                                type="url" 
-                                id="img_url" 
-                                name="img_url" 
-                                class="form-control @error('img_url') is-invalid @enderror"
-                                value="{{ old('img_url') }}"
+                            <label for="image" class="form-label">
+                                Image <span class="text-danger">*</span>
+                            </label>
+
+                            <input
+                                type="file"
+                                id="image"
+                                name="image"
+                                accept="image/jpeg,image/png,image/jpg,image/webp"
+                                class="form-control @error('image') is-invalid @enderror"
                                 required
                             >
-                            @error('img_url')
-                                <div class="invalid-feedback">{{ $message }}</div>
+
+                            @error('image')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
                             @enderror
-                            <small class="form-text text-muted">Enter a valid URL to an image file</small>
+
+                            <small class="form-text text-muted">
+                                Upload an image (JPG, JPEG, PNG, or WEBP).
+                            </small>
                         </div>
 
-                        <div class="mb-3" id="preview-container">
-                            @if (old('img_url'))
-                                <label class="form-label">Preview</label>
-                                <br>
-                                <img id="preview-image" src="{{ old('img_url') }}" alt="Preview" class="img-thumbnail" style="max-width: 200px;" onerror="this.style.display='none'">
-                            @endif
+                        {{-- Image Preview --}}
+                        <div
+                            class="mb-3"
+                            id="preview-container"
+                            style="display: none;"
+                        >
+                            <label class="form-label">Preview</label>
+
+                            <br>
+
+                            <img
+                                id="preview-image"
+                                src=""
+                                alt="Image Preview"
+                                class="img-thumbnail mt-2"
+                                style="max-width: 200px;"
+                            >
                         </div>
 
+                        {{-- Buttons --}}
                         <div class="d-flex gap-2">
-                            <button 
-                                type="submit" 
+
+                            <button
+                                type="submit"
                                 class="btn btn-primary"
                             >
-                                <i class="bi bi-check-circle me-2"></i> Create Gallery Item
+                                <i class="bi bi-check-circle me-2"></i>
+                                Create Gallery Item
                             </button>
-                            <a href="{{ route('galleries.index') }}" class="btn btn-secondary">
-                                <i class="bi bi-x-circle me-2"></i> Cancel
+
+                            <a
+                                href="{{ route('galleries.index') }}"
+                                class="btn btn-secondary"
+                            >
+                                <i class="bi bi-x-circle me-2"></i>
+                                Cancel
                             </a>
+
                         </div>
+
                     </form>
+
                 </div>
             </div>
+
         </div>
     </div>
 
     <script>
-        document.getElementById('img_url').addEventListener('change', function(e) {
-            const url = e.target.value;
-            const container = document.getElementById('preview-container');
-            
-            if (url) {
-                let preview = document.getElementById('preview-image');
-                if (!preview) {
-                    const label = document.createElement('label');
-                    label.className = 'form-label';
-                    label.textContent = 'Preview';
-                    
-                    preview = document.createElement('img');
-                    preview.id = 'preview-image';
-                    preview.className = 'img-thumbnail d-block mt-2';
-                    preview.style.maxWidth = '200px';
-                    
-                    container.innerHTML = '';
-                    container.appendChild(label);
-                    container.appendChild(preview);
-                }
-                preview.src = url;
-                preview.onerror = function() { this.style.display = 'none'; };
-                preview.style.display = 'block';
+        document.getElementById('image').addEventListener('change', function (event) {
+            const file = event.target.files[0];
+
+            const previewContainer =
+                document.getElementById('preview-container');
+
+            const previewImage =
+                document.getElementById('preview-image');
+
+            if (file) {
+                previewImage.src = URL.createObjectURL(file);
+                previewContainer.style.display = 'block';
+            } else {
+                previewImage.src = '';
+                previewContainer.style.display = 'none';
             }
         });
     </script>

@@ -15,7 +15,7 @@ class StoreGalleryRequest extends FormRequest
     {
         return [
             'title' => 'required|string|max:255',
-            'img_url' => 'required|url',
+            'image' => 'required|image',
         ];
     }
     public function messages(): array
@@ -24,8 +24,7 @@ class StoreGalleryRequest extends FormRequest
             'title.required' => 'The title is required.',
             'title.string' => 'The title must be a string.',
             'title.max' => 'The title may not be greater than 255 characters.',
-            'img_url.required' => 'The image URL is required.',
-            'img_url.url' => 'The image URL must be a valid URL.',
+            'image.required' => 'The image is required.',
         ];
     }
 }

@@ -25,6 +25,11 @@ class GalleryController extends Controller
         return view('galleries.index', compact('galleries'));
     }
 
+    public function show(Gallery $gallery): View
+    {
+        return view('galleries.show', compact('gallery'));
+    }
+
     public function create(): View
     {
         return view('galleries.create');
