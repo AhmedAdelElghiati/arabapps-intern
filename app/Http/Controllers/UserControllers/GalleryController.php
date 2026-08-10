@@ -15,7 +15,7 @@ class GalleryController extends Controller
     }
     public function index(): JsonResponse
     {
-        $galleries = $this->galleryService->getAllGalleries();
+        $galleries = $this->galleryService->getPaginatedGalleries(request()->query('q'),15);
         return response()->json([
             'status' => 'success',
             'data' => GalleryResource::collection($galleries),

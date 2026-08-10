@@ -5,7 +5,11 @@
                 <div>
                     <h1 class="app-page-title">Gallery Items</h1>
                 </div>
-                <div>
+                <div class="d-flex align-items-center gap-2">
+                    <form class="d-flex me-2" method="GET" action="{{ route('galleries.index') }}">
+                        <input name="q" value="{{ request('q') }}" class="form-control form-control-sm" placeholder="Search title..." aria-label="Search">
+                        <button class="btn btn-sm btn-outline-secondary ms-2" type="submit"><i class="bi bi-search"></i></button>
+                    </form>
                     <a href="{{ route('galleries.create') }}" class="btn btn-primary">
                         <i class="bi bi-plus-circle me-2"></i> Add New Item
                     </a>

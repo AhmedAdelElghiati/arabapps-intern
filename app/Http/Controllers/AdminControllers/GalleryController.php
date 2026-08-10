@@ -21,7 +21,7 @@ class GalleryController extends Controller
 
     public function index(): View
     {
-        $galleries = $this->galleryService->getPaginatedGalleries(15);
+        $galleries = $this->galleryService->getPaginatedGalleries(request()->query('q'),15);
         return view('galleries.index', compact('galleries'));
     }
 

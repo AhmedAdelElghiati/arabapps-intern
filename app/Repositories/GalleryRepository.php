@@ -13,9 +13,11 @@ class GalleryRepository
         return Gallery::all();
     }
 
-    public function paginate(int $perPage = 15) : LengthAwarePaginator
+    public function paginate(?string $query = null , int $perPage = 15) : LengthAwarePaginator
     {
-        return Gallery::paginate($perPage);
+        return Gallery::when($query, function ($q) use ($query) {;
+            $q->where('title', 'like', "%{$query}%");
+        })->paginate($perPage);
     }
 
     public function find(int $id): ?Gallery

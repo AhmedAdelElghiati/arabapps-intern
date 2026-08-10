@@ -18,9 +18,9 @@ class GalleryService
     {
         return $this->repository->all();
     }
-    public function getPaginatedGalleries(int $perPage = 15) : LengthAwarePaginator
+    public function getPaginatedGalleries(?string $query = null , int $perPage = 15) : LengthAwarePaginator
     {
-        return $this->repository->paginate($perPage);
+        return $this->repository->paginate($query , $perPage);
     }
     public function getGalleryById(int $id): ?Gallery
     {
