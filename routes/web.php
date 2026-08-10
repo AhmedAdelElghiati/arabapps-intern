@@ -45,4 +45,13 @@ Route::get('/exams/edit/{id}', function () {
 })->name('exams.edit');
 
 // Gallery routes
-Route::resource('galleries', GalleryController::class);
+//Route::resource('galleries', GalleryController::class);
+Route::prefix('galleries')->group(function () {
+    Route::get('/', [GalleryController::class, 'index'])->name('galleries.index');
+    Route::get('/create', [GalleryController::class, 'create'])->name('galleries.create');
+    Route::post('/', [GalleryController::class, 'store'])->name('galleries.store');
+    Route::get('/{gallery}', [GalleryController::class, 'show'])->name('galleries.show');
+    Route::get('/{gallery}/edit', [GalleryController::class, 'edit'])->name('galleries.edit');
+    Route::put('/{gallery}', [GalleryController::class, 'update'])->name('galleries.update');
+    Route::delete('/{gallery}', [GalleryController::class, 'destroy'])->name('galleries.destroy');
+});
