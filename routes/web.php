@@ -45,5 +45,6 @@ Route::get('/exams/edit/{id}', function () {
 })->name('exams.edit');
 
 //-------------------------------
-
-Route::resource('success-stories', SuccessStoriesController::class);
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('success-stories', SuccessStoriesController::class);
+});
