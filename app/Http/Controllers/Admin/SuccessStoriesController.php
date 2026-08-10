@@ -7,9 +7,10 @@ use App\Http\Requests\StoreSuccessStoryRequest;
 use App\Http\Requests\UpdateSuccessStoryRequest;
 use App\Models\Course;
 use App\Models\SuccessStory;
-use App\Services\SuccessStoryService;
+use App\Services\Admin\SuccessStoryService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Storage;
 
 class SuccessStoriesController extends Controller
 {
@@ -27,41 +28,57 @@ class SuccessStoriesController extends Controller
 
     public function create(): View
     {
-        $courses = Course::pluck('title', 'id');
-
-        return view('admin.success_stories.create', compact('courses'));
+        return view('admin.success_stories.create');
     }
 
     public function store(StoreSuccessStoryRequest $request): RedirectResponse
-{
-    $this->successStoryService->createStory($request->validated());
+{   $data = $request->validated();
+    $data['is_top_scored'] = $request->has('is_top_scored');
+    if ($request->hasFile('photo')) {
+            $data['photo_path'] = $request->file('photo')->store('success_stories', 'public');
+    }
+    $data['created_by'] = 1;
+    $this->successStoryService->createStory($data);
 
     return redirect()
-        ->route('success-stories.index')
+        ->route('admin.success-stories.index')
         ->with('success', 'Success story created successfully.');
 }
     public function edit(SuccessStory $successStory): View
     {
-        $courses = Course::pluck('title', 'id');
 
-        return view('admin.success_stories.edit', compact('successStory', 'courses'));
+        return view('admin.success_stories.edit', compact('successStory'));
     }
 
     public function update(UpdateSuccessStoryRequest $request, SuccessStory $successStory): RedirectResponse
 {
-    $this->successStoryService->updateStory($successStory, $request->validated());
+    $data = $request->validated();
+
+        // Handle Image Replacement
+        if ($request->hasFile('photo')) {
+            // Delete existing image if present
+            if ($successStory->photo_url && Storage::disk('public')->exists($successStory->photo_url)) {
+                Storage::disk('public')->delete($successStory->photo_url);
+            }
+
+            $data['photo_url'] = $request->file('photo')->store('success_stories', 'public');
+        }
+    $this->successStoryService->updateStory($successStory, $data);
 
     return redirect()
-        ->route('success-stories.index')
+        ->route('admin.success-stories.index')
         ->with('success', 'Success story updated successfully.');
 }
 
    public function destroy(SuccessStory $successStory): RedirectResponse
 {
+    if ($successStory->photo_path && Storage::disk('public')->exists($successStory->photo_path)) {
+            Storage::disk('public')->delete($successStory->photo_path);
+        }
     $this->successStoryService->deleteStory($successStory);
 
     return redirect()
-        ->route('success-stories.index')
+        ->route('admin.success-stories.index')
         ->with('success', 'Success story deleted successfully.');
 }
 }

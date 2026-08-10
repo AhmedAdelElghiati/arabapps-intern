@@ -16,11 +16,11 @@ class SuccessStory extends Model
         'photo_url',
         'grade',
         'is_top_scored',
-        'score',
-        'course_id',
-        'total_score',
         'display_order',
-        'description'
+        'description',
+        'is_active',
+        'track',
+        
     ];
 
     public function creator(): BelongsTo
