@@ -11,10 +11,7 @@ class FaqsRepositories implements FaqsInterface
     }
     public function getFaqById($id)
     {
-        if (!Faq::find($id)) {
-            return null; 
-        }
-        return Faq::find($id);
+        return  Faq::find($id);
 
     }
     public function createFaq(array $data)
