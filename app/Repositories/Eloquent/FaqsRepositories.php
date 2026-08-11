@@ -23,20 +23,15 @@ class FaqsRepositories implements FaqsInterface
     }
     public function updateFaq($id, array $data)
     {
+
         $faq = Faq::find($id);
-        if (!$faq) {
-            return null; 
-        }
-        $faq->update($data);
-        return $faq;
+
+        return $faq->update($data);
 
     }
     public function deleteFaq($id)
     {
         $faq = Faq::find($id);
-        if (!$faq) {
-            return null; 
-        }
         return $faq->delete();
     }
 }
