@@ -25,8 +25,9 @@ class FaqsController extends Controller
         }
         return view('faqs.index', compact('faqs'));
     }
-    public function show($id){
-        $faq=$this->faqsService->getFaqById($id);
+    public function show($id)
+    {
+        $faq = $this->faqsService->getFaqById($id);
         if (!$faq) {
             return redirect()->route('faqs.index')->with('error', 'Faq not found');
         }
@@ -39,30 +40,31 @@ class FaqsController extends Controller
     }
     public function store(FaqsRequest $request)
     {
-       $this->faqsService->createFaq($request);
+        $this->faqsService->createFaq($request);
         return redirect()->route('faqs.index')->with('success', 'Faq created successfully');
     }
-    public function edit($id){
-        $faq=$this->faqsService->getFaqById($id);
+    public function edit($id)
+    {
+        $faq = $this->faqsService->getFaqById($id);
         if (!$faq) {
             return redirect()->route('faqs.index')->with('error', 'Faq not found');
         }
-        return view('faqs.update',compact('faq'));
+        return view('faqs.update', compact('faq'));
     }
     public function update(UpdateFaqsRequest $request, $id)
     {
-        $this->faqsService->updateFaq($id, $request);
         if (!$this->faqsService->getFaqById($id)) {
             return redirect()->route('faqs.index')->with('error', 'Faq not found');
         }
-       return redirect()->route('faqs.index')->with('success', 'Faq updated successfully');
+        $this->faqsService->updateFaq($id, $request);
+        return redirect()->route('faqs.index')->with('success', 'Faq updated successfully');
     }
-    public function delete($id){
-       $this->faqsService->deleteFaq($id);
-       if (!$this->faqsService->getFaqById($id)) {
-        return redirect()->route('faqs.index')->with('error', 'Faq not found');
-       }
-      
+    public function delete($id)
+    {
+        if (!$this->faqsService->getFaqById($id)) {
+            return redirect()->route('faqs.index')->with('error', 'Faq not found');
+        }
+        $this->faqsService->deleteFaq($id);
         return redirect()->route('faqs.index')->with('success', 'Faq deleted successfully');
     }
 
