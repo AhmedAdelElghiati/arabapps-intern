@@ -1,13 +1,13 @@
 <?php 
-namespace App\Services;
-use App\Models\Faqs;
-use App\Repositories\Interfaces\FaqsInterface;
+namespace App\Services\Admin;
+
+
 use App\Http\Requests\FaqsRequest;
-use App\Repositories\Eloquent\FaqsRepositories;
+use App\Repositories\Admin\FaqsRepository;
 use App\Http\Requests\UpdateFaqsRequest;
 class FaqsService{
     private $faqsRepository;
-    public function __construct(FaqsRepositories $faqsRepository)
+    public function __construct(FaqsRepository $faqsRepository)
     {
         $this->faqsRepository = $faqsRepository;
     }

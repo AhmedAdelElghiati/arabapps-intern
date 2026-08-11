@@ -1,8 +1,7 @@
 <?php
-namespace App\Repositories\Eloquent;
-use App\Repositories\Interfaces\FaqsInterface;
+namespace App\Repositories\Admin;
 use App\Models\Faq;
-class FaqsRepositories implements FaqsInterface
+class FaqsRepository 
 {
 
     public function getAllFaqs()
