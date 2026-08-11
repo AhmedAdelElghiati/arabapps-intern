@@ -7,7 +7,7 @@ use App\Http\Resources\FaqsResource;
 use Illuminate\Http\Request;
 use App\Traits\ApiResponder;
 
-use App\Services\FaqsService;
+use App\Services\User\FaqsService;
 class FaqsController extends Controller
 {
     //

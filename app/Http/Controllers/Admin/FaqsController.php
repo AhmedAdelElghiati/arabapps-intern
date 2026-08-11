@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateFaqsRequest;
 use Illuminate\Http\Request;
 use App\Models\Faq;
-use App\Services\FaqsService;
+use App\Services\Admin\FaqsService;
 use App\Http\Requests\FaqsRequest;
 class FaqsController extends Controller
 {
