@@ -53,16 +53,16 @@
                             <label class="form-label fw-medium text-dark">
                                 Question <span class="text-danger">*</span>
                             </label>
-                            <textarea class="form-control" name="question" rows="3"
-                                placeholder="Enter question..." required>{{ $faq->question }}</textarea>
+                            <textarea class="form-control" name="question" rows="3" placeholder="Enter question..."
+                                required>{{ $faq->question }}</textarea>
                         </div>
 
                         <div class="col-md-12">
                             <label class="form-label fw-medium text-dark">
                                 Answer <span class="text-danger">*</span>
                             </label>
-                            <textarea class="form-control" name="answer" rows="5"
-                                placeholder="Enter answer..." required>{{ $faq->answer }}</textarea>
+                            <textarea class="form-control" name="answer" rows="5" placeholder="Enter answer..."
+                                required>{{ $faq->answer }}</textarea>
                         </div>
 
                         <div class="col-md-6">
@@ -79,8 +79,9 @@
                             </label>
                             <select name="category" class="form-select">
                                 <option value="">Select Category</option>
+
                                 @foreach (\App\Enum\FaqsEnum::cases() as $category)
-                                    <option value="{{ $category->value }}" {{ $faq->category === $category->value ? 'selected' : '' }}>
+                                    <option value="{{ $category->value }}" @selected($faq->category === $category)>
                                         {{ $category->value }}
                                     </option>
                                 @endforeach
