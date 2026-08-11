@@ -7,7 +7,9 @@ class FaqsRepositories implements FaqsInterface
 
     public function getAllFaqs()
     {
-        return Faq::all();
+        $query = Faq::query();
+        $faqs=$query->paginate(10);
+        return $faqs;
     }
     public function getFaqById($id)
     {
