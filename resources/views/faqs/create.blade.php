@@ -1,11 +1,12 @@
-
 <x-admin-layout>
     @push('styles')
         <style>
-            .form-control:focus, .form-select:focus {
+            .form-control:focus,
+            .form-select:focus {
                 border-color: #86b7fe;
                 box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
             }
+
             .section-title {
                 font-size: 0.85rem;
                 text-transform: uppercase;
@@ -20,109 +21,167 @@
     @endpush
 
     <div class="container-fluid mt-4 mb-5">
+
         <div class="d-flex align-items-center mb-4">
-            <a href="{{ route('exams.index') }}" class="btn btn-light shadow-sm text-secondary me-3 rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+            <a href="{{ route('exams.index') }}"
+                class="btn btn-light shadow-sm text-secondary me-3 rounded-circle d-flex align-items-center justify-content-center"
+                style="width: 40px; height: 40px;">
                 <i class="bi bi-arrow-left"></i>
             </a>
+
             <h4 class="mb-0 fw-bold">Add New FAQ</h4>
         </div>
 
         <div class="card border-0 shadow-sm rounded-4">
+
             <div class="card-header bg-white border-bottom py-3">
                 <h5 class="card-title mb-0 d-flex align-items-center fw-bold text-dark">
                     <div class="bg-primary bg-opacity-10 text-primary p-2 rounded-3 me-3 d-flex">
                         <i class="bi bi-file-earmark-text fs-5"></i>
                     </div>
-                    Exam Details
+
+                    FAQ Details
                 </h5>
             </div>
 
             <div class="card-body p-4 p-md-5">
-               <form action="{{ route('faqs.store') }}" method="POST">
-    @csrf
 
-    <h6 class="section-title">FAQ Information</h6>
+                {{-- Validation Errors --}}
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul class="mb-0">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
-    <div class="row gy-4 mb-5">
+                <form action="{{ route('faqs.store') }}" method="POST">
+                    @csrf
 
-        <div class="col-md-12">
-            <label class="form-label fw-medium text-dark">
-                Question <span class="text-danger">*</span>
-            </label>
-            <textarea
-                class="form-control"
-                name="question"
-                rows="3"
-                placeholder="Enter question..."
-                required>{{ old('question') }}</textarea>
-        </div>
+                    <h6 class="section-title">FAQ Information</h6>
 
-        <div class="col-md-12">
-            <label class="form-label fw-medium text-dark">
-                Answer <span class="text-danger">*</span>
-            </label>
-            <textarea
-                class="form-control"
-                name="answer"
-                rows="5"
-                placeholder="Enter answer..."
-                required>{{ old('answer') }}</textarea>
-        </div>
+                    <div class="row gy-4 mb-5">
 
-        <div class="col-md-6">
-            <label class="form-label fw-medium text-dark">
-                Publish Date
-            </label>
-            <input
-                type="date"
-                class="form-control"
-                name="publish_date"
-                value="{{ old('publish_date') }}">
-        </div>
+                        {{-- Question --}}
+                        <div class="col-md-12">
+                            <label class="form-label fw-medium text-dark">
+                                Question <span class="text-danger">*</span>
+                            </label>
 
-        <div class="col-md-6">
-            <label class="form-label fw-medium text-dark">
-                Category
-            </label>
-            <select name="category" class="form-select">
-                <option value="">Select Category</option>
-                @foreach (\App\Enum\FaqsEnum::cases() as $category)
-                    <option value="{{ $category->value }}" {{ old('category') === $category->value ? 'selected' : '' }}>
-                            {{ $category->value }}
-                        </option>
-                    @endforeach
-                </select>
-            
-        </div>
+                            <textarea class="form-control @error('question') is-invalid @enderror" name="question"
+                                rows="3" placeholder="Enter question..." required>{{ old('question') }}</textarea>
 
-        <div class="col-md-6">
-            <label class="form-label fw-medium text-dark">
-                Display Order
-            </label>
-            <input
-                type="number"
-                class="form-control"
-                name="display_order"
-                value="{{ old('display_order') }}">
-        </div>
+                            @error('question')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
 
-  
 
-    <hr class="my-4 text-muted">
+                        {{-- Answer --}}
+                        <div class="col-md-12">
+                            <label class="form-label fw-medium text-dark">
+                                Answer <span class="text-danger">*</span>
+                            </label>
 
-    <div class="d-flex justify-content-end gap-3">
-        <a href="{{ route('faqs.index') }}" class="btn btn-light border fw-medium px-4">
-            Cancel
-        </a>
+                            <textarea class="form-control @error('answer') is-invalid @enderror" name="answer" rows="5"
+                                placeholder="Enter answer..." required>{{ old('answer') }}</textarea>
 
-        <button
-            type="submit"
-            class="btn btn-primary d-flex align-items-center gap-2 fw-medium px-4 shadow-sm">
-            <i class="bi bi-check2-circle fs-5"></i>
-            Save FAQ
-        </button>
-    </div>
-</form>
+                            @error('answer')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+
+
+                        {{-- Publish Date --}}
+                        <div class="col-md-6">
+                            <label class="form-label fw-medium text-dark">
+                                Publish Date
+                            </label>
+
+                            <input type="date" class="form-control @error('publish_date') is-invalid @enderror"
+                                name="publish_date" value="{{ old('publish_date') }}">
+
+                            @error('publish_date')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+
+
+                        {{-- Category --}}
+                        <div class="col-md-6">
+                            <label class="form-label fw-medium text-dark">
+                                Category
+                            </label>
+
+                            <select name="category" class="form-select @error('category') is-invalid @enderror">
+
+                                <option value="">Select Category</option>
+
+                                @foreach (\App\Enum\FaqsEnum::cases() as $category)
+                                    <option value="{{ $category->value }}" {{ old('category') === $category->value ? 'selected' : '' }}>
+                                        {{ $category->value }}
+                                    </option>
+                                @endforeach
+
+                            </select>
+
+                            @error('category')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+
+
+                        {{-- Display Order --}}
+                        <div class="col-md-6">
+                            <label class="form-label fw-medium text-dark">
+                                Display Order <span class="text-danger">*</span>
+                            </label>
+
+                            <input type="number" class="form-control @error('display_order') is-invalid @enderror"
+                                name="display_order" value="{{ old('display_order') }}"
+                                placeholder="Enter display order..." required>
+
+                            @error('display_order')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+
+                    </div>
+
+                    <hr class="my-4 text-muted">
+
+                    {{-- Buttons --}}
+                    <div class="d-flex justify-content-end gap-3">
+
+                        <a href="{{ route('faqs.index') }}" class="btn btn-light border fw-medium px-4">
+                            Cancel
+                        </a>
+
+                        <button type="submit"
+                            class="btn btn-primary d-flex align-items-center gap-2 fw-medium px-4 shadow-sm">
+
+                            <i class="bi bi-check2-circle fs-5"></i>
+
+                            Save FAQ
+
+                        </button>
+
+                    </div>
+
+                </form>
+
             </div>
         </div>
     </div>
