@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreGalleryRequest;
-use App\Http\Requests\UpdateGalleryRequest;
+use App\Http\Requests\GalleryIndexRequest;
+use App\Http\Requests\GalleryStoreRequest;
+use App\Http\Requests\GalleryUpdateRequest;
 use App\Models\Gallery;
 use App\Services\Admin\GalleryService;
 use Illuminate\Http\RedirectResponse;
@@ -18,9 +19,9 @@ class GalleryController extends Controller
     {
     }
 
-    public function index(): View
+    public function index(GalleryIndexRequest $request): View
     {
-        $galleries = $this->galleryService->getPaginatedGalleries(request()->query('q'),15);
+        $galleries = $this->galleryService->getPaginatedGalleries($request->query('q'),15);
         return view('galleries.index', compact('galleries'));
     }
 
@@ -34,7 +35,7 @@ class GalleryController extends Controller
         return view('galleries.create');
     }
 
-    public function store(StoreGalleryRequest $request): RedirectResponse
+    public function store(GalleryStoreRequest $request): RedirectResponse
     {
         $gallery = $this->galleryService->createGallery($request->validated());
         return redirect()
@@ -49,7 +50,7 @@ class GalleryController extends Controller
     }
 
 
-    public function update(UpdateGalleryRequest $request, Gallery $gallery): RedirectResponse
+    public function update(GalleryUpdateRequest $request, Gallery $gallery): RedirectResponse
     {
         $this->galleryService->updateGallery($gallery, $request->validated());
 

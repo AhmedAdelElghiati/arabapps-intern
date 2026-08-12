@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\GalleryStoreRequest;
 use App\Http\Resources\GalleryResource;
 use App\Services\User\GalleryService;
 use App\Traits\ApiResponder;
@@ -15,9 +16,9 @@ class GalleryController extends Controller
         protected GalleryService $galleryService
     ) {
     }
-    public function index(): JsonResponse
+    public function index(GalleryStoreRequest $request): JsonResponse
     {
-        $galleries = $this->galleryService->getPaginatedGalleries(request()->query('q'),15);
+        $galleries = $this->galleryService->getPaginatedGalleries($request->query('q'),15);
         return $this->respondResource(GalleryResource::collection($galleries));
     }
 
