@@ -50,8 +50,13 @@
                                         <tr>
                                             <td>{{ $gallery->title }}</td>
                                             <td>
-                                                <img src="{{ asset('storage/' . $gallery->image) }}" alt="{{ $gallery->title }}" class="img-thumbnail" style="max-width: 50px; max-height: 50px;">
-                                            </td>
+                                                <img
+                                                    src="{{ filter_var($gallery->image, FILTER_VALIDATE_URL)
+                                                        ? $gallery->image
+                                                        : asset('storage/' . $gallery->image) }}"
+                                                        alt="{{ $gallery->title }}"
+                                                        class="img-thumbnail"
+                                                >                                            </td>
                                             <td>{{ $gallery->created_at->format('Y-m-d H:i') }}</td>
                                             <td>
                                                 <a href="{{ route('galleries.show', $gallery->id) }}" class="btn btn-sm btn-info">
