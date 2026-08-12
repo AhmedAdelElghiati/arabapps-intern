@@ -17,12 +17,10 @@ class FaqsController extends Controller
     {
         $this->faqsService = $faqsService;
     }
-    public function index()
+    public function index(Request $request)
     {
-        $faqs = $this->faqsService->getAllFaqs();
-        if (!$faqs) {
-            return redirect()->route('faqs.index')->with('error', 'No faqs found');
-        }
+        $faqs = $this->faqsService->getAllFaqs($request->input('search'));
+
         return view('faqs.index', compact('faqs'));
     }
     public function show($id)
@@ -53,19 +51,24 @@ class FaqsController extends Controller
     }
     public function update(UpdateFaqsRequest $request, $id)
     {
-        if (!$this->faqsService->getFaqById($id)) {
-            return redirect()->route('faqs.index')->with('error', 'Faq not found');
+        try {
+            $this->faqsService->updateFaq($id, $request);
+            return redirect()->route('faqs.index')->with('success', 'Faq updated successfully');
+        } catch (\Exception $e) {
+            return redirect()->route('faqs.index')->with('error', 'Failed to update Faq: ' . $e->getMessage());
         }
-        $this->faqsService->updateFaq($id, $request);
-        return redirect()->route('faqs.index')->with('success', 'Faq updated successfully');
+
     }
     public function delete($id)
     {
-        if (!$this->faqsService->getFaqById($id)) {
-            return redirect()->route('faqs.index')->with('error', 'Faq not found');
+
+        try {
+            $this->faqsService->deleteFaq($id);
+            return redirect()->route('faqs.index')->with('success', 'Faq deleted successfully');
+        } catch (\Exception $e) {
+            return redirect()->route('faqs.index')->with('error', 'Failed to delete Faq: ' . $e->getMessage());
         }
-        $this->faqsService->deleteFaq($id);
-        return redirect()->route('faqs.index')->with('success', 'Faq deleted successfully');
+ 
     }
 
 }

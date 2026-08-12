@@ -27,10 +27,11 @@ class FaqsController extends Controller
             new FaqsResource($faqs)
         );
     }
-    public function index()
+    public function index(Request $request)
     {
-        $faqs = $this->faqservice->getAllFaqs();
-        return $this->respondResource(
+        $faqs = $this->faqservice->getAllFaqs($request->input('search'));
+
+       return $this->respondResource(
             FaqsResource::collection($faqs)
         );
     }

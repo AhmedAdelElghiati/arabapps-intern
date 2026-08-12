@@ -26,7 +26,7 @@ class FaqsRequest extends FormRequest
         return [
             'question'=>'required|string',
             'answer'=>'required|string',
-            'category' => ['sometimes','string',  Rule::enum(FaqsEnum::class)],
+            'category' => ['nullable','string',  Rule::enum(FaqsEnum::class)],
             'display_order'=>'required|integer',
             'publish_date'=>'nullable|date',    
 

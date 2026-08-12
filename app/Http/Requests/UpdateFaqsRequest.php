@@ -28,7 +28,7 @@ class UpdateFaqsRequest extends FormRequest
             //
             'question' => 'sometimes|string',
             'answer' => 'sometimes|string',
-            'category' => ['sometimes','string',  Rule::enum(FaqsEnum::class)],
+            'category' => ['nullable','string',  Rule::enum(FaqsEnum::class)],
             'display_order' => 'sometimes|integer',
             'publish_date' => 'nullable|date',
         ];
