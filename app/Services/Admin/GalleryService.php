@@ -4,6 +4,7 @@ namespace App\Services\Admin;
 
 use App\Models\Gallery;
 use App\Repositories\Admin\GalleryRepository;
+use App\Support\FileUploader;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -11,7 +12,8 @@ use Illuminate\Pagination\LengthAwarePaginator;
 class GalleryService
 {
     public function __construct(
-        protected GalleryRepository $repository
+        protected GalleryRepository $repository,
+        protected FileUploader $fileUploader
     ) {
     }
     public function getPaginatedGalleries(?string $query = null , int $perPage = 15) : LengthAwarePaginator
@@ -34,12 +36,18 @@ class GalleryService
     public function updateGallery(Gallery $gallery, array $data): bool
     {
         if($data['image'] instanceof UploadedFile) {
-            $data['image'] = $data['image']->store('galleries');
+            $data['image'] = $this->fileUploader->replace($data['image'], 'galleries', $gallery->image);
         }
         return $this->repository->update($gallery, $data);
     }
     public function deleteGallery(Gallery $gallery): bool
     {
-        return $this->repository->delete($gallery);
+        $deleted = $this->repository->delete($gallery);
+
+        if ($deleted) {
+            $this->fileUploader->delete($gallery->image);
+        }
+
+        return $deleted;
     }
 }
