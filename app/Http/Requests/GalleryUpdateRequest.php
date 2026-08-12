@@ -24,7 +24,7 @@ class GalleryUpdateRequest extends FormRequest
             'title.required' => 'The title is required.',
             'title.string' => 'The title must be a string.',
             'title.max' => 'The title may not be greater than 255 characters.',
-            'image.required' => 'The image URL is required.',
+            'image.required' => 'The image is required.',
         ];
     }
 }
