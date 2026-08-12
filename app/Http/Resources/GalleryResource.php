@@ -12,7 +12,7 @@ class GalleryResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'img_url' => $this->img_url,
+            'image' => $this->image,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
