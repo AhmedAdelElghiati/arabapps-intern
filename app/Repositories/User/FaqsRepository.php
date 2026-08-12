@@ -5,15 +5,21 @@ use App\Models\Faq;
 class FaqsRepository 
 {
 
-    public function getAllFaqs()
+    public function getAllFaqs(?string $search = null)
     {
         $query = Faq::query();
-        $faqs=$query->paginate(10);
-        return $faqs;
+
+        if ($search) {
+            $query->where('question', 'like', "%{$search}%")
+                ->orWhere('answer', 'like', "%{$search}%")
+                ->orWhere('category', 'like', "%{$search}%");
+        }
+
+        return $query->paginate(10)->withQueryString();
     }
     public function getFaqById($id)
     {
-        return  Faq::find($id);
+        return  Faq::findOrFail($id);
 
     }
 

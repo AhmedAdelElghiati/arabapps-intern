@@ -1,18 +1,25 @@
 <?php
 namespace App\Repositories\Admin;
 use App\Models\Faq;
-class FaqsRepository 
+class FaqsRepository
 {
 
-    public function getAllFaqs()
+
+    public function getAllFaqs(?string $search = null)
     {
         $query = Faq::query();
-        $faqs=$query->paginate(10);
-        return $faqs;
+
+        if ($search) {
+            $query->where('question', 'like', "%{$search}%")
+                ->orWhere('answer', 'like', "%{$search}%")
+                ->orWhere('category', 'like', "%{$search}%");
+        }
+
+        return $query->paginate(10)->withQueryString();
     }
     public function getFaqById($id)
     {
-        return  Faq::find($id);
+        return Faq::findOrFail($id);
 
     }
     public function createFaq(array $data)
@@ -22,14 +29,14 @@ class FaqsRepository
     public function updateFaq($id, array $data)
     {
 
-        $faq = Faq::find($id);
+        $faq = Faq::findOrFail($id);
 
         return $faq->update($data);
 
     }
     public function deleteFaq($id)
     {
-        $faq = Faq::find($id);
+        $faq = Faq::findOrFail($id);
         return $faq->delete();
     }
 }
