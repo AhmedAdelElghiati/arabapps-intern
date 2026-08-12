@@ -54,6 +54,9 @@
                                             </td>
                                             <td>{{ $gallery->created_at->format('Y-m-d H:i') }}</td>
                                             <td>
+                                                <a href="{{ route('galleries.show', $gallery->id) }}" class="btn btn-sm btn-info">
+                                                    <i class="bi bi-eye"></i> Show
+                                                </a>
                                                 <a href="{{ route('galleries.edit', $gallery->id) }}" class="btn btn-sm btn-warning">
                                                     <i class="bi bi-pencil"></i> Edit
                                                 </a>
