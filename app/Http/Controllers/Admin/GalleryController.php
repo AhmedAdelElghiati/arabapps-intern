@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\AdminControllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreGalleryRequest;
 use App\Http\Requests\UpdateGalleryRequest;
 use App\Models\Gallery;
-use App\Services\GalleryService;
-use Illuminate\Http\JsonResponse;
+use App\Services\Admin\GalleryService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 

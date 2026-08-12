@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Admin;
 
 use App\Models\Gallery;
-use App\Repositories\GalleryRepository;
+use App\Repositories\Admin\GalleryRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -13,10 +13,6 @@ class GalleryService
     public function __construct(
         protected GalleryRepository $repository
     ) {
-    }
-    public function getAllGalleries(): Collection
-    {
-        return $this->repository->all();
     }
     public function getPaginatedGalleries(?string $query = null , int $perPage = 15) : LengthAwarePaginator
     {

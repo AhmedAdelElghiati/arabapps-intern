@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\AdminControllers\GalleryController;
+use App\Http\Controllers\Admin\GalleryController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {

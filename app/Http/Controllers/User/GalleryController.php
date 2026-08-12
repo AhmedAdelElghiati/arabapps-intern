@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\UserControllers;
+namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\GalleryResource;
-use App\Services\GalleryService;
-use Illuminate\Http\JsonResponse;
+use App\Services\User\GalleryService;
 use App\Traits\ApiResponder;
+use Illuminate\Http\JsonResponse;
 
 class GalleryController extends Controller
 {
@@ -19,5 +19,11 @@ class GalleryController extends Controller
     {
         $galleries = $this->galleryService->getPaginatedGalleries(request()->query('q'),15);
         return $this->respondResource(GalleryResource::collection($galleries));
+    }
+
+    public function show(int $id): JsonResponse
+    {
+        $gallery = $this->galleryService->getGalleryById($id);
+        return $this->respondResource(new GalleryResource($gallery));
     }
 }
