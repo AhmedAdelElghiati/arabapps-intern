@@ -9,8 +9,9 @@ class FaqsService{
     {
         $this->faqsRepository = $faqsRepository;
     }
-    public function getAllFaqs(){
-        return $this->faqsRepository->getAllFaqs();
+    public function getAllFaqs(?string $search = null)
+    {
+        return $this->faqsRepository->getAllFaqs($search);
     }
     public function getFaqById($id){
         return $this->faqsRepository->getFaqById($id);
