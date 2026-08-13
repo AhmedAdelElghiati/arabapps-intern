@@ -4,7 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\FaqsResource;
-use Illuminate\Http\Request;
+use App\Http\Requests\SearchRequest;
 use App\Traits\ApiResponder;
 
 use App\Services\User\FaqsService;
@@ -27,9 +27,9 @@ class FaqsController extends Controller
             new FaqsResource($faqs)
         );
     }
-    public function index(Request $request)
+    public function index(SearchRequest $request)
     {
-        $faqs = $this->faqservice->getAllFaqs($request->input('search'));
+        $faqs = $this->faqservice->getAllFaqs($request->validated('search'));
 
        return $this->respondResource(
             FaqsResource::collection($faqs)

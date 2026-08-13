@@ -4,8 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateFaqsRequest;
-use Illuminate\Http\Request;
-use App\Models\Faq;
+use App\Http\Requests\SearchRequest;
 use App\Services\Admin\FaqsService;
 use App\Http\Requests\FaqsRequest;
 class FaqsController extends Controller
@@ -17,9 +16,9 @@ class FaqsController extends Controller
     {
         $this->faqsService = $faqsService;
     }
-    public function index(Request $request)
+    public function index(SearchRequest $request)
     {
-        $faqs = $this->faqsService->getAllFaqs($request->input('search'));
+        $faqs = $this->faqsService->getAllFaqs($request->validated('search'));
 
         return view('faqs.index', compact('faqs'));
     }
@@ -68,7 +67,7 @@ class FaqsController extends Controller
         } catch (\Exception $e) {
             return redirect()->route('faqs.index')->with('error', 'Failed to delete Faq: ' . $e->getMessage());
         }
- 
+
     }
 
 }
