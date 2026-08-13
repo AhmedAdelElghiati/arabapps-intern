@@ -1,0 +1,35 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Foundation\Http\FormRequest;
+use App\Enum\FaqsEnum;
+use Illuminate\Validation\Rule;
+class FaqsRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, ValidationRule|array<mixed>|string>
+     */
+    public function rules(): array
+    {
+        return [
+            'question'=>'required|string',
+            'answer'=>'required|string',
+            'category' => ['nullable','string',  Rule::enum(FaqsEnum::class)],
+            'display_order'=>'required|integer',
+            'publish_date'=>'nullable|date',    
+
+        ];
+    }
+}
