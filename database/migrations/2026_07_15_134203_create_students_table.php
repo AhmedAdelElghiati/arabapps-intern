@@ -12,17 +12,17 @@ return new class extends Migration {
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('email')->unique();
-            $table->string('phone')->unique();
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
+            $table->string('email')->unique()->nullable();
+            $table->string('phone')->unique()->nullable();
             $table->string('parent_phone')->nullable();
             $table->string('parent_email')->nullable();
-            $table->string('grade');
+            $table->string('grade')->nullable();
             $table->string('school_name')->nullable();
-            $table->string('password');
-            $table->string('student_type');
-            $table->string('status');
+            $table->string('password')->nullable();
+            $table->string('student_type')->nullable();
+            $table->string('status')->nullable();
             $table->foreignId('created_by')->nullable()->constrained('admins')->nullOnDelete();
             $table->timestamps();
         });
