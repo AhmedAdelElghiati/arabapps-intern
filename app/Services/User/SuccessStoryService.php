@@ -1,20 +1,23 @@
 <?php
 
 namespace App\Services\User;
-
 use App\Models\SuccessStory;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-
+use App\Repositories\Eloquent\SuccessStoryRepository;
 class SuccessStoryService
 {
+    public function __construct(
+        protected SuccessStoryRepository $successStoryRepository
+    ) {
+    }
     public function getPaginatedStories(int $perPage = 15): LengthAwarePaginator
     {
-        return SuccessStory::orderBy('display_order', 'asc')->where('is_top_scored', true)->paginate($perPage);
+        return $this->successStoryRepository->getPaginated($perPage);
     }
-
-    public function getTopScored(): \Illuminate\Database\Eloquent\Collection
+    
+    public function findById(int $id)
     {
-        return SuccessStory::orderBy('display_order', 'asc')->where('is_top_scored', true)->get();
+        return $this->successStoryRepository->findById($id);
     }
 
 }
