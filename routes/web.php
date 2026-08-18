@@ -46,5 +46,11 @@ Route::get('/exams/edit/{id}', function () {
 
 //-------------------------------
 Route::prefix('admin')->name('admin.')->group(function () {
-    Route::resource('success-stories', SuccessStoriesController::class);
+
+    Route::prefix('success-stories')->name('success-stories.')->group(function () {
+        Route::resource('/', SuccessStoriesController::class);
+        // Or if using standard resource naming:
+        // Route::resource('', SuccessStoriesController::class);
+    });
+
 });

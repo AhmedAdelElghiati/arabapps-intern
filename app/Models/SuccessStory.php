@@ -20,7 +20,6 @@ class SuccessStory extends Model
         'description',
         'is_active',
         'track',
-        
     ];
 
     public function creator(): BelongsTo
