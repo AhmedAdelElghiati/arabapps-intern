@@ -3,7 +3,6 @@
 namespace App\Repositories\Eloquent;
 
 use App\Models\SuccessStory;
-use App\Repositories\Contracts\SuccessStoryRepositoryInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -21,14 +20,7 @@ class SuccessStoryRepository
             ->paginate($perPage);
     }
 
-    public function getTopScored(): Collection
-    {
-        return $this->model
-            ->newQuery()
-            ->topScored()
-            ->ordered()
-            ->get();
-    }
+    
 
     public function findById(int $id): ?SuccessStory
     {
