@@ -59,12 +59,15 @@
                         <div class="fw-semibold">Admin User</div>
                         <small class="text-body-secondary">admin@example.com</small>
                     </li>
-                    <li><hr class="dropdown-divider"></li>
                     <li>
-                        <button type="button" class="dropdown-item text-danger">
-                            <i class="bi bi-box-arrow-right me-2"></i>
-                            Logout
-                        </button>
+                        <form method="POST" action="{{ route('admin.logout') }}">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="dropdown-item d-flex align-items-center gap-2">
+                                <i class="bi bi-box-arrow-right"></i>
+                                Logout
+                            </button>
+                        </form>
                     </li>
                 </ul>
             </li>
