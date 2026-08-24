@@ -12,7 +12,7 @@ class Student extends Model
     protected $fillable=[
         'first_name','last_name','email','phone',
         'parent_phone','parent_email','grade','school_name',
-        'password','student_type','status','created_by'
+        'password','is_guest','student_type','status','created_by'
     ];
  
 
