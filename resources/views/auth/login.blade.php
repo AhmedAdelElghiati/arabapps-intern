@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Login</title>
 
     <link rel="stylesheet" href="{{ asset('adminlte/dist/css/adminlte.min.css') }}" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+        crossorigin="anonymous" />
 
     <style>
         body {
@@ -141,6 +143,7 @@
         }
     </style>
 </head>
+
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="card login-card card-outline card-primary shadow-lg border-0">
@@ -153,31 +156,20 @@
 
                     <div class="mb-3 custom-input-group">
                         <i class="bi bi-envelope"></i>
-                        <input
-                            type="email"
-                            name="email"
-                            class="form-control"
-                            placeholder="Email address"
-                            required
-                            autocomplete="email"
-                        />
+                        <input type="email" name="email" class="form-control" placeholder="Email address" required
+                            autocomplete="email" />
                     </div>
 
 
                     <div class="mb-3 custom-input-group">
                         <i class="bi bi-lock"></i>
-                        <input
-                            type="password"
-                            name="password"
-                            class="form-control"
-                            placeholder="Password"
-                            required
-                            autocomplete="current-password"
-                        />
+                        <input type="password" name="password" class="form-control" placeholder="Password" required
+                            autocomplete="current-password" />
                     </div>
-
+                    <input type="checkbox" name="remember" id="remember" class="form-check-input" value="1">
+                    <label for="remember" class="form-check-label">Remember Me</label>
                     @error('email')
-                    <div class="text-danger mb-2 fs-6 text-center">{{ $message }}</div>
+                        <div class="text-danger mb-2 fs-6 text-center">{{ $message }}</div>
                     @enderror
                     <button type="submit" class="btn btn-primary btn-login w-100">Login</button>
                 </form>
@@ -185,4 +177,5 @@
         </div>
     </div>
 </body>
+
 </html>

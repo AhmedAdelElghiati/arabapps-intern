@@ -15,7 +15,10 @@ class AuthController extends Controller
     }
     public function store(LoginRequest $request)
     {
-        if (Auth::guard('admin')->attempt($request->validated())) {
+        $credentials = $request->only('email', 'password');
+        $remember = $request->boolean('remember');
+
+        if (Auth::guard('admin')->attempt($credentials, $remember)) {
             $request->session()->regenerate();
             return redirect()->route('dashboard');
         }
