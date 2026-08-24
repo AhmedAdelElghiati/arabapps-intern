@@ -14,7 +14,7 @@ class AuthController extends Controller
     }
     public function store(LoginRequest $request)
     {
-        if (Auth::attempt($request->validated())) {
+        if (Auth::guard('admin')->attempt($request->validated())) {
             $request->session()->regenerate();
             return redirect()->route('dashboard');
         }
@@ -25,7 +25,7 @@ class AuthController extends Controller
     }
     public  function destroy()
     {
-        Auth::logout();
+        Auth::guard('admin')->logout();
         return redirect()->route('admin.login');
     }
 }
