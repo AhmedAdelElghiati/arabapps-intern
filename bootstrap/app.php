@@ -15,14 +15,17 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        $middleware->redirectGuestsTo('auth/login');
+        $middleware->redirectGuestsTo(function ($request) {
+            if ($request->is('api/*')) {
+                return null;
+            }
+            return route('admin.login');
+        });
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $responder = new class {
             use ApiResponder;
         };
-
-
         $exceptions->render(function (ThrottleRequestsException $exception, $request) use ($responder) {
             if ($request->is('api/*')) {
                 return  $responder->setStatusCode(429)->respondWithError(message: 'Too many requests. Please try again later.');
