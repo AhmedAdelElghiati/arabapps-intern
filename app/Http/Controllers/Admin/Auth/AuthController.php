@@ -16,7 +16,7 @@ class AuthController extends Controller
     {
         if (Auth::attempt($request->validated())) {
             $request->session()->regenerate();
-            return redirect('/');
+            return redirect()->route('dashboard');
         }
 
         return back()->withErrors([
@@ -26,6 +26,6 @@ class AuthController extends Controller
     public  function destroy()
     {
         Auth::logout();
-        return redirect('auth/login');
+        return redirect()->route('admin.login');
     }
 }
