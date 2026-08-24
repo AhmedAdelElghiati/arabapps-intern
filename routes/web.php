@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('guest:admin')->group(function () {
     Route::prefix('auth')->group(function () {
         Route::get('/login', [SessionsController::class, 'create'])->name('admin.login');
-        Route::post('/login', [SessionsController::class, 'store'])->name('admin.login.store');
+        Route::post('/login', [SessionsController::class, 'store'])
+        ->middleware('throttle:5,1')->name('admin.login.store');
     });
 });
 
