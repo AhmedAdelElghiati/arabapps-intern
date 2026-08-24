@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\Admin\FaqsController;
 use App\Http\Controllers\Admin\GalleryController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\SuccessStoriesController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('dashboard');
@@ -73,3 +73,6 @@ Route::prefix('galleries')->group(function () {
     Route::put('/{gallery}', [GalleryController::class, 'update'])->name('galleries.update');
     Route::delete('/{gallery}', [GalleryController::class, 'destroy'])->name('galleries.destroy');
 });
+
+});
+

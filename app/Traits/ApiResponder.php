@@ -2,8 +2,6 @@
 
 namespace App\Traits;
 
-use Illuminate\Http\JsonResponse;
-
 trait ApiResponder
 {
     /**
@@ -31,7 +29,7 @@ trait ApiResponder
 
     /**
      * @param  string  $message
-     * @return JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function respondNotFound($message = 'Not Found!')
     {
@@ -40,7 +38,7 @@ trait ApiResponder
 
     /**
      * @param  string  $message
-     * @return JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function respondInternalError($message = 'Internal ServerError!')
     {
@@ -50,10 +48,11 @@ trait ApiResponder
     /**
      * @param  array  $data
      * @param  array  $headers
-     * @return JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function respond($data = [], $headers = [])
     {
+
         $data['success'] = $this->isSuccess();
 
         if (isset($data['meta']) && isset($data['meta']['message'])) {
@@ -64,31 +63,11 @@ trait ApiResponder
     }
 
     /**
-     * Standard helper for custom success responses with payload data.
-     *
-     * @param  mixed   $data
-     * @param  string  $message
-     * @param  int     $status
-     * @return JsonResponse
-     */
-    public function successResponse($data = [], string $message = '', int $status = 200): JsonResponse
-    {
-        $this->setStatusCode($status);
-
-        return $this->respond([
-            'data' => $data,
-            'meta' => [
-                'message' => $message,
-            ],
-        ]);
-    }
-
-    /**
      * Wrap a JsonResource (or AnonymousResourceCollection) in our standard
      * envelope and coerce to a JsonResponse so strict controller return
      * types (`: JsonResponse`) remain valid.
      */
-    public function respondResource($resource, $metaData = [], $status = 200): JsonResponse
+    public function respondResource($resource, $metaData = [], $status = 200): \Illuminate\Http\JsonResponse
     {
         $this->statusCode = $status;
 
@@ -114,10 +93,11 @@ trait ApiResponder
     }
 
     /**
-     * @return JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function respondWithError($message, $code = null)
     {
+
         return $this->respond([
             'error' => [
                 'message' => $this->formattedMessage($message),
@@ -129,8 +109,8 @@ trait ApiResponder
     }
 
     /**
-     * @param  string|array  $message
-     * @return JsonResponse
+     * @param  $code
+     * @return \Illuminate\Http\JsonResponse
      */
     public function respondWithSuccess($message)
     {
