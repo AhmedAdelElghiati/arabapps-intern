@@ -6,8 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\User\GuestRequest;
 use App\Http\Requests\User\LoginRequest;
 use App\Http\Resources\UserResource;
+use App\Models\Student;
+use App\Models\User;
+use App\Models\Device;
 use App\Services\User\UserService;
 use App\Traits\ApiResponder;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -26,7 +32,7 @@ class UserController extends Controller
             $request->validated()
         );
 
-       
+
         if (!$result['success']) {
             return $this
                 ->setStatusCode(401)
@@ -60,5 +66,8 @@ class UserController extends Controller
                 'message' => 'guest created successfully',
             ],
         ]);
+    
     }
+   
+    
 }
