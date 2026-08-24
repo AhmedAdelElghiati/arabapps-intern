@@ -21,6 +21,7 @@ class UserService
 
         if (!$student || !Hash::check($data['password'], $student->password)) {
             return [
+                'success'=>false,
                 'message' => 'login failed',
             ];
         }
@@ -46,6 +47,7 @@ class UserService
         $token = $student->createToken('auth')->plainTextToken;
 
         return [
+            'success'=>true,
             'student' => $student,
             'token' => $token,
         ];
