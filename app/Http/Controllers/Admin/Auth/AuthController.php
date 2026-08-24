@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\Admin\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 
-class SessionsController extends Controller
+class AuthController extends Controller
 {
     public function create()
     {
@@ -14,7 +14,7 @@ class SessionsController extends Controller
     }
     public function store(LoginRequest $request)
     {
-        if(Auth::attempt($request->validated())) {
+        if (Auth::attempt($request->validated())) {
             $request->session()->regenerate();
             return redirect('/');
         }
@@ -22,7 +22,6 @@ class SessionsController extends Controller
         return back()->withErrors([
             'email' => 'The provided credentials are incorrect.',
         ]);
-
     }
     public  function destroy()
     {

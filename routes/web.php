@@ -1,15 +1,15 @@
 <?php
 
-use App\Http\Controllers\Admin\Auth\SessionsController;
+use App\Http\Controllers\Admin\Auth\AuthController;
 use App\Http\Controllers\Admin\FaqsController;
 use App\Http\Controllers\Admin\GalleryController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest:admin')->group(function () {
     Route::prefix('auth')->group(function () {
-        Route::get('/login', [SessionsController::class, 'create'])->name('admin.login');
-        Route::post('/login', [SessionsController::class, 'store'])
-        ->middleware('throttle:5,1')->name('admin.login.store');
+        Route::get('/login', [AuthController::class, 'create'])->name('admin.login');
+        Route::post('/login', [AuthController::class, 'store'])
+            ->middleware('throttle:5,1')->name('admin.login.store');
     });
 });
 
@@ -19,7 +19,7 @@ Route::middleware('auth:admin')->group(function () {
         return view('dashboard');
     })->name('dashboard');
 
-    Route::delete('/logout', [SessionsController::class, 'destroy'])->name('admin.logout');
+    Route::delete('/logout', [AuthController::class, 'destroy'])->name('admin.logout');
 
     Route::prefix('galleries')->group(function () {
         Route::get('/', [GalleryController::class, 'index'])->name('galleries.index');
@@ -40,9 +40,4 @@ Route::middleware('auth:admin')->group(function () {
         Route::put('/updated/{id}', [FaqsController::class, 'update'])->name('update');
         Route::delete('/delete/{id}', [FaqsController::class, 'delete'])->name('delete');
     });
-
-
 });
-
-
-
