@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\Auth\AuthController;
 use App\Http\Controllers\Admin\FaqsController;
 use App\Http\Controllers\Admin\GalleryController;
+use App\Http\Controllers\Admin\SuccessStoriesController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest:admin')->group(function () {
@@ -18,9 +19,13 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/', function () {
         return view('dashboard');
     })->name('dashboard');
-
+  
     Route::delete('/logout', [AuthController::class, 'destroy'])->name('admin.logout');
 
+    Route::prefix('success-stories')->name('success-stories.')->group(function () {
+        Route::resource('/', SuccessStoriesController::class);
+    });
+    
     Route::prefix('galleries')->group(function () {
         Route::get('/', [GalleryController::class, 'index'])->name('galleries.index');
         Route::get('/create', [GalleryController::class, 'create'])->name('galleries.create');
@@ -41,3 +46,4 @@ Route::middleware('auth:admin')->group(function () {
         Route::delete('/delete/{id}', [FaqsController::class, 'delete'])->name('delete');
     });
 });
+
