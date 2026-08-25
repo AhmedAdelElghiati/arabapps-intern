@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Http\Exceptions\ThrottleRequestsException;
@@ -26,9 +27,14 @@ return Application::configure(basePath: dirname(__DIR__))
         $responder = new class {
             use ApiResponder;
         };
+        $exceptions->render(function (AuthenticationException $exception, $request) use ($responder) {
+            if ($request->is('api/*')) {
+                return $responder->setStatusCode(401)->respondWithError(message: $exception->getMessage());
+            }
+        });
         $exceptions->render(function (ThrottleRequestsException $exception, $request) use ($responder) {
             if ($request->is('api/*')) {
-                return  $responder->setStatusCode(429)->respondWithError(message: 'Too many requests. Please try again later.');
+                return  $responder->setStatusCode($exception->getStatusCode())->respondWithError(message: 'Too many requests. Please try again later.');
             }
 
             return redirect()->route('admin.login')->withErrors([
