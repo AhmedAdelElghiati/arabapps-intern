@@ -13,9 +13,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         //
-        $middleware->alias([
-            'rate.limit' => \App\Http\Middleware\RateLimitMiddleware::class,
-        ]);
+
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
