@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\FaqsController;
 use App\Http\Controllers\Admin\GalleryController;
+use App\Http\Controllers\Admin\SuccessStoriesController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -45,6 +46,13 @@ Route::get('/exams/edit/{id}', function () {
     return view('exams.edit', ['exam' => (object) []]);
 })->name('exams.edit');
 
+//-------------------------------
+Route::prefix('admin')->name('admin.')->group(function () {
+
+    Route::prefix('success-stories')->name('success-stories.')->group(function () {
+        Route::resource('/', SuccessStoriesController::class);
+    });
+
 Route::prefix('faqs')->as('faqs.')->group(function () {
     Route::get('/', [FaqsController::class, 'index'])->name('index');
     Route::get('/create', [FaqsController::class, 'create'])->name('create');
@@ -65,3 +73,6 @@ Route::prefix('galleries')->group(function () {
     Route::put('/{gallery}', [GalleryController::class, 'update'])->name('galleries.update');
     Route::delete('/{gallery}', [GalleryController::class, 'destroy'])->name('galleries.destroy');
 });
+
+});
+
