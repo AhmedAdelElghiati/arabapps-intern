@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::prefix('user')->group(function () {
+    Route::post('register',[UserController::class,'register']);
 
     Route::post('login', [UserController::class, 'login'])
         ->middleware(['rate.limit']);
@@ -13,4 +14,3 @@ Route::prefix('user')->group(function () {
     Route::post('guest', [UserController::class, 'guest']);
 
 });
-Route::post('register',[UserController::class,'register']);

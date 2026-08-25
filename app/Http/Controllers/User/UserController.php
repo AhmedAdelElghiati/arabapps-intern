@@ -19,11 +19,36 @@ class UserController extends Controller
 {
     use ApiResponder;
 
-    protected $userService;
+    protected UserService $userService;
 
     public function __construct(UserService $userService)
     {
         $this->userService = $userService;
+    }
+    public function register(Request $request)
+    {
+        $validatedData = $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|email|unique:students,email',
+            'phone' => 'required|string|max:20|unique:students,phone',
+            'parent_phone' => 'nullable|string|max:20',
+            'parent_email' => 'nullable|email|max:255',
+            'grade' => 'nullable|string|max:50',
+            'school_name' => 'nullable|string|max:255',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $validatedData['password'] = Hash::make($validatedData['password']);
+        // $validatedData['is_guest'] = false;
+        $validatedData['student_type'] = 1;
+        $validatedData['status'] = 1;
+        $student = Student::create($validatedData);
+
+        return response()->json([
+            'message' => 'User registered successfully',
+            'data' => new UserResource($student),
+        ], 201);
     }
 
     public function login(LoginRequest $request)
@@ -66,8 +91,8 @@ class UserController extends Controller
                 'message' => 'guest created successfully',
             ],
         ]);
-    
+
     }
-   
-    
+
+
 }
