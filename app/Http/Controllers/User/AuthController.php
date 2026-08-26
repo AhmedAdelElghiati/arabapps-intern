@@ -39,7 +39,8 @@ class AuthController extends Controller
 
         return $this->respond([
             'data' => [
-                'token' => $result['token'],
+                'access_token' => $result['access_token'],
+                'refresh_token' => $result['refresh_token'],
                 'student' => new UserResource($result['student']),
             ],
 
@@ -47,6 +48,12 @@ class AuthController extends Controller
                 'message' => 'login success',
             ],
         ]);
+    }
+    public function refresh()
+    {
+        // return ;
+        return response()->json(['message' => 'ok']);
+        // return 'OK';
     }
 
     public function guest(GuestRequest $request)
@@ -64,8 +71,8 @@ class AuthController extends Controller
                 'message' => 'guest created successfully',
             ],
         ]);
-    
+
     }
-   
-    
+
+
 }
