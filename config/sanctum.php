@@ -37,7 +37,7 @@ return [
     |
     */
 
-    'guard' => ['student'],
+    'guard' => [],
 
     /*
     |--------------------------------------------------------------------------
@@ -51,8 +51,8 @@ return [
     */
 
     'expiration' => null,
-    'access_token' => 60,
-    'refresh_token' => 60 * 24,
+    'access_token' =>(int)env('ACCESS_TOKEN',60),
+    'refresh_token' =>(int)env('REFRESH_TOKEN',60 * 24) ,
 
     /*
     |--------------------------------------------------------------------------

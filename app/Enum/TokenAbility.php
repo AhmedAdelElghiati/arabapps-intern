@@ -3,7 +3,7 @@ namespace App\Enum;
 
 enum TokenAbility:string
 {
-    case ACCESS_API='access_token';
-    case ISSUE_ACCESS_TOKEN='refresh_token';
+    case ACCESS_API='access_api';
+    case ISSUE_ACCESS_TOKEN='issue_access_token';
 
 }

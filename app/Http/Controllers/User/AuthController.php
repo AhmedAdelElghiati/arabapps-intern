@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\User;
-
+use Illuminate\Support\Facades\Auth;
+use App\Enum\TokenAbility;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\GuestRequest;
 use App\Http\Requests\User\LoginRequest;
@@ -9,6 +10,8 @@ use App\Http\Resources\UserResource;
 use App\Models\Student;
 use App\Models\User;
 use App\Models\Device;
+use Illuminate\Support\Carbon;
+
 use App\Services\User\AuthService;
 use App\Traits\ApiResponder;
 
@@ -52,6 +55,12 @@ class AuthController extends Controller
     public function refresh()
     {
         // return ;
+        $student=auth();
+        $student->currentAccessToken()->delete();
+          $access_token = $student->createToken('access-token', [TokenAbility::ACCESS_API->value],
+           Carbon::now()->addMinutes(config('sanctum.access_token')))->plainTextToken;
+        $refresh_token=$student->createToken('fresh-token',[TokenAbility::ISSUE_ACCESS_TOKEN->value],
+        Carbon::now()->addMinutes(config('sanctum.refresh_token')))->plainTextToken;
         return response()->json(['message' => 'ok']);
         // return 'OK';
     }

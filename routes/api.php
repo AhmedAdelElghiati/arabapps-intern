@@ -17,12 +17,12 @@ Route::prefix('user')->group(function () {
     Route::post('guest', [AuthController::class, 'guest']);
 
 });
-Route::post('/refresh', [AuthController::class, 'refresh'])->middleware(['auth:sanctum']);
+Route::post('/refresh', [AuthController::class, 'refresh'])->middleware(['auth:student','ability:'.TokenAbility::ISSUE_ACCESS_TOKEN->value]);
 
 // Route::post('refresh', [AuthController::class, 'refresh'])
 //     // ->middleware([
 //     //     'auth:student'
-//     //     // ,'ability:refresh_token'
+//     //     // ,'ability:refresh_token' 'ability:' . TokenAbility::ISSUE_ACCESS_TOKEN->value
 //     // ])
 // ;
 
