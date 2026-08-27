@@ -14,7 +14,54 @@ class AuthService
     {
         $this->userRepository = $userRepository;
     }
+public function  register(array $data): array
+    {
+        $data['password'] = Hash::make($data['password']);
+        $otp = (string) random_int(100000, 999999);
+        $device_id = $data['device_id'];
+        $phone = $data['phone'];
+        $pendingUser = $this->userRepository->createOrUpdateOtp($data, $otp, $device_id,$phone);
 
+        // Send SMS with the raw $otp code here
+
+        return [
+            'success'      => true,
+            'message'      => 'Registration initiated. OTP sent successfully.',
+            'requires_otp' => true,
+            'phone'        => $data['phone'],
+        ];
+    }
+
+    public function verifyOtp(array $data): array
+    {
+        $pending = $this->userRepository->findLatestOtpByPhone($data['phone']);
+
+        if (!$pending || $data['otp_code'] != $pending->otp_code || now()->greaterThan($pending->expires_at)) {
+            return [
+                'success' => false,
+                'message' => 'Invalid OTP code or OTP has expired.',
+            ];
+        }
+
+        return DB::transaction(function () use ($pending) {
+            $studentData = $pending->data;
+            $studentData['is_guest'] = false;
+
+            $student = $this->userRepository->createStudent($studentData);
+
+            if (!empty($pending->device_id)) {
+                $this->userRepository->linkDeviceToStudent($pending->device_id, $student->id);
+            }
+
+            $this->userRepository->deleteOtp($pending);
+
+            return [
+                'success' => true,
+                'student' => $student,
+                'message' => 'Account verified and created successfully.',
+            ];
+        });
+    }
     public function login(array $data)
     {
 
