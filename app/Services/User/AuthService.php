@@ -57,10 +57,15 @@ public function  register(array $data): array
 
             $this->userRepository->deleteOtp($pending);
 
+            $access_token = $student->createToken('access-token', [TokenAbility::ACCESS_API->value], Carbon::now()->addMinutes(config('sanctum.access_token')))->plainTextToken;
+            $refresh_token=$student->createToken('fresh-token',[TokenAbility::ISSUE_ACCESS_TOKEN->value],Carbon::now()->addMinutes(config('sanctum.refresh_token')))->plainTextToken;
+
             return [
                 'success' => true,
                 'student' => $student,
                 'message' => 'Account verified and created successfully.',
+                'access_token' => $access_token,
+                'refresh_token'=>$refresh_token
             ];
         });
     }

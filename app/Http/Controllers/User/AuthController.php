@@ -14,13 +14,12 @@ use App\Models\User;
 use App\Models\Otp;
 use App\Models\Device;
 use Illuminate\Support\Carbon;
-
 use App\Services\User\AuthService;
 use App\Traits\ApiResponder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Middleware\GuestMiddleware; // Fixed casing: Uppercase 'A'
+use App\Http\Middleware\GuestMiddleware;
 
 class AuthController extends Controller
 {
@@ -93,7 +92,7 @@ class AuthController extends Controller
     public function refresh()
     {
         // return ;
-        $student=auth();
+        $student = User::findOrFail(Auth::id());
         $student->currentAccessToken()->delete();
           $access_token = $student->createToken('access-token', [TokenAbility::ACCESS_API->value],
            Carbon::now()->addMinutes(config('sanctum.access_token')))->plainTextToken;
