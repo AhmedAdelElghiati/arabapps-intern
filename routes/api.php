@@ -1,13 +1,14 @@
 <?php
 
 use App\Http\Controllers\User\AuthController;
+use App\Http\Controllers\User\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
 Route::prefix('user')->group(function () {
-    Route::post('register',[UserController::class,'register']);
-
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/verify-otp', [AuthController::class, 'verifyOtp']);
     Route::post('login', [AuthController::class, 'login'])
         ->middleware(['throttle:5,1']);
         //5 request per minute
