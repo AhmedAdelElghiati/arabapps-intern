@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\User;
-
+use Illuminate\Support\Facades\Auth;
+use App\Enum\TokenAbility;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\GuestRequest;
 use App\Http\Requests\User\LoginRequest;
@@ -10,8 +11,10 @@ use App\Http\Requests\User\RegisterRequest;
 use App\Http\Resources\UserResource;
 use App\Models\Student;
 use App\Models\User;
-use App\Models\Otp; 
+use App\Models\Otp;
 use App\Models\Device;
+use Illuminate\Support\Carbon;
+
 use App\Services\User\AuthService;
 use App\Traits\ApiResponder;
 use Illuminate\Http\Request;
@@ -78,13 +81,26 @@ class AuthController extends Controller
 
         return $this->respond([
             'data' => [
-                'token'   => $result['token'],
+                'access_token' => $result['access_token'],
+                'refresh_token' => $result['refresh_token'],
                 'student' => new UserResource($result['student']),
             ],
             'meta' => [
                 'message' => 'login success',
             ],
         ]);
+    }
+    public function refresh()
+    {
+        // return ;
+        $student=auth();
+        $student->currentAccessToken()->delete();
+          $access_token = $student->createToken('access-token', [TokenAbility::ACCESS_API->value],
+           Carbon::now()->addMinutes(config('sanctum.access_token')))->plainTextToken;
+        $refresh_token=$student->createToken('fresh-token',[TokenAbility::ISSUE_ACCESS_TOKEN->value],
+        Carbon::now()->addMinutes(config('sanctum.refresh_token')))->plainTextToken;
+        return response()->json(['message' => 'ok']);
+        // return 'OK';
     }
 
     public function guest(GuestRequest $request)
@@ -100,5 +116,8 @@ class AuthController extends Controller
                 'message' => 'guest created successfully',
             ],
         ]);
+
     }
+
+
 }
