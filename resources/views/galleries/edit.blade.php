@@ -3,7 +3,7 @@
         <div class="container-fluid">
             <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
                 <div>
-                    <h1 class="app-page-title">Edit Gallery Item</h1>
+                    <h1 class="app-page-title">{{ __('pages/galleries.edit.title') }}</h1>
                 </div>
             </div>
         </div>
@@ -25,55 +25,48 @@
 
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('galleries.update', $gallery->id) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('galleries.update', $gallery->id) }}" method="POST"
+                        enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
 
                         <div class="mb-3">
-                            <label for="title" class="form-label">Title <span class="text-danger">*</span></label>
-                            <input
-                                type="text"
-                                id="title"
-                                name="title"
+                            <label for="title" class="form-label">{{ __('pages/galleries.fields.title') }} <span
+                                    class="text-danger">*</span></label>
+                            <input type="text" id="title" name="title"
                                 class="form-control @error('title') is-invalid @enderror"
-                                value="{{ old('title', $gallery->title) }}"
-                                required
-                            >
+                                value="{{ old('title', $gallery->title) }}" required>
                             @error('title')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div class="mb-3">
-                            <label for="image" class="form-label">Image</label>
-                            <input
-                                type="file"
-                                id="image"
-                                name="image"
+                            <label for="image" class="form-label">{{ __('pages/galleries.fields.image') }}</label>
+                            <input type="file" id="image" name="image"
                                 accept="image/jpeg,image/png,image/jpg,image/webp"
-                                class="form-control @error('image') is-invalid @enderror"
-                            >
+                                class="form-control @error('image') is-invalid @enderror">
                             @error('image')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
-                            <small class="form-text text-muted">Upload an image (JPG, JPEG, PNG, or WEBP). Leave empty to keep existing image.</small>
+                            <small class="form-text text-muted">{{ __('pages/galleries.messages.type') }}</small>
                         </div>
 
-                        <div class="mb-3" id="preview-container" style="{{ $gallery->image ? 'display:block;' : 'display:none;' }}">
-                            <label class="form-label">Preview</label>
+                        <div class="mb-3" id="preview-container"
+                            style="{{ $gallery->image ? 'display:block;' : 'display:none;' }}">
+                            <label class="form-label">{{ __('pages/galleries.actions.preview') }}</label>
                             <br>
-                            <img id="preview-image" src="{{ $gallery->image ? asset('storage/' . $gallery->image) : '' }}" alt="Preview" class="img-thumbnail" style="max-width: 200px;">
+                            <img id="preview-image"
+                                src="{{ $gallery->image ? asset('storage/' . $gallery->image) : '' }}" alt="Preview"
+                                class="img-thumbnail" style="max-width: 200px;">
                         </div>
 
                         <div class="d-flex gap-2">
-                            <button
-                                type="submit"
-                                class="btn btn-primary"
-                            >
-                                <i class="bi bi-check-circle me-2"></i> Update Gallery Item
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-check-circle me-2"></i> {{ __('pages/galleries.edit.submit') }}
                             </button>
                             <a href="{{ route('galleries.index') }}" class="btn btn-secondary">
-                                <i class="bi bi-x-circle me-2"></i> Cancel
+                                <i class="bi bi-x-circle me-2"></i> {{ __('pages/galleries.edit.cancel') }}
                             </a>
                         </div>
                     </form>
@@ -83,7 +76,7 @@
     </div>
 
     <script>
-        document.getElementById('image').addEventListener('change', function (event) {
+        document.getElementById('image').addEventListener('change', function(event) {
             const file = event.target.files[0];
 
             const previewContainer = document.getElementById('preview-container');

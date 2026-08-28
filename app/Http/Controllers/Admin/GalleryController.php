@@ -15,13 +15,11 @@ class GalleryController extends Controller
 {
     public function __construct(
         protected GalleryService $galleryService
-    )
-    {
-    }
+    ) {}
 
     public function index(GalleryIndexRequest $request): View
     {
-        $galleries = $this->galleryService->getPaginatedGalleries($request->query('q'),15);
+        $galleries = $this->galleryService->getPaginatedGalleries($request->query('q'), 15);
         return view('galleries.index', compact('galleries'));
     }
 
@@ -40,7 +38,7 @@ class GalleryController extends Controller
         $gallery = $this->galleryService->createGallery($request->validated());
         return redirect()
             ->route('galleries.index')
-            ->with('success', 'Gallery item created successfully.');
+            ->with('success', __('pages/galleries.messages.created'));
     }
 
 
@@ -56,7 +54,7 @@ class GalleryController extends Controller
 
         return redirect()
             ->route('galleries.index')
-            ->with('success', 'Gallery item updated successfully.');
+            ->with('success', __('pages/galleries.messages.updated'));
     }
 
     public function destroy(Gallery $gallery): RedirectResponse
@@ -65,6 +63,6 @@ class GalleryController extends Controller
 
         return redirect()
             ->route('galleries.index')
-            ->with('success', 'Gallery item deleted successfully.');
+            ->with('success', __('pages/galleries.messages.deleted'));
     }
 }
