@@ -7,18 +7,18 @@
                 </div>
                 <div class="d-flex align-items-center gap-2">
                     <a href="{{ route('galleries.edit', $gallery->id) }}" class="btn btn-warning">
-                        <i class="bi bi-pencil me-2"></i> Edit
+                        <i class="bi bi-pencil me-2"></i> {{ __('pages/galleries.actions.edit') }}
                     </a>
                     <form action="{{ route('galleries.destroy', $gallery->id) }}" method="POST" class="d-inline"
                         onsubmit="return confirm('Are you sure you want to delete this gallery item?');">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger">
-                            <i class="bi bi-trash me-2"></i> Delete
+                            <i class="bi bi-trash me-2"></i> {{ __('pages/galleries.actions.delete') }}
                         </button>
                     </form>
                     <a href="{{ route('galleries.index') }}" class="btn btn-secondary">
-                        <i class="bi bi-arrow-left me-2"></i> Back to List
+                        <i class="bi bi-arrow-left me-2"></i> {{ __('pages/galleries.actions.back') }}
                     </a>
                 </div>
             </div>
@@ -46,8 +46,9 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="mb-4">
-                                @if($gallery->image)
-                                    <img src="{{ asset('storage/' . $gallery->image) }}" alt="{{ $gallery->title }}" class="img-fluid rounded" style="max-width: 100%; height: auto;">
+                                @if ($gallery->image)
+                                    <img src="{{ asset('storage/' . $gallery->image) }}" alt="{{ $gallery->title }}"
+                                        class="img-fluid rounded" style="max-width: 100%; height: auto;">
                                 @else
                                     <div class="alert alert-info">No image available</div>
                                 @endif

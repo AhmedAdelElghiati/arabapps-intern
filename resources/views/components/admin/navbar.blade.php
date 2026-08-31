@@ -8,7 +8,20 @@
             </li>
         </ul>
 
-        <ul class="navbar-nav ms-auto">
+        <ul class="navbar-nav ms-auto align-items-center gap-2">
+            <li class="nav-item">
+                <div class="btn-group btn-group-sm" role="group" aria-label="Language switcher">
+                    <a href="{{ route('lang.switch', ['locale' => 'ar']) }}"
+                        class="btn {{ app()->getLocale() === 'ar' ? 'btn-primary' : 'btn-outline-secondary' }}">
+                        AR
+                    </a>
+                    <a href="{{ route('lang.switch', ['locale' => 'en']) }}"
+                        class="btn {{ app()->getLocale() === 'en' ? 'btn-primary' : 'btn-outline-secondary' }}">
+                        EN
+                    </a>
+                </div>
+            </li>
+
             <li class="nav-item dropdown">
                 <a class="nav-link" href="#" id="bd-theme" aria-label="Toggle color scheme"
                     data-bs-toggle="dropdown" aria-expanded="false">
