@@ -24,6 +24,7 @@ return Application::configure(basePath: dirname(__DIR__))
         });
                 $middleware->alias([
             'lang' => \App\Http\Middleware\LangMiddleware::class,
+            'api-lang'=>\App\Http\Middleware\LangApiMiddleware::class,
         ]);
 
     })

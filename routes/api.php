@@ -4,9 +4,9 @@ use App\Http\Controllers\User\FaqsController;
 use App\Http\Controllers\User\GalleryController;
 use Illuminate\Support\Facades\Route;
 
-Route::controller(FaqsController::class)->prefix('faqs')->as('faqs.')->group(function () {
-    Route::get('/', 'index');
-    Route::get('/{id}', 'show');
+Route::middleware('api-lang')->prefix('faqs')->as('faqs.')->group(function () {
+    Route::get('/', [FaqsController::class, 'index']);
+    Route::get('/{id}',  [FaqsController::class, 'show']);
 });
 
 

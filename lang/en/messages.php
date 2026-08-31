@@ -50,4 +50,5 @@ return [
     'cancel' => 'Cancel',
     'save_faq' => 'Save FAQ',
     'update_faq' => 'Update FAQ',
+    'faq_not_found'=>'FAQ not found'
 ];
