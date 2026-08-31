@@ -42,7 +42,7 @@ class SuccessStoriesController extends Controller
 
     return redirect()
         ->route('admin.success-stories.index')
-        ->with('success', 'Success story created successfully.');
+        ->with('success', '');
 }
     public function edit(SuccessStory $successStory): View
     {
@@ -54,9 +54,7 @@ class SuccessStoriesController extends Controller
 {
     $data = $request->validated();
 
-        // Handle Image Replacement
         if ($request->hasFile('photo')) {
-            // Delete existing image if present
             if ($successStory->photo_url && Storage::disk('public')->exists($successStory->photo_url)) {
                 Storage::disk('public')->delete($successStory->photo_url);
             }
@@ -67,7 +65,7 @@ class SuccessStoriesController extends Controller
 
     return redirect()
         ->route('admin.success-stories.index')
-        ->with('success', 'Success story updated successfully.');
+        ->with('success', __('pages/top_students.index.success'));
 }
 
    public function destroy(SuccessStory $successStory): RedirectResponse
@@ -79,6 +77,6 @@ class SuccessStoriesController extends Controller
 
     return redirect()
         ->route('admin.success-stories.index')
-        ->with('success', 'Success story deleted successfully.');
+        ->with('success', __('pages/top_students.index.success'));
 }
 }

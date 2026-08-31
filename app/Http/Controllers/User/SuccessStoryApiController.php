@@ -21,7 +21,7 @@ class SuccessStoryApiController extends Controller
 
         return $this->respondResource(
             SuccessStoryResource::collection($stories),
-            ['message' => 'Success stories retrieved successfully.']
+            ['message' => __('pages/top_students.index.success')]
         );
     }
 }
