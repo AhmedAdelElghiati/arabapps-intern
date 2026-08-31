@@ -34,7 +34,9 @@
 
             </a>
 
-            <h4 class="mb-0 fw-bold">Update FAQ</h4>
+            <h4 class="mb-0 fw-bold">
+                {{ __('messages.update_faq') }}
+            </h4>
 
         </div>
 
@@ -52,7 +54,7 @@
 
                     </div>
 
-                    FAQ Details
+                    {{ __('messages.faq_details') }}
 
                 </h5>
 
@@ -70,7 +72,7 @@
 
 
                     <h6 class="section-title">
-                        FAQ Information
+                        {{ __('messages.faq_information') }}
                     </h6>
 
 
@@ -81,7 +83,8 @@
 
                             <label class="form-label fw-medium text-dark">
 
-                                Question <span class="text-danger">*</span>
+                                {{ __('messages.question') }}
+                                <span class="text-danger">*</span>
 
                             </label>
 
@@ -89,7 +92,7 @@
                                 class="form-control @error('question') is-invalid @enderror"
                                 name="question"
                                 rows="3"
-                                placeholder="Enter question..."
+                                placeholder="{{ __('messages.enter_question') }}"
                                 required>{{ old('question', $faq->question) }}</textarea>
 
                             @error('question')
@@ -106,7 +109,8 @@
 
                             <label class="form-label fw-medium text-dark">
 
-                                Answer <span class="text-danger">*</span>
+                                {{ __('messages.answer') }}
+                                <span class="text-danger">*</span>
 
                             </label>
 
@@ -114,7 +118,7 @@
                                 class="form-control @error('answer') is-invalid @enderror"
                                 name="answer"
                                 rows="5"
-                                placeholder="Enter answer..."
+                                placeholder="{{ __('messages.enter_answer') }}"
                                 required>{{ old('answer', $faq->answer) }}</textarea>
 
                             @error('answer')
@@ -130,7 +134,7 @@
                         <div class="col-md-6">
 
                             <label class="form-label fw-medium text-dark">
-                                Publish Date
+                                {{ __('messages.publish_date') }}
                             </label>
 
                             <input
@@ -152,7 +156,7 @@
                         <div class="col-md-6">
 
                             <label class="form-label fw-medium text-dark">
-                                Category
+                                {{ __('messages.category') }}
                             </label>
 
                             <select
@@ -160,7 +164,7 @@
                                 class="form-select @error('category') is-invalid @enderror">
 
                                 <option value="">
-                                    Select Category
+                                    {{ __('messages.select_category') }}
                                 </option>
 
                                 @foreach (\App\Enum\FaqsEnum::cases() as $category)
@@ -191,7 +195,8 @@
 
                             <label class="form-label fw-medium text-dark">
 
-                                Display Order <span class="text-danger">*</span>
+                                {{ __('messages.display_order') }}
+                                <span class="text-danger">*</span>
 
                             </label>
 
@@ -206,6 +211,7 @@
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
+
                             @enderror
 
                         </div>
@@ -223,7 +229,7 @@
                             href="{{ route('faqs.index') }}"
                             class="btn btn-light border fw-medium px-4">
 
-                            Cancel
+                            {{ __('messages.cancel') }}
 
                         </a>
 
@@ -234,7 +240,7 @@
 
                             <i class="bi bi-check2-circle fs-5"></i>
 
-                            Update FAQ
+                            {{ __('messages.update_faq') }}
 
                         </button>
 

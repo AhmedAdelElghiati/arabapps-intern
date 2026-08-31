@@ -22,6 +22,10 @@ return Application::configure(basePath: dirname(__DIR__))
             }
             return route('admin.login');
         });
+                $middleware->alias([
+            'lang' => \App\Http\Middleware\LangMiddleware::class,
+        ]);
+
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $responder = new class {

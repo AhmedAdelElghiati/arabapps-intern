@@ -1,9 +1,13 @@
 <!doctype html>
-<html lang="en">
+<html
+    lang="{{ app()->getLocale() }}"
+    dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}"
+>
 <!--begin::Head-->
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title> Academy Admin</title>
+
+    <title>Academy Admin</title>
 
     <!--begin::Accessibility Meta Tags-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
@@ -13,12 +17,14 @@
     <!--end::Accessibility Meta Tags-->
 
     <!--begin::Primary Meta Tags-->
-    <meta name="title" content=" Academy Admin" />
+    <meta name="title" content="Academy Admin" />
     <meta name="author" content="ColorlibHQ" />
+
     <meta
         name="description"
         content=""
     />
+
     <meta
         name="keywords"
         content="bootstrap 5, bootstrap, bootstrap 5 admin dashboard, bootstrap 5 dashboard, bootstrap 5 charts, bootstrap 5 calendar, bootstrap 5 datepicker, bootstrap 5 tables, bootstrap 5 datatable, vanilla js datatable, colorlibhq, colorlibhq dashboard, colorlibhq admin dashboard, accessible admin panel, WCAG compliant"
@@ -26,10 +32,16 @@
     <!--end::Primary Meta Tags-->
 
     <!--begin::Accessibility Features-->
-    <!-- Skip links will be dynamically added by accessibility.js -->
     <meta name="supported-color-schemes" content="light dark" />
-    <link rel="preload" href="{{ asset('adminlte/dist/css/adminlte.css') }}" as="style" />
+
+    <link
+        rel="preload"
+        href="{{ asset('adminlte/dist/css/adminlte.css') }}"
+        as="style"
+    />
+
     @stack('styles')
+
     <!--end::Accessibility Features-->
 
     <!--begin::Fonts-->
@@ -60,7 +72,21 @@
     <!--end::Third Party Plugin(Bootstrap Icons)-->
 
     <!--begin::Required Plugin(AdminLTE)-->
-    <link rel="stylesheet" href="{{ asset('adminlte/dist/css/adminlte.css') }}" />
+    @if(app()->getLocale() === 'ar')
+
+        <link
+            rel="stylesheet"
+            href="{{ asset('adminlte/dist/css/adminlte.rtl.css') }}"
+        />
+
+    @else
+
+        <link
+            rel="stylesheet"
+            href="{{ asset('adminlte/dist/css/adminlte.css') }}"
+        />
+
+    @endif
     <!--end::Required Plugin(AdminLTE)-->
 
     <!-- apexcharts -->
@@ -80,50 +106,83 @@
     />
 </head>
 <!--end::Head-->
+
 <!--begin::Body-->
-<body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+<body
+    class="layout-fixed sidebar-expand-lg bg-body-tertiary {{ app()->getLocale() === 'ar' ? 'layout-rtl' : '' }}"
+>
+
 <!--begin::App Wrapper-->
 <div class="app-wrapper">
+
     <x-admin.navbar></x-admin.navbar>
+
     <x-admin.sidebar></x-admin.sidebar>
+
     <!--begin::App Main-->
-   <main class="app-main">
-       {{ $slot }}
-   </main>
+    <main class="app-main">
+
+        {{ $slot }}
+
+    </main>
     <!--end::App Main-->
+
     <x-admin.footer></x-admin.footer>
+
 </div>
 <!--end::App Wrapper-->
+
+
 <!--begin::Script-->
+
 <!--begin::Third Party Plugin(OverlayScrollbars)-->
 <script
     src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/browser/overlayscrollbars.browser.es6.min.js"
     crossorigin="anonymous"
 ></script>
-<!--end::Third Party Plugin(OverlayScrollbars)--><!--begin::Required Plugin(popperjs for Bootstrap 5)-->
+<!--end::Third Party Plugin(OverlayScrollbars)-->
+
+
+<!--begin::Required Plugin(popperjs for Bootstrap 5)-->
 <script
     src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
     crossorigin="anonymous"
 ></script>
-<!--end::Required Plugin(popperjs for Bootstrap 5)--><!--begin::Required Plugin(Bootstrap 5)-->
+<!--end::Required Plugin(popperjs for Bootstrap 5)-->
+
+
+<!--begin::Required Plugin(Bootstrap 5)-->
 <script
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.min.js"
     crossorigin="anonymous"
 ></script>
-<!--end::Required Plugin(Bootstrap 5)--><!--begin::Required Plugin(AdminLTE)-->
+<!--end::Required Plugin(Bootstrap 5)-->
+
+
+<!--begin::Required Plugin(AdminLTE)-->
 <script src="{{ asset('adminlte/dist/js/adminlte.js') }}"></script>
-<!--end::Required Plugin(AdminLTE)--><!--begin::OverlayScrollbars Configure-->
+<!--end::Required Plugin(AdminLTE)-->
+
+
+<!--begin::OverlayScrollbars Configure-->
 <script>
+
     const SELECTOR_SIDEBAR_WRAPPER = '.sidebar-wrapper';
+
     const Default = {
         scrollbarTheme: 'os-theme-light',
         scrollbarAutoHide: 'leave',
         scrollbarClickScroll: true,
     };
-    document.addEventListener('DOMContentLoaded', function () {
-        const sidebarWrapper = document.querySelector(SELECTOR_SIDEBAR_WRAPPER);
 
-        // Disable OverlayScrollbars on mobile devices to prevent touch interference
+    document.addEventListener('DOMContentLoaded', function () {
+
+        const sidebarWrapper =
+            document.querySelector(SELECTOR_SIDEBAR_WRAPPER);
+
+        // Disable OverlayScrollbars on mobile devices
+        // to prevent touch interference
+
         const isMobile = window.innerWidth <= 992;
 
         if (
@@ -131,81 +190,198 @@
             OverlayScrollbarsGlobal?.OverlayScrollbars !== undefined &&
             !isMobile
         ) {
-            OverlayScrollbarsGlobal.OverlayScrollbars(sidebarWrapper, {
-                scrollbars: {
-                    theme: Default.scrollbarTheme,
-                    autoHide: Default.scrollbarAutoHide,
-                    clickScroll: Default.scrollbarClickScroll,
-                },
-            });
+
+            OverlayScrollbarsGlobal.OverlayScrollbars(
+                sidebarWrapper,
+                {
+                    scrollbars: {
+                        theme: Default.scrollbarTheme,
+                        autoHide: Default.scrollbarAutoHide,
+                        clickScroll: Default.scrollbarClickScroll,
+                    },
+                }
+            );
+
         }
+
     });
+
 </script>
-<!--end::OverlayScrollbars Configure--><!--begin::Color Mode Toggle (#6010)-->
+<!--end::OverlayScrollbars Configure-->
+
+
+<!--begin::Color Mode Toggle (#6010)-->
 <script>
+
     (() => {
+
         'use strict';
 
         const STORAGE_KEY = 'lte-theme';
 
-        const getStoredTheme = () => localStorage.getItem(STORAGE_KEY);
-        const setStoredTheme = (theme) => localStorage.setItem(STORAGE_KEY, theme);
+        const getStoredTheme = () =>
+            localStorage.getItem(STORAGE_KEY);
 
-        const prefersDark = () => globalThis.matchMedia('(prefers-color-scheme: dark)').matches;
+        const setStoredTheme = (theme) =>
+            localStorage.setItem(STORAGE_KEY, theme);
+
+        const prefersDark = () =>
+            globalThis.matchMedia(
+                '(prefers-color-scheme: dark)'
+            ).matches;
 
         const getPreferredTheme = () => {
+
             const stored = getStoredTheme();
-            if (stored) return stored;
-            return prefersDark() ? 'dark' : 'light';
+
+            if (stored) {
+                return stored;
+            }
+
+            return prefersDark()
+                ? 'dark'
+                : 'light';
+
         };
 
         const setTheme = (theme) => {
-            const resolved = theme === 'auto' ? (prefersDark() ? 'dark' : 'light') : theme;
-            document.documentElement.setAttribute('data-bs-theme', resolved);
+
+            const resolved =
+                theme === 'auto'
+                    ? (prefersDark() ? 'dark' : 'light')
+                    : theme;
+
+            document.documentElement.setAttribute(
+                'data-bs-theme',
+                resolved
+            );
+
         };
 
         setTheme(getPreferredTheme());
 
         const showActiveTheme = (theme) => {
+
             // Highlight the active dropdown option
-            document.querySelectorAll('[data-bs-theme-value]').forEach((el) => {
-                el.classList.remove('active');
-                el.setAttribute('aria-pressed', 'false');
-                const check = el.querySelector('.bi-check-lg');
-                if (check) check.classList.add('d-none');
-            });
-            const active = document.querySelector(`[data-bs-theme-value="${theme}"]`);
+
+            document
+                .querySelectorAll('[data-bs-theme-value]')
+                .forEach((el) => {
+
+                    el.classList.remove('active');
+
+                    el.setAttribute(
+                        'aria-pressed',
+                        'false'
+                    );
+
+                    const check =
+                        el.querySelector('.bi-check-lg');
+
+                    if (check) {
+                        check.classList.add('d-none');
+                    }
+
+                });
+
+
+            const active =
+                document.querySelector(
+                    `[data-bs-theme-value="${theme}"]`
+                );
+
+
             if (active) {
+
                 active.classList.add('active');
-                active.setAttribute('aria-pressed', 'true');
-                const check = active.querySelector('.bi-check-lg');
-                if (check) check.classList.remove('d-none');
+
+                active.setAttribute(
+                    'aria-pressed',
+                    'true'
+                );
+
+
+                const check =
+                    active.querySelector('.bi-check-lg');
+
+
+                if (check) {
+                    check.classList.remove('d-none');
+                }
+
             }
+
+
             // Sync the topbar trigger icon
-            document.querySelectorAll('[data-lte-theme-icon]').forEach((icon) => {
-                icon.classList.toggle('d-none', icon.dataset.lteThemeIcon !== theme);
-            });
+
+            document
+                .querySelectorAll('[data-lte-theme-icon]')
+                .forEach((icon) => {
+
+                    icon.classList.toggle(
+                        'd-none',
+                        icon.dataset.lteThemeIcon !== theme
+                    );
+
+                });
+
         };
 
-        globalThis.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-            const stored = getStoredTheme();
-            if (!stored || stored === 'auto') setTheme(getPreferredTheme());
-        });
 
-        document.addEventListener('DOMContentLoaded', () => {
-            showActiveTheme(getPreferredTheme());
-            document.querySelectorAll('[data-bs-theme-value]').forEach((toggle) => {
-                toggle.addEventListener('click', () => {
-                    const theme = toggle.getAttribute('data-bs-theme-value');
-                    setStoredTheme(theme);
-                    setTheme(theme);
-                    showActiveTheme(theme);
-                });
+        globalThis
+            .matchMedia('(prefers-color-scheme: dark)')
+            .addEventListener('change', () => {
+
+                const stored = getStoredTheme();
+
+                if (!stored || stored === 'auto') {
+                    setTheme(getPreferredTheme());
+                }
+
             });
-        });
+
+
+        document.addEventListener(
+            'DOMContentLoaded',
+            () => {
+
+                showActiveTheme(
+                    getPreferredTheme()
+                );
+
+
+                document
+                    .querySelectorAll('[data-bs-theme-value]')
+                    .forEach((toggle) => {
+
+                        toggle.addEventListener(
+                            'click',
+                            () => {
+
+                                const theme =
+                                    toggle.getAttribute(
+                                        'data-bs-theme-value'
+                                    );
+
+                                setStoredTheme(theme);
+
+                                setTheme(theme);
+
+                                showActiveTheme(theme);
+
+                            }
+                        );
+
+                    });
+
+            }
+        );
+
     })();
+
 </script>
 <!--end::Color Mode Toggle-->
+
 
 <!-- OPTIONAL SCRIPTS -->
 
@@ -215,18 +391,33 @@
     crossorigin="anonymous"
 ></script>
 
+
 <!-- sortablejs -->
 <script>
-    new Sortable(document.querySelector('.connectedSortable'), {
-        group: 'shared',
-        handle: '.card-header',
+
+    new Sortable(
+        document.querySelector('.connectedSortable'),
+        {
+            group: 'shared',
+            handle: '.card-header',
+        }
+    );
+
+
+    const cardHeaders =
+        document.querySelectorAll(
+            '.connectedSortable .card-header'
+        );
+
+
+    cardHeaders.forEach((cardHeader) => {
+
+        cardHeader.style.cursor = 'move';
+
     });
 
-    const cardHeaders = document.querySelectorAll('.connectedSortable .card-header');
-    cardHeaders.forEach((cardHeader) => {
-        cardHeader.style.cursor = 'move';
-    });
 </script>
+
 
 <!-- apexcharts -->
 <script
@@ -235,8 +426,12 @@
     crossorigin="anonymous"
 ></script>
 
+
 @stack('scripts')
+
 <!--end::Script-->
+
 </body>
 <!--end::Body-->
+
 </html>

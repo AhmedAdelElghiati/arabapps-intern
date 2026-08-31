@@ -6,6 +6,15 @@ use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\SuccessStoriesController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('lang/{lang}',function($lang){
+        Session::put('lang',$lang);
+        return redirect()->back();
+})->name('lang.index');
+Route::middleware(['lang'])->group(function () {
+    Route::get('/welcome', function () {
+        return view('welcome');
+    });
+});
 Route::middleware('guest:admin')->group(function () {
     Route::prefix('auth')->group(function () {
         Route::get('/login', [AuthController::class, 'create'])->name('admin.login');
@@ -36,7 +45,7 @@ Route::middleware('auth:admin')->group(function () {
         Route::delete('/{gallery}', [GalleryController::class, 'destroy'])->name('galleries.destroy');
     });
 
-    Route::prefix('faqs')->as('faqs.')->group(function () {
+    Route::middleware('lang')->prefix('faqs')->as('faqs.')->group(function () {
         Route::get('/', [FaqsController::class, 'index'])->name('index');
         Route::get('/create', [FaqsController::class, 'create'])->name('create');
         Route::post('/insert', [FaqsController::class, 'store'])->name('store');
