@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\LocalizationController;
 use App\Http\Controllers\Admin\SuccessStoriesController;
 use Illuminate\Support\Facades\Route;
 
+// Route::middleware('localization')->group( function(){
 Route::get('/lang/{locale}', [LocalizationController::class, 'switch'])->name('lang.switch');
 
 Route::middleware('guest:admin')->group(function () {
@@ -49,3 +50,4 @@ Route::middleware('auth:admin')->group(function () {
         Route::delete('/delete/{id}', [FaqsController::class, 'delete'])->name('delete');
     });
 });
+// });
