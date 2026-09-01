@@ -16,13 +16,13 @@ class AuthService
     {
         $this->userRepository = $userRepository;
     }
-public function  register(array $data): array
+
+    public function register(array $data): array
     {
         $data['password'] = Hash::make($data['password']);
         $otp = (string) random_int(100000, 999999);
-        $device_id = $data['device_id'];
-        $phone = $data['phone'];
-        $pendingUser = $this->userRepository->createOrUpdateOtp($data, $otp, $device_id,$phone);
+
+        $this->userRepository->createOrUpdateOtp($data, $otp, $data['device_id'], $data['phone']);
 
         // Send SMS with the raw $otp code here
 
@@ -38,7 +38,11 @@ public function  register(array $data): array
     {
         $pending = $this->userRepository->findLatestOtpByPhone($data['phone']);
 
-        if (!$pending || $data['otp_code'] != $pending->otp_code || now()->greaterThan($pending->expires_at)) {
+        if (
+            ! $pending
+            || ! hash_equals((string) $pending->otp_code, (string) $data['otp_code'])
+            || now()->greaterThan($pending->expires_at)
+        ) {
             return [
                 'success' => false,
                 'message' => 'Invalid OTP code or OTP has expired.',
@@ -47,87 +51,109 @@ public function  register(array $data): array
 
         return DB::transaction(function () use ($pending) {
             $studentData = $pending->data;
-            $studentData['is_guest'] = false;
+            $studentData['is_guest']          = false;
+            $studentData['status']            = 'Active';
+            $studentData['phone_verified_at'] = now();
 
             $student = $this->userRepository->createStudent($studentData);
 
-            if (!empty($pending->device_id)) {
+            if (! empty($pending->device_id)) {
                 $this->userRepository->linkDeviceToStudent($pending->device_id, $student->id);
             }
 
             $this->userRepository->deleteOtp($pending);
 
-            $access_token = $student->createToken('access-token', [TokenAbility::ACCESS_API->value], Carbon::now()->addMinutes(config('sanctum.access_token')))->plainTextToken;
-            $refresh_token=$student->createToken('fresh-token',[TokenAbility::ISSUE_ACCESS_TOKEN->value],Carbon::now()->addMinutes(config('sanctum.refresh_token')))->plainTextToken;
-
-            return [
-                'success' => true,
-                'student' => $student,
-                'message' => 'Account verified and created successfully.',
-                'access_token' => $access_token,
-                'refresh_token'=>$refresh_token
-            ];
+            return array_merge(
+                [
+                    'success' => true,
+                    'student' => $student,
+                    'message' => 'Account verified and created successfully.',
+                ],
+                $this->issueTokens($student)
+            );
         });
     }
-    public function login(array $data)
-    {
 
+    public function login(array $data): array
+    {
         $student = $this->userRepository->findByPhone($data['phone']);
 
-        if (!$student || !Hash::check($data['password'], $student->password)) {
+        if (! $student || ! Hash::check($data['password'], $student->password)) {
             return [
-                'success'=>false,
+                'success' => false,
                 'message' => 'login failed',
+            ];
+        }
+
+        if ($student->status === 'Blocked') {
+            return [
+                'success' => false,
+                'message' => 'Your account has been blocked.',
             ];
         }
 
         $device = $this->userRepository->findDevice($data['device_id']);
 
         if ($device) {
-
-            $currentStudent = $this->userRepository->findStudent($device->student_id);
-
-            if ($currentStudent && $currentStudent->is_guest==true) {
-                $this->userRepository->updateDevice($device,
-                 ['student_id' => $student->id
-                 ]);
-            }
+            $this->userRepository->updateDevice($device, ['student_id' => $student->id]);
         } else {
-
             $this->userRepository->createDevice([
-                'device_id' => $data['device_id'],
-                'student_id' => $student->id
-                ]);
+                'device_id'  => $data['device_id'],
+                'student_id' => $student->id,
+            ]);
         }
-        $access_token = $student->createToken('access-token', [TokenAbility::ACCESS_API->value], Carbon::now()->addMinutes(config('sanctum.access_token')))->plainTextToken;
-        $refresh_token=$student->createToken('fresh-token',[TokenAbility::ISSUE_ACCESS_TOKEN->value],Carbon::now()->addMinutes(config('sanctum.refresh_token')))->plainTextToken;
-        return [
-            'success'=>true,
-            'student' => $student,
-            'access_token' => $access_token,
-            'refresh_token'=>$refresh_token
-        ];
+
+        return array_merge(
+            [
+                'success' => true,
+                'student' => $student,
+            ],
+            $this->issueTokens($student)
+        );
     }
 
-    public function guest(array $data)
+    public function guest(array $data): array
     {
-        DB::beginTransaction();
-        try{
-        $student = $this->userRepository->create([
-            'is_guest' => true,
-        ]);
-        $this->userRepository->createDevice([
-            'device_id' => $data['device_id'],
-            'student_id' => $student->id,
-        ]);
-        $token=$student->createToken('token-guest')->plainTextToken;
-        }
-        catch(\Throwable $e){
-            DB::rollBack();
-        }
-        DB::commit();
+        return DB::transaction(function () use ($data) {
+            $student = $this->userRepository->create([
+                'is_guest' => true,
+            ]);
+
+            $this->userRepository->createDevice([
+                'device_id'  => $data['device_id'],
+                'student_id' => $student->id,
+            ]);
+
+            return array_merge(
+                ['student' => $student],
+                $this->issueTokens($student)
+            );
+        });
+    }
+
+    public function refresh($student): array
+    {
+        $student->currentAccessToken()->delete();
+
+        return $this->issueTokens($student);
+    }
+
+    /**
+     * Issue a fresh access/refresh token pair for the given student.
+     */
+    private function issueTokens($student): array
+    {
         return [
-            'student' => $student,
+            'access_token' => $student->createToken(
+                'access-token',
+                [TokenAbility::ACCESS_API->value],
+                Carbon::now()->addMinutes((int) config('sanctum.access_token'))
+            )->plainTextToken,
+            'refresh_token' => $student->createToken(
+                'refresh-token',
+                [TokenAbility::ISSUE_ACCESS_TOKEN->value],
+                Carbon::now()->addMinutes((int) config('sanctum.refresh_token'))
+            )->plainTextToken,
         ];
     }
 }

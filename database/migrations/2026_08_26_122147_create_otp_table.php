@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('otp', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('device_id')->constrained()->cascadeOnDelete();
+            $table->string('device_id')->nullable();
             $table->string('otp_code');
             $table->timestamp('expires_at');
             $table->json('data');// all data

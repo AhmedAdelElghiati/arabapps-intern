@@ -12,8 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('students', function (Blueprint $table) {
-            //
-            $table->string('fmc_token')->nullable();
+            $table->string('fcm_token')->nullable();
         });
     }
 
@@ -23,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('students', function (Blueprint $table) {
-            //
+            $table->dropColumn('fcm_token');
         });
     }
 };

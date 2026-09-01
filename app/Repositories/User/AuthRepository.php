@@ -37,11 +37,8 @@ public function createOrUpdateOtp(array $data, string $otp, string $deviceId,str
     public function linkDeviceToStudent(string $deviceId, int $studentId): void
     {
         Device::updateOrCreate(
-            ['id' => $deviceId],
-            [
-                'student_id' => $studentId,
-                'last_login' => now(),
-            ]
+            ['device_id' => $deviceId],
+            ['student_id' => $studentId]
         );
     }
 
@@ -52,9 +49,6 @@ public function createOrUpdateOtp(array $data, string $otp, string $deviceId,str
         public function findByPhone(string $phone)
     {
         return Student::where('phone', $phone)->first();
-    }
-    public function findStudent($id){
-        return Student::findOrFail($id);
     }
 
     public function create(array $data)

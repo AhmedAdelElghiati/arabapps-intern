@@ -23,8 +23,8 @@ class OtpRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'otp_code'=> 'required|min:4',
-            'phone' => 'required|max:20'
+            'otp_code' => ['required', 'digits:6'],
+            'phone'    => ['required', 'string', 'max:20'],
         ];
     }
 }

@@ -26,6 +26,6 @@ class Otp extends Model
 
     public function device(): BelongsTo
     {
-        return $this->belongsTo(Device::class, 'device_id', 'id');
+        return $this->belongsTo(Device::class, 'device_id', 'device_id');
     }
 }

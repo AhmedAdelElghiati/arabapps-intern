@@ -9,19 +9,22 @@ use Symfony\Component\HttpFoundation\Response;
 class GuestMiddleware
 {
     /**
-     * Handle an incoming request.
+     * Reject students that only hold a guest account.
+     *
+     * Must run behind `auth:student`.
      *
      * @param  Closure(Request): (Response)  $next
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $student=$request->user('student');
-        if ($student->is_guest=true) {
-            # code...
+        $student = $request->user('student');
+
+        if (! $student || $student->is_guest) {
             return response()->json([
-                'message'=>'unauthroized',
-            ]);
+                'message' => 'This action requires a full account.',
+            ], Response::HTTP_FORBIDDEN);
         }
+
         return $next($request);
     }
 }
