@@ -19,7 +19,7 @@ class GalleryFactory extends Factory
     {
         return [
             'title' => fake()->sentence(5),
-            'img_url' => fake()->imageUrl(800, 600, 'education'),
-        ];
+            'image' => 'https://picsum.photos/seed/' . fake()->uuid() . '/800/600',
+            ];
     }
 }

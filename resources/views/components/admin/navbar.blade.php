@@ -8,37 +8,47 @@
             </li>
         </ul>
 
-        <ul class="navbar-nav ms-auto">
+        <ul class="navbar-nav ms-auto align-items-center gap-2">
+            <li class="nav-item">
+                <div class="btn-group btn-group-sm" role="group" aria-label="Language switcher">
+                    <a href="{{ route('lang.switch', ['locale' => 'ar']) }}"
+                        class="btn {{ app()->getLocale() === 'ar' ? 'btn-primary' : 'btn-outline-secondary' }}">
+                        AR
+                    </a>
+                    <a href="{{ route('lang.switch', ['locale' => 'en']) }}"
+                        class="btn {{ app()->getLocale() === 'en' ? 'btn-primary' : 'btn-outline-secondary' }}">
+                        EN
+                    </a>
+                </div>
+            </li>
+
             <li class="nav-item dropdown">
-                <a
-                    class="nav-link"
-                    href="#"
-                    id="bd-theme"
-                    aria-label="Toggle color scheme"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                >
+                <a class="nav-link" href="#" id="bd-theme" aria-label="Toggle color scheme"
+                    data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="bi bi-sun-fill" data-lte-theme-icon="light"></i>
                     <i class="bi bi-moon-fill d-none" data-lte-theme-icon="dark"></i>
                     <i class="bi bi-circle-half d-none" data-lte-theme-icon="auto"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bd-theme">
                     <li>
-                        <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light">
+                        <button type="button" class="dropdown-item d-flex align-items-center"
+                            data-bs-theme-value="light">
                             <i class="bi bi-sun-fill me-2"></i>
                             Light
                             <i class="bi bi-check-lg ms-auto d-none"></i>
                         </button>
                     </li>
                     <li>
-                        <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark">
+                        <button type="button" class="dropdown-item d-flex align-items-center"
+                            data-bs-theme-value="dark">
                             <i class="bi bi-moon-fill me-2"></i>
                             Dark
                             <i class="bi bi-check-lg ms-auto d-none"></i>
                         </button>
                     </li>
                     <li>
-                        <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto">
+                        <button type="button" class="dropdown-item d-flex align-items-center"
+                            data-bs-theme-value="auto">
                             <i class="bi bi-circle-half me-2"></i>
                             Auto
                             <i class="bi bi-check-lg ms-auto d-none"></i>
@@ -48,23 +58,28 @@
             </li>
 
             <li class="nav-item dropdown user-menu">
-                <a class="nav-link dropdown-toggle d-flex align-items-center gap-2" href="#" data-bs-toggle="dropdown">
-                    <span class="user-image rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center">
+                <a class="nav-link dropdown-toggle d-flex align-items-center gap-2" href="#"
+                    data-bs-toggle="dropdown">
+                    <span
+                        class="user-image rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center">
                         <i class="bi bi-person-fill"></i>
                     </span>
-                    <span class="d-none d-md-inline">Admin User</span>
+                    <span class="d-none d-md-inline">{{ auth('admin')->user()->first_name }}</span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li class="px-3 py-2">
-                        <div class="fw-semibold">Admin User</div>
-                        <small class="text-body-secondary">admin@example.com</small>
+                        <div class="fw-semibold">{{ auth('admin')->user()->first_name }}</div>
+                        <small class="text-body-secondary">{{ auth('admin')->user()->email }}</small>
                     </li>
-                    <li><hr class="dropdown-divider"></li>
                     <li>
-                        <button type="button" class="dropdown-item text-danger">
-                            <i class="bi bi-box-arrow-right me-2"></i>
-                            Logout
-                        </button>
+                        <form method="POST" action="{{ route('admin.logout') }}">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="dropdown-item d-flex align-items-center gap-2">
+                                <i class="bi bi-box-arrow-right"></i>
+                                Logout
+                            </button>
+                        </form>
                     </li>
                 </ul>
             </li>

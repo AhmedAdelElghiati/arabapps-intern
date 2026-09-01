@@ -7,5 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Faq extends Model
 {
-    use HasFactory;
+     use HasFactory;
+    protected $fillable = [
+        'question',
+        'answer',
+        'publish_date',
+        'category',
+        'display_order',
+        'created_by',
+
+    ];
+    protected $casts = [
+       'category'=> \App\Enum\FaqsEnum::class,
+    ];
+   
 }
