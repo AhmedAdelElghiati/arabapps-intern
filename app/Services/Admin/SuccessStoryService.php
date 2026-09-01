@@ -4,31 +4,37 @@ namespace App\Services\Admin;
 
 use App\Models\SuccessStory;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-
+use App\Repositories\Admin\SuccessStoryRepository;
 class SuccessStoryService
 {
+    private SuccessStoryRepository $successStoryRepository;
+    public function __construct(
+        protected SuccessStoryRepository $SuccessStoryRepository
+    ) {
+        $this->successStoryRepository = $SuccessStoryRepository;
+    }
     public function getPaginatedStories(int $perPage = 15): LengthAwarePaginator
     {
-        return SuccessStory::orderBy("created_at","desc")->paginate($perPage);
+        return $this->successStoryRepository->paginate($perPage);
     }
 
     public function getAll(): \Illuminate\Database\Eloquent\Collection
     {
-        return SuccessStory::get();
+        return $this->successStoryRepository->all();
     }
 
     public function createStory(array $data): SuccessStory
     {
-        return SuccessStory::create($data);
+        return $this->successStoryRepository->create($data);
     }
 
     public function updateStory(SuccessStory $successStory, array $data): bool
     {
-        return $successStory->update($data);
+        return $this->successStoryRepository->update($successStory, $data);
     }
 
     public function deleteStory(SuccessStory $successStory): ?bool
     {
-        return $successStory->delete();
+        return $this->successStoryRepository->delete($successStory);
     }
 }
