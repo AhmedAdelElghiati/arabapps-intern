@@ -23,12 +23,19 @@ class My_CoursesController extends Controller
 
         Enrollment::where('expired_at', '<', now())->delete();
         // will return (course id - title - image url - description - duration - total items - completed items - progress percentage) for each course
+        $search = $request->query('search');
         $courses = DB::table('courses')
         ->join('lessons', 'lessons.course_id', '=', 'courses.id')
         ->join('lesson_items', 'lesson_items.lesson_id', '=', 'lessons.id')
         ->leftJoin('completed_items', function ($join) use ($user) {
         $join->on('completed_items.lesson_item_id', '=', 'lesson_items.id')
              ->where('completed_items.user_id', '=', $user->id);
+    })
+    ->when($search, function ($query, $search) {
+        return $query->where(function ($q) use ($search) {
+            $q->where('courses.title', 'LIKE', "%{$search}%")
+              ->orWhere('courses.description', 'LIKE', "%{$search}%");
+        });
     })
     ->select(
         'courses.id',
@@ -39,10 +46,16 @@ class My_CoursesController extends Controller
         DB::raw('COUNT(DISTINCT lesson_items.id) as total_items'),
         DB::raw('COUNT(DISTINCT completed_items.id) as completed_items_count'),
         DB::raw('ROUND((COUNT(DISTINCT completed_items.id) / COUNT(DISTINCT lesson_items.id)) * 100, 2) as progress_percentage')
+    )->groupBy(
+        'courses.id',
+        'courses.title',
+        'courses.image_url',
+        'courses.description',
+        'courses.duration'
     )
     ->paginate();
-
-        return $this->respond([
+    
+    return $this->respond([
             'data' => $courses,
         ]);
     }
