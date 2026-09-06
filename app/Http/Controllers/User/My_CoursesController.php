@@ -20,8 +20,9 @@ class My_CoursesController extends Controller
             'per_page' => 'nullable|integer|min:1',
             'page' => 'nullable|integer|min:1',
         ]);
+
         Enrollment::where('expired_at', '<', now())->delete();
-        // will return (course id - title - total items - completed items - progress percentage) for each course
+        // will return (course id - title - image url - description - duration - total items - completed items - progress percentage) for each course
         $courses = DB::table('courses')
         ->join('lessons', 'lessons.course_id', '=', 'courses.id')
         ->join('lesson_items', 'lesson_items.lesson_id', '=', 'lessons.id')
@@ -32,20 +33,22 @@ class My_CoursesController extends Controller
     ->select(
         'courses.id',
         'courses.title',
+        'courses.image_url',
+        'courses.description',
+        'courses.duration',
         DB::raw('COUNT(DISTINCT lesson_items.id) as total_items'),
         DB::raw('COUNT(DISTINCT completed_items.id) as completed_items_count'),
         DB::raw('ROUND((COUNT(DISTINCT completed_items.id) / COUNT(DISTINCT lesson_items.id)) * 100, 2) as progress_percentage')
     )
-    ->groupBy('courses.id', 'courses.title')
     ->paginate();
 
-            return $this->respond([
+        return $this->respond([
             'data' => $courses,
         ]);
     }
-    public function showCourse(Request $request,$id)
-    {//
-        $user = $request->user();
+    public function showCourse(Request $request,$id){
+
+    $user = $request->user();
 
     $course = Course::with('lessons.lessonItems')->find($id);
 
@@ -54,7 +57,7 @@ class My_CoursesController extends Controller
     }
 
     $completedItemIds = CompletedItem::where('user_id', $user->id)
-        ->pluck('lesson_item_id')
+        ->pluck('lesson_item_id') // mean select this column only from completed_items table
         ->toArray();
 
     $course->lessons->each(function ($lesson) use ($completedItemIds) {
@@ -67,7 +70,8 @@ class My_CoursesController extends Controller
     return $this->respond([
         'data' => $course,
     ]);
-    }
+
+}
     public function showLessonItem(Request $request, $courseId, $lessonId)
     {
         $user = $request->user();
