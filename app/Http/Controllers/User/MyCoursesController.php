@@ -11,6 +11,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Services\User\MyCoursesService;
 use Illuminate\Support\Facades\Auth;
+use App\Models\LessonItem;
+use App\Models\Lesson;
+
+use function Laravel\Prompts\progress;
 
 class MyCoursesController extends Controller
 {
@@ -20,10 +24,29 @@ class MyCoursesController extends Controller
     ) {
     }
     public function index(){
-        $user = 1;
-        $enrollments = Enrollment::all();
+        $user = 2;
+        $enrollments = Enrollment::all()
+        ->where('student_id', $user);
+        $courses = Course::with('lessons.lessonItems')->whereIn('id', $enrollments->pluck('course_id'))->get();
+        $user = 2;
             return $this->respond([
-                'data' => $enrollments,
+                // 'data' => $enrollments,
+                'courses' => $courses,
+                'number_of_lessons' => $courses->sum(function ($course) {
+                    return $course->lessons->count();
+                }),
+                'number_of_completed_lessons' => $courses->sum(function ($course) {
+                    return $course->lessons->sum(function ($lesson) use ($user) {
+                        return $lesson->lessonItems->whereIn('id', CompletedItem::where('user_id', $user)->pluck('lesson_item_id'))->count();
+                    });
+                }),
+                'progress' => $courses->sum(function ($course) use ($user) {
+                    $totalLessons = $course->lessons->count();
+                    $completedLessons = $course->lessons->sum(function ($lesson) use ($user) {
+                        return $lesson->lessonItems->whereIn('id', CompletedItem::where('user_id', $user)->pluck('lesson_item_id'))->count();
+                    });
+                    return $totalLessons > 0 ? ($completedLessons / $totalLessons) * 100 : 0;
+                })
             ]);
     }
     public function showCourse(Request $request,$id){
