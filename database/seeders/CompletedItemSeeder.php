@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\CompletedItem;
 use Illuminate\Database\Seeder;
-
+use App\Models\Student;
 class CompletedItemSeeder extends Seeder
 {
     /**
@@ -12,6 +12,9 @@ class CompletedItemSeeder extends Seeder
      */
     public function run(): void
     {
-        CompletedItem::factory(300)->create();
+        $students = Student::all();
+        CompletedItem::factory(300)
+        ->recycle($students)
+        ->create();
     }
 }

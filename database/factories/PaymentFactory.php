@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Payment;
 use Illuminate\Database\Eloquent\Factories\Factory;
-
+use App\Models\Enrollment;
 /**
  * @extends Factory<Payment>
  */
@@ -18,7 +18,7 @@ class PaymentFactory extends Factory
     public function definition(): array
     {
         return [
-            'enrollment_id' => fake()->numberBetween(1, 100),
+            'enrollment_id' => Enrollment::factory(),
             'payment_method' => fake()->randomElement(['Cash', 'Credit Card', 'Bank Transfer', 'EWallet']),
             'status' => fake()->randomElement(['Paid', 'Pending', 'Refunded', 'Failed']),
             'amount' => fake()->randomFloat(2, 80, 350),

@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Question;
 use Illuminate\Database\Seeder;
-
+use App\Models\Exam;
 class QuestionSeeder extends Seeder
 {
     /**
@@ -12,6 +12,9 @@ class QuestionSeeder extends Seeder
      */
     public function run(): void
     {
-        Question::factory(200)->create();
+        $exams = Exam::all();
+        Question::factory(120)
+        ->recycle($exams)
+        ->create();
     }
 }

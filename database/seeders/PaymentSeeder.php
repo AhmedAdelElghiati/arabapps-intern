@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Payment;
 use Illuminate\Database\Seeder;
-
+use App\Models\Enrollment;
 class PaymentSeeder extends Seeder
 {
     /**
@@ -12,6 +12,9 @@ class PaymentSeeder extends Seeder
      */
     public function run(): void
     {
-        Payment::factory(150)->create();
+        $enrollments = Enrollment::all();
+        Payment::factory(150)
+        ->recycle($enrollments)
+        ->create();
     }
 }
