@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\User\ExamController;
 use App\Http\Controllers\User\SuccessStoryApiController;
 use App\Http\Controllers\User\FaqsController;
 use App\Http\Controllers\User\GalleryController;
@@ -17,5 +19,9 @@ Route::prefix('gallery')->group(
         Route::get('/{gallery}', [GalleryController::class, 'show']);
     }
 );
+
+Route::prefix('exams')->group(function () {
+    Route::get('/', [ExamController::class, 'index']);
+});
 
 Route::get('/success-stories', [SuccessStoryApiController::class, 'index']);
