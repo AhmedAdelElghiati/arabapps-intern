@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\Eloquent;
+namespace App\Repositories\Admin;
 
 use App\Models\SuccessStory;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -20,7 +20,7 @@ class SuccessStoryRepository
             ->paginate($perPage);
     }
 
-    
+
 
     public function findById(int $id): ?SuccessStory
     {
