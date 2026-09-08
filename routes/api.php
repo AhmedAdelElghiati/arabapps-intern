@@ -6,7 +6,7 @@ use App\Http\Controllers\User\SuccessStoryApiController;
 use App\Http\Controllers\User\FaqsController;
 use App\Http\Controllers\User\GalleryController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\User\CourseController;
 Route::prefix('user')->group(function () {
     Route::post('/register', [AuthController::class, 'register'])
         ->middleware('throttle:6,1');
@@ -40,3 +40,10 @@ Route::prefix('gallery')->group(
 );
 
 Route::get('/success-stories', [SuccessStoryApiController::class, 'index']);
+// api of courses 
+Route::prefix('courses')->group(function () {
+    Route::get('/', [CourseController::class, 'index']);
+    Route::post('/enroll', [CourseController::class, 'enroll'])
+        ->middleware(['auth:student', 'student.full']);
+    Route::get('/{id}', [CourseController::class, 'show']);
+});
