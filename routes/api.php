@@ -24,10 +24,14 @@ Route::prefix('user')->group(function () {
     Route::post('/refresh', [AuthController::class, 'refresh'])
         ->middleware(['auth:student', 'ability:' . TokenAbility::ISSUE_ACCESS_TOKEN->value]);
 });
-
-Route::get('/co', [MyCoursesController::class, 'index'])
-    ->middleware(['auth:student', 'ability:' . TokenAbility::ISSUE_ACCESS_TOKEN->value]);
-
+Route::prefix('myCourses')->group(function(){
+Route::get('/', [MyCoursesController::class, 'index'])
+    ->middleware(['auth:student']);
+    // ->middleware(['auth:student', 'ability:' . TokenAbility::ISSUE_ACCESS_TOKEN->value]);
+Route::get('/{id}', [MyCoursesController::class, 'show'])
+    ->middleware(['auth:student']);
+    // ->middleware(['auth:student', 'ability:' . TokenAbility::ISSUE_ACCESS_TOKEN->value]);
+});
 Route::controller(FaqsController::class)->prefix('faqs')->as('faqs.')->group(function () {
     Route::get('/', 'index');
     Route::get('/{id}', 'show');
@@ -42,3 +46,8 @@ Route::prefix('gallery')->group(
 );
 
 Route::get('/success-stories', [SuccessStoryApiController::class, 'index']);
+
+
+Route::get('/test',function(){
+    return \App\Models\Course::paginate(request()->get(''));
+});
