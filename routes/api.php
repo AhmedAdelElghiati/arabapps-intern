@@ -22,6 +22,7 @@ Route::prefix('gallery')->group(
 
 Route::prefix('exams')->group(function () {
     Route::get('/', [ExamController::class, 'index']);
+    Route::get('/{examId}', [ExamController::class, 'show']);
 });
 
 Route::get('/success-stories', [SuccessStoryApiController::class, 'index']);
