@@ -41,25 +41,29 @@ class CourseController extends Controller
 
 
     }
-    public function enroll(Request $request){
-        $validated = $request->validate([
-            'course_id' => ['required', 'integer', 'exists:courses,id'],
-        ]);
+   public function enroll(Request $request)
+{
+    $validated = $request->validate([
+        'course_id' => ['required', 'integer', 'exists:courses,id'],
+    ]);
 
-        $enrollment = $this->courseService->enrollFreeCourse(
-            $request->user('student')->id,
-            $validated['course_id']
-        );
+    $result = $this->courseService->enrollFreeCourse($request->user('student')->id, $validated['course_id']);
 
-        if (! $enrollment) {
-            return response()->json([
-                'message' => 'Only free courses can be enrolled in this way.',
-            ], 422);
-        }
-
+    if ($result['status'] === 'not_free') {
         return response()->json([
-            'message' => 'Course enrolled successfully.',
-            'enrollment' => $enrollment,
-        ], 201);
+            'message' => 'Only free courses can be enrolled in this way.',
+        ], 422);
     }
+
+    if ($result['status'] === 'already_enrolled') {
+        return response()->json([
+            'message' => 'You are already enrolled in this course.',
+        ], 409);
+    }
+
+    return response()->json([
+        'message' => 'Course enrolled successfully.',
+        'enrollment' => $result['enrollment'],
+    ], 201);
+}
 }

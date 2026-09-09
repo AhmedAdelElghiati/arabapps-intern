@@ -11,27 +11,41 @@ class CourseService
         $this->courseRepository = $courseRepository;
     }
     public function getAllCourses()
-    {    
-         
-       
+    {
+
+
         return $this->courseRepository->getAllCourses();
     }
-    public function getCourseById($id){   
-         
-        return $this->courseRepository->getCourseById($id);;
+    public function getCourseById($id)
+    {
+
+        return $this->courseRepository->getCourseById($id);
+        ;
 
     }
-
     public function enrollFreeCourse(int $studentId, int $courseId)
     {
         $course = $this->courseRepository->getCourseById($courseId);
 
-        if (! $course->is_free) {
-            return response()->json([
-                'message' => 'Only free courses can be enrolled in this way.',
-            ], 422);
+        if (!$course->is_free) {
+            return [
+                'status' => 'not_free',
+            ];
         }
 
-        return $this->courseRepository->enrollStudent($studentId, $courseId);
+        $enrollment = $this->courseRepository->getEnrollment($courseId, $studentId );
+
+        if ($enrollment) {
+            return [
+                'status' => 'already_enrolled',
+            ];
+        }
+
+        return [
+            'status' => 'enrolled',
+            'enrollment' => $this->courseRepository->enrollStudent($studentId, $courseId),
+        ];
     }
+
+
 }

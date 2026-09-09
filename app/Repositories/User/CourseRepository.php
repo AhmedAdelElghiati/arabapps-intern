@@ -22,15 +22,17 @@ class CourseRepository
     {
             return Course::with(['lessons.items','materials',])->findOrFail($id);
     }
-
-    public function enrollStudent(int $studentId, int $courseId): Enrollment
+    public function getEnrollment($courseId,$studentId )
     {
-        return Enrollment::firstOrCreate(
+        return Enrollment::where('course_id', $courseId)->where('student_id', $studentId)->first();
+    }
+
+    public function enrollStudent(int $studentId, int $courseId)
+    {
+        return Enrollment::create(
             [
                 'student_id' => $studentId,
                 'course_id' => $courseId,
-            ],
-            [
                 'access_type' => 'free',
                 'enrolled_at' => now(),
                 'status' => 'active',
