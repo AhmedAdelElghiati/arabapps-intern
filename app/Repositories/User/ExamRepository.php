@@ -22,4 +22,9 @@ class ExamRepository
             ->paginate(15);
         return $exams;
     }
+
+    public function getExamById(int $examId)
+    {
+        return Exam::with(['questions.examOptions'])->findOrFail($examId);
+    }
 }
