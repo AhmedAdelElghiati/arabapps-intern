@@ -20,7 +20,9 @@ class ExamResource extends JsonResource
             'description' => $this->description,
             'duration' => $this->duration,
             'questions_count' => $this->questions_count,
-
+            'questions' => QuestionResource::collection(
+                $this->whenLoaded('questions')
+            ),
         ];
     }
 }
