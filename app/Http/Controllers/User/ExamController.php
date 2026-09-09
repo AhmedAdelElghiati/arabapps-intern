@@ -24,4 +24,10 @@ class ExamController extends Controller
         $exams = $this->examService->getAllExams($request);
         return $this->respondResource(ExamResource::collection($exams), ['Exams retrieved successfully.']);
     }
+
+    public function show($examId)
+    {
+        $exam = $this->examService->getExamById($examId);
+        return $this->respondResource(new ExamResource($exam), ['Exam retrieved successfully.']);
+    }
 }
