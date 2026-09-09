@@ -19,4 +19,8 @@ class ExamService
 
         return $this->examRepository->getAllExams($search, $track);
     }
+    public function getExamById(int $examId)
+    {
+        return $this->examRepository->getExamById($examId);
+    }
 }
