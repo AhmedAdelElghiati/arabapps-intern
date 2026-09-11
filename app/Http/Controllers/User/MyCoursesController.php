@@ -24,26 +24,29 @@ class MyCoursesController extends Controller
     ) {
     }
     public function index(){
-    $studentId = Auth::id(); // what i have to do there
+        $student = authUser('student');
+        $studentId = $student->id; // what i have to do there
         $courses=$this->myCoursesService->getAllCoursesWithProgress($studentId);
-        return $this->respond([
-        'data' => CourseResource::collection($courses)
-        ]);
+        if($courses->isEmpty()){
+            return $this -> respondWithError(__('pages/myCourses.index'));
+        }
+
+        return $this->respondResource(CourseResource::collection($courses));
     }
     public function show(int $courseId)
 {
     $studentId = Auth::id();
     $course = $this->myCoursesService->getCourseWithProgress($studentId,$courseId);
         if(!$course){
-            return $this->respond([
-                'massage'=>'this user don\'t have this course'
-            ]);
+            return $this -> respondWithError(__('pages/myCourses.show'));
         }
+        return $this->respondResource(new CourseResource($course));
         // Single model uses new CourseResource()
-        return response()->json([
-            'status' => 'success',
-            'data'   => new CourseResource($course),
-        ]);
+
+        // api responder
+        // one structure
+
+        // magic method
 }
 
 }
