@@ -19,4 +19,12 @@ class ExamSubmissionRepository
             ->where('exam_id', $examId)
             ->count();
     }
+
+    public function getActiveExamSubmission(int $studentId, int $examId): ?ExamSubmission
+    {
+        return ExamSubmission::where('student_id', $studentId)
+            ->where('exam_id', $examId)
+            ->where('is_completed', false)
+            ->first();
+    }
 }
