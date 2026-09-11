@@ -41,7 +41,7 @@ Route::prefix('gallery')->group(
     }
 );
 
-Route::prefix('exams')->group(function () {
+Route::middleware('auth:student')->prefix('exams')->group(function () {
     Route::get('/', [ExamController::class, 'index']);
     Route::get('/{examId}', [ExamController::class, 'show']);
     Route::post('/{examId}/start', [ExamSubmissionController::class, 'createExamSubmission']);
