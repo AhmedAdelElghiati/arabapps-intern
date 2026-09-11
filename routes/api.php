@@ -48,6 +48,3 @@ Route::prefix('gallery')->group(
 Route::get('/success-stories', [SuccessStoryApiController::class, 'index']);
 
 
-Route::get('/test',function(){
-    return \App\Models\Course::paginate(request()->get(''));
-});
