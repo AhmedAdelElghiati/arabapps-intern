@@ -18,7 +18,7 @@ class StudentAnswerFactory extends Factory
     public function definition(): array
     {
         return [
-            'submission_id' => fake()->numberBetween(1, 150),
+            'submission_id' => fake()->numberBetween(2, 150),
             'question_id' => fake()->numberBetween(1, 200),
             'choice_id' => fake()->numberBetween(1, 800),
         ];
