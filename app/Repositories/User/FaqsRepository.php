@@ -19,7 +19,7 @@ class FaqsRepository
     }
     public function getFaqById($id)
     {
-        return  Faq::findOrFail($id);
+        return  Faq::find($id);
 
     }
 

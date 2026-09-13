@@ -21,7 +21,7 @@ class FaqsController extends Controller
     {
         $faqs = $this->faqservice->getFaqById($id);
         if (!$faqs) {
-            return $this->respondNotFound('FAQ not found');
+            return $this->respondNotFound(__('messages.faq_not_found'));
         }
         return $this->respondResource(
             new FaqsResource($faqs)
