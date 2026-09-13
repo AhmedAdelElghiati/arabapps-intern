@@ -24,13 +24,11 @@ Route::prefix('user')->group(function () {
     Route::post('/refresh', [AuthController::class, 'refresh'])
         ->middleware(['auth:student', 'ability:' . TokenAbility::ISSUE_ACCESS_TOKEN->value]);
 });
-Route::prefix('myCourses')->group(function(){
+Route::prefix('my-courses')->group(function(){
 Route::get('/', [MyCoursesController::class, 'index'])
-    ->middleware(['auth:student']);
-    // ->middleware(['auth:student', 'ability:' . TokenAbility::ISSUE_ACCESS_TOKEN->value]);
+    ->middleware(['auth:student', 'ability:' . TokenAbility::ISSUE_ACCESS_TOKEN->value]);
 Route::get('/{id}', [MyCoursesController::class, 'show'])
-    ->middleware(['auth:student']);
-    // ->middleware(['auth:student', 'ability:' . TokenAbility::ISSUE_ACCESS_TOKEN->value]);
+    ->middleware(['auth:student', 'ability:' . TokenAbility::ISSUE_ACCESS_TOKEN->value]);
 });
 Route::controller(FaqsController::class)->prefix('faqs')->as('faqs.')->group(function () {
     Route::get('/', 'index');

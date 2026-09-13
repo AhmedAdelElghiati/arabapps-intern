@@ -14,7 +14,7 @@ use App\Services\User\MyCoursesService;
 use Illuminate\Support\Facades\Auth;
 use App\Models\LessonItem;
 use App\Models\Lesson;
-use function Laravel\Prompts\progress;
+
 use App\Http\Resources\CourseResource;
 class MyCoursesController extends Controller
 {
@@ -24,8 +24,7 @@ class MyCoursesController extends Controller
     ) {
     }
     public function index(){
-        $student = authUser('student');
-        $studentId = $student->id; // what i have to do there
+        $studentId = authUser('student')->id;
         $courses=$this->myCoursesService->getAllCoursesWithProgress($studentId);
         if($courses->isEmpty()){
             return $this -> respondWithError(__('pages/myCourses.index'));
@@ -35,7 +34,7 @@ class MyCoursesController extends Controller
     }
     public function show(int $courseId)
 {
-    $studentId = Auth::id();
+    $studentId = authUser('student')->id;
     $course = $this->myCoursesService->getCourseWithProgress($studentId,$courseId);
         if(!$course){
             return $this -> respondWithError(__('pages/myCourses.show'));
