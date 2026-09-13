@@ -14,12 +14,14 @@ use Illuminate\Support\Facades\Storage;
 
 class SuccessStoriesController extends Controller
 {
+    private SuccessStoryService $successStoryService;
     public function __construct(
-        protected SuccessStoryService $successStoryService
+        protected SuccessStoryService $SuccessStoryService
     ) {
+        $this->successStoryService = $SuccessStoryService;
     }
 
-    public function index(): View
+    public function index()
     {
         $stories = $this->successStoryService->getPaginatedStories(15);
 
@@ -31,7 +33,7 @@ class SuccessStoriesController extends Controller
         return view('admin.success_stories.create');
     }
 
-    public function store(StoreSuccessStoryRequest $request): RedirectResponse
+    public function store(StoreSuccessStoryRequest $request)
 {   $data = $request->validated();
     $data['is_top_scored'] = $request->has('is_top_scored');
     if ($request->hasFile('photo')) {
@@ -44,13 +46,13 @@ class SuccessStoriesController extends Controller
         ->route('admin.success-stories.index')
         ->with('success', '');
 }
-    public function edit(SuccessStory $successStory): View
+    public function edit(SuccessStory $successStory)
     {
 
         return view('admin.success_stories.edit', compact('successStory'));
     }
 
-    public function update(UpdateSuccessStoryRequest $request, SuccessStory $successStory): RedirectResponse
+    public function update(UpdateSuccessStoryRequest $request, SuccessStory $successStory)
 {
     $data = $request->validated();
 
@@ -68,7 +70,7 @@ class SuccessStoriesController extends Controller
         ->with('success', __('pages/top_students.index.success'));
 }
 
-   public function destroy(SuccessStory $successStory): RedirectResponse
+   public function destroy(SuccessStory $successStory)
 {
     if ($successStory->photo_path && Storage::disk('public')->exists($successStory->photo_path)) {
             Storage::disk('public')->delete($successStory->photo_path);
