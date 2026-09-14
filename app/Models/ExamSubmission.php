@@ -11,6 +11,8 @@ class ExamSubmission extends Model
     protected $fillable = [
         'student_id',
         'exam_id',
+        'score',
+        'is_completed',
         'started_at',
         'completed_at'
     ];
