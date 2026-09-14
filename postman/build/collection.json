@@ -1,0 +1,43 @@
+{
+  "info": {
+    "name": "TmsIntern API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": [
+      "# TmsIntern API",
+      "",
+      "Hand-documented Postman collection for the TmsIntern platform, built",
+      "from version-controlled fragments under `postman/build/fragments`. Rebuild it",
+      "with `postman/build.sh` (bash) or `postman/build.ps1` (PowerShell).",
+      "",
+      "## Authentication",
+      "",
+      "Auth uses **Laravel Sanctum** with two token abilities:",
+      "",
+      "- `access` — used by virtually every protected endpoint.",
+      "- `refresh` — used **only** by `POST /user/refresh`.",
+      "",
+      "The collection default auth is **Bearer `{{accessToken}}`**, so protected",
+      "requests inherit it automatically. Public requests override this with *No Auth*.",
+      "",
+      "`Verify OTP` and `Refresh access token` include test scripts that",
+      "capture the returned tokens into the `{{accessToken}}` / `{{refreshToken}}`",
+      "collection variables, so you can log in once and then call protected endpoints.",
+      "",
+      "## Variables",
+      "",
+      "| Variable | Purpose |",
+      "| --- | --- |",
+      "| `baseUrl` | API root, e.g. `http://localhost:8000/api`. |",
+      "| `accessToken` | Auto-filled after verify-otp / refresh. |",
+      "| `refreshToken` | Auto-filled after verify-otp / refresh. |",
+      "| `lang` | Sent as the `lang` header (`ar` or `en`). Defaults to `ar`. |"
+    ]
+  },
+  "auth": "bearer",
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8000/api", "type": "string" },
+    { "key": "accessToken", "value": "", "type": "string" },
+    { "key": "refreshToken", "value": "", "type": "string" },
+    { "key": "lang", "value": "ar", "type": "string" }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "name": "Show Enrolled Course",
+  "method": "GET",
+  "path": "my-courses/:id",
+  "description": "Show details and progress of a specific enrolled course.",
+  "auth": "bearer",
+  "pathVariables": {
+    "id": {
+      "value": "1",
+      "description": "Course ID"
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "05. Gallery",
+  "order": 5,
+  "description": "Gallery endpoints.",
+  "auth": "none"
+}

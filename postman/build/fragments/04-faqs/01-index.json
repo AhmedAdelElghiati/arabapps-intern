@@ -1,0 +1,7 @@
+{
+  "name": "List FAQs",
+  "method": "GET",
+  "path": "faqs",
+  "description": "List all frequently asked questions.",
+  "auth": "none"
+}

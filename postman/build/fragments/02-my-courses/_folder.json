@@ -1,0 +1,6 @@
+{
+  "name": "02. My Courses",
+  "order": 2,
+  "description": "Student dashboard endpoints for enrolled courses.",
+  "auth": "bearer"
+}

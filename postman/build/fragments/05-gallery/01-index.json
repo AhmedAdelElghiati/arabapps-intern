@@ -1,0 +1,7 @@
+{
+  "name": "List Gallery",
+  "method": "GET",
+  "path": "gallery",
+  "description": "List all gallery items.",
+  "auth": "none"
+}

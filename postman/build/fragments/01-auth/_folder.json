@@ -1,0 +1,6 @@
+{
+  "name": "01. Auth",
+  "order": 1,
+  "description": "User authentication endpoints (register, login, OTP, refresh)",
+  "auth": "none"
+}
