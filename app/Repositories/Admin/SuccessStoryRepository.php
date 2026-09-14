@@ -15,6 +15,7 @@ class SuccessStoryRepository
 
     public function all(): Collection
     {
+        // Using get() instead of all() because all() cannot be chained after orderBy
         return $this->model->newQuery()->orderBy("created_at", "desc")->get();
     }
 

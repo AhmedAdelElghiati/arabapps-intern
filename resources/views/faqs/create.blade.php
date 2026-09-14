@@ -29,7 +29,7 @@
                 <i class="bi bi-arrow-left"></i>
             </a>
 
-            <h4 class="mb-0 fw-bold">Add New FAQ</h4>
+            <h4 class="mb-0 fw-bold">{{ __('messages.add_new_faq') }}</h4>
         </div>
 
         <div class="card border-0 shadow-sm rounded-4">
@@ -40,7 +40,7 @@
                         <i class="bi bi-file-earmark-text fs-5"></i>
                     </div>
 
-                    FAQ Details
+                    {{ __('messages.faq_details') }}
                 </h5>
             </div>
 
@@ -60,18 +60,18 @@
                 <form action="{{ route('faqs.store') }}" method="POST">
                     @csrf
 
-                    <h6 class="section-title">FAQ Information</h6>
+                    <h6 class="section-title">{{ __('messages.faq_information') }}</h6>
 
                     <div class="row gy-4 mb-5">
 
                         {{-- Question --}}
                         <div class="col-md-12">
                             <label class="form-label fw-medium text-dark">
-                                Question <span class="text-danger">*</span>
+                                {{ __('messages.question') }} <span class="text-danger">*</span>
                             </label>
 
                             <textarea class="form-control @error('question') is-invalid @enderror" name="question"
-                                rows="3" placeholder="Enter question..." required>{{ old('question') }}</textarea>
+                                rows="3" placeholder="{{ __('messages.enter_question') }}" required>{{ old('question') }}</textarea>
 
                             @error('question')
                                 <div class="invalid-feedback">
@@ -84,11 +84,11 @@
                         {{-- Answer --}}
                         <div class="col-md-12">
                             <label class="form-label fw-medium text-dark">
-                                Answer <span class="text-danger">*</span>
+                                {{ __('messages.answer') }} <span class="text-danger">*</span>
                             </label>
 
                             <textarea class="form-control @error('answer') is-invalid @enderror" name="answer" rows="5"
-                                placeholder="Enter answer..." required>{{ old('answer') }}</textarea>
+                                placeholder="{{ __('messages.enter_answer') }}" required>{{ old('answer') }}</textarea>
 
                             @error('answer')
                                 <div class="invalid-feedback">
@@ -101,7 +101,7 @@
                         {{-- Publish Date --}}
                         <div class="col-md-6">
                             <label class="form-label fw-medium text-dark">
-                                Publish Date
+                                {{ __('messages.publish_date') }}
                             </label>
 
                             <input type="date" class="form-control @error('publish_date') is-invalid @enderror"
@@ -118,12 +118,12 @@
                         {{-- Category --}}
                         <div class="col-md-6">
                             <label class="form-label fw-medium text-dark">
-                                Category
+                                {{ __('messages.category') }}
                             </label>
 
                             <select name="category" class="form-select @error('category') is-invalid @enderror">
 
-                                <option value="">Select Category</option>
+                                <option value="">{{ __('messages.select_category') }}</option>
 
                                 @foreach (\App\Enum\FaqsEnum::cases() as $category)
                                     <option value="{{ $category->value }}" {{ old('category') === $category->value ? 'selected' : '' }}>
@@ -144,12 +144,12 @@
                         {{-- Display Order --}}
                         <div class="col-md-6">
                             <label class="form-label fw-medium text-dark">
-                                Display Order <span class="text-danger">*</span>
+                                {{ __('messages.display_order') }} <span class="text-danger">*</span>
                             </label>
 
                             <input type="number" class="form-control @error('display_order') is-invalid @enderror"
                                 name="display_order" value="{{ old('display_order') }}"
-                                placeholder="Enter display order..." required>
+                                placeholder="{{ __('messages.enter_display_order') }}" required>
 
                             @error('display_order')
                                 <div class="invalid-feedback">
@@ -166,7 +166,7 @@
                     <div class="d-flex justify-content-end gap-3">
 
                         <a href="{{ route('faqs.index') }}" class="btn btn-light border fw-medium px-4">
-                            Cancel
+                            {{ __('messages.cancel') }}
                         </a>
 
                         <button type="submit"
@@ -174,7 +174,7 @@
 
                             <i class="bi bi-check2-circle fs-5"></i>
 
-                            Save FAQ
+                            {{ __('messages.save_faq') }}
 
                         </button>
 

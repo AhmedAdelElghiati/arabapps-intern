@@ -11,10 +11,14 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class GalleryService
 {
+    private GalleryRepository $repository;
+    private FileUploader $fileUploader;
     public function __construct(
-        protected GalleryRepository $repository,
-        protected FileUploader $fileUploader
+        protected GalleryRepository $Repository,
+        protected FileUploader $FileUploader
     ) {
+        $this->repository = $Repository;
+        $this->fileUploader = $FileUploader;
     }
     public function getPaginatedGalleries(?string $query = null , int $perPage = 15) : LengthAwarePaginator
     {
