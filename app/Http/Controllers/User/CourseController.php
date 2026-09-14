@@ -16,54 +16,43 @@ class CourseController extends Controller
     {
         $this->courseService = $courseService;
     }
-    public function index()
+    public function index(Request $request)
     {
-        $courses = $this->courseService->getAllCourses();
-        return response()->json([
-            'courses' => $courses,
-        ]);
-
+        $hasFree = $request->boolean('free');
+        $hasPaid = $request->boolean('paid');
+        $courses = $this->courseService->getAllCourses($hasFree, $hasPaid);
+        
+        return $this->respondResource(CourseResource::collection($courses));
     }
 
     public function show($id)
     {
         $course = $this->courseService->getCourseById($id);
 
-
-        if (!$course) {
-            return $this->respondNotFound('Course not found');
-        }
-
-
         return $this->respondResource(
             new CourseResource($course)
         );
-
-
     }
-   public function enroll(Request $request)
-{
-    $validated = $request->validate([
-        'course_id' => ['required', 'integer', 'exists:courses,id'],
-    ]);
+    public function enroll(Request $request)
+    {
+        $validated = $request->validate([
+            'course_id' => ['required', 'integer', 'exists:courses,id'],
+        ]);
 
-    $result = $this->courseService->enrollFreeCourse($request->user('student')->id, $validated['course_id']);
+        $result = $this->courseService->enrollFreeCourse($request->user('student')->id, $validated['course_id']);
 
-    if ($result['status'] === 'not_free') {
-        return response()->json([
-            'message' => 'Only free courses can be enrolled in this way.',
-        ], 422);
+        if ($result['status'] === 'not_free') {
+            return $this->respondWithError(__('pages/courses.only_free_courses'), 422);
+        }
+
+        if ($result['status'] === 'already_enrolled') {
+            return $this->respondWithError(__('pages/courses.already_enrolled'), 409);
+        }
+
+        return $this->respondSuccess(
+            __('pages/courses.course_enrolled_successfully'),
+            ['enrollment' => $result['enrollment']],
+            201
+        );
     }
-
-    if ($result['status'] === 'already_enrolled') {
-        return response()->json([
-            'message' => 'You are already enrolled in this course.',
-        ], 409);
-    }
-
-    return response()->json([
-        'message' => 'Course enrolled successfully.',
-        'enrollment' => $result['enrollment'],
-    ], 201);
-}
 }

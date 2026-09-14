@@ -7,14 +7,14 @@ use App\Models\Lesson;
 class CourseRepository
 {
     // Define methods for course-related database operations here
-    public function getAllCourses()
+    public function getAllCourses(bool $hasFree, bool $hasPaid)
     {
         $query = Course::query();
-        if (request()->has('free')) {
-            $query->where('is_free', request()->boolean('free'));
+        if ($hasFree) {
+            $query->where('is_free', true);
         }
-        if (request()->has('paid')) {
-            $query->where('is_free', !request()->boolean('paid'));
+        if ($hasPaid) {
+            $query->where('is_free', false);
         }
         return $query->paginate(10)->withQueryString();
     }

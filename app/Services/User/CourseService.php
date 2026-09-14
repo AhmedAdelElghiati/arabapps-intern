@@ -10,11 +10,9 @@ class CourseService
     {
         $this->courseRepository = $courseRepository;
     }
-    public function getAllCourses()
+    public function getAllCourses(bool $hasFree, bool $hasPaid)
     {
-
-
-        return $this->courseRepository->getAllCourses();
+        return $this->courseRepository->getAllCourses($hasFree, $hasPaid);
     }
     public function getCourseById($id)
     {
