@@ -35,6 +35,10 @@ return Application::configure(basePath: dirname(__DIR__))
             }
             return route('admin.login');
         });
+                $middleware->alias([
+            'api-lang'=>\App\Http\Middleware\LangApiMiddleware::class,
+        ]);
+
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $responder = new class {

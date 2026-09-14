@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Enrollment extends Model
 {
     use HasFactory;
-
     protected $fillable = [
         'student_id',
         'course_id',
@@ -17,4 +16,18 @@ class Enrollment extends Model
         'expired_at',
         'status',
     ];
+
+    protected $casts = [
+        'enrolled_at' => 'datetime',
+        'expired_at'  => 'datetime',
+    ];
+    public function student()
+    {
+        return $this->belongsTo(Student::class);
+    }
+
+    public function course()
+    {
+        return $this->belongsTo(Course::class);
+    }
 }

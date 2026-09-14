@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\ExamOption;
+use App\Models\Question;
 use Illuminate\Database\Seeder;
 
 class ExamOptionSeeder extends Seeder
@@ -12,6 +13,9 @@ class ExamOptionSeeder extends Seeder
      */
     public function run(): void
     {
-        ExamOption::factory(800)->create();
+        $questions=Question::all();
+        ExamOption::factory(800)
+            ->recycle($questions)
+            ->create();
     }
 }

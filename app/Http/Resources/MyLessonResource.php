@@ -1,23 +1,22 @@
 <?php
+
 namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class LessonResource extends JsonResource
+class MyLessonResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
-        $isLocked = !$this->is_free;
-
         return [
             'id'           => $this->id,
             'title'        => $this->title,
-            'description'  => $this->when(!$isLocked, $this->description),
+            'description'  => $this->description,
             'is_free'      => (bool) $this->is_free,
-            'is_locked'    => $isLocked,
+            'is_locked'    => false, // Enrolled students never see locked lessons
             'publish_date' => $this->publish_date,
-            'items'        => $this->when(!$isLocked, LessonItemResource::collection($this->whenLoaded('lessonItems'))),
+            'items'        => LessonItemResource::collection($this->whenLoaded('lessonItems')),
         ];
     }
 }

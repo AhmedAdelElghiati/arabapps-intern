@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use App\Models\ExamOption;
 use Illuminate\Database\Eloquent\Factories\Factory;
-
+use App\Models\Question;
 /**
  * @extends Factory<ExamOption>
  */
@@ -18,7 +18,7 @@ class ExamOptionFactory extends Factory
     public function definition(): array
     {
         return [
-            'question_id' => fake()->numberBetween(1, 200),
+            'question_id' => Question::factory(),
             'option_text' => fake()->sentence(3),
             'is_correct' => fake()->boolean,
         ];
