@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\LessonItem;
 use App\Models\Lesson;
 
-use App\Http\Resources\CourseResource;
+use App\Http\Resources\MyCourseResource;
 class MyCoursesController extends Controller
 {
     use ApiResponder;
@@ -30,7 +30,7 @@ class MyCoursesController extends Controller
             return $this -> respondWithError(__('pages/myCourses.index'));
         }
 
-        return $this->respondResource(CourseResource::collection($courses));
+        return $this->respondResource(MyCourseResource::collection($courses));
     }
     public function show(int $courseId)
 {
@@ -39,13 +39,7 @@ class MyCoursesController extends Controller
         if(!$course){
             return $this -> respondWithError(__('pages/myCourses.show'));
         }
-        return $this->respondResource(new CourseResource($course));
-        // Single model uses new CourseResource()
-
-        // api responder
-        // one structure
-
-        // magic method
+        return $this->respondResource(new MyCourseResource($course));
 }
 
 }

@@ -7,6 +7,7 @@ use App\Http\Controllers\User\FaqsController;
 use App\Http\Controllers\User\GalleryController;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\User\CourseController;
 use App\Http\Controllers\User\MyCoursesController;
 Route::prefix('user')->group(function () {
     Route::post('/register', [AuthController::class, 'register'])
@@ -44,5 +45,10 @@ Route::prefix('gallery')->group(
 );
 
 Route::get('/success-stories', [SuccessStoryApiController::class, 'index']);
-
-
+// api of courses 
+Route::prefix('courses')->group(function () {
+    Route::get('/', [CourseController::class, 'index']);
+    Route::post('/enroll', [CourseController::class, 'enroll'])
+        ->middleware(['auth:student', 'student.full']);
+    Route::get('/{id}', [CourseController::class, 'show']);
+});

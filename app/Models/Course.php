@@ -9,6 +9,11 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 class Course extends Model
 {
     use HasFactory;
+    public function materials()
+    {
+        return $this->hasMany(CourseMaterial::class);
+    }
+
     public function lessons()
     {
         return $this->hasMany(Lesson::class);
@@ -22,9 +27,5 @@ class Course extends Model
     public function enrollments()
     {
         return $this->hasMany(Enrollment::class);
-    }
-    public function materials()
-    {
-        return $this->hasMany(CourseMaterial::class);
     }
 }
