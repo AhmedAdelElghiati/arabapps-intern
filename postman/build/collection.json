@@ -16,28 +16,28 @@
       "- `access` — used by virtually every protected endpoint.",
       "- `refresh` — used **only** by `POST /user/refresh`.",
       "",
-      "The collection default auth is **Bearer `{{accessToken}}`**, so protected",
+      "The collection default auth is **Bearer `{{access_token}}`**, so protected",
       "requests inherit it automatically. Public requests override this with *No Auth*.",
       "",
       "`Verify OTP` and `Refresh access token` include test scripts that",
-      "capture the returned tokens into the `{{accessToken}}` / `{{refreshToken}}`",
+      "capture the returned tokens into the `{{access_token}}` / `{{refresh_token}}`",
       "collection variables, so you can log in once and then call protected endpoints.",
       "",
       "## Variables",
       "",
       "| Variable | Purpose |",
       "| --- | --- |",
-      "| `baseUrl` | API root, e.g. `http://localhost:8000/api`. |",
-      "| `accessToken` | Auto-filled after verify-otp / refresh. |",
-      "| `refreshToken` | Auto-filled after verify-otp / refresh. |",
+      "| `base_url` | API root, e.g. `http://localhost:8000/api`. |",
+      "| `access_token` | Auto-filled after verify-otp / refresh. |",
+      "| `refresh_token` | Auto-filled after verify-otp / refresh. |",
       "| `lang` | Sent as the `lang` header (`ar` or `en`). Defaults to `ar`. |"
     ]
   },
   "auth": "bearer",
   "variable": [
-    { "key": "baseUrl", "value": "http://localhost:8000/api", "type": "string" },
-    { "key": "accessToken", "value": "", "type": "string" },
-    { "key": "refreshToken", "value": "", "type": "string" },
+    { "key": "base_url", "value": "http://localhost:8000/api", "type": "string" },
+    { "key": "access_token", "value": "", "type": "string" },
+    { "key": "refresh_token", "value": "", "type": "string" },
     { "key": "lang", "value": "ar", "type": "string" }
   ]
 }

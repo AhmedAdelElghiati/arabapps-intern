@@ -2,7 +2,7 @@
   "info": {
     "_postman_id": "c2b31fb9-e131-6465-dd82-068dcdda62f2",
     "name": "TmsIntern API",
-    "description": "# TmsIntern API\n\nHand-documented Postman collection for the TmsIntern platform, built\nfrom version-controlled fragments under `postman/build/fragments`. Rebuild it\nwith `postman/build.sh` (bash) or `postman/build.ps1` (PowerShell).\n\n## Authentication\n\nAuth uses **Laravel Sanctum** with two token abilities:\n\n- `access` — used by virtually every protected endpoint.\n- `refresh` — used **only** by `POST /user/refresh`.\n\nThe collection default auth is **Bearer `{{accessToken}}`**, so protected\nrequests inherit it automatically. Public requests override this with *No Auth*.\n\n`Verify OTP` and `Refresh access token` include test scripts that\ncapture the returned tokens into the `{{accessToken}}` / `{{refreshToken}}`\ncollection variables, so you can log in once and then call protected endpoints.\n\n## Variables\n\n| Variable | Purpose |\n| --- | --- |\n| `baseUrl` | API root, e.g. `http://localhost:8000/api`. |\n| `accessToken` | Auto-filled after verify-otp / refresh. |\n| `refreshToken` | Auto-filled after verify-otp / refresh. |\n| `lang` | Sent as the `lang` header (`ar` or `en`). Defaults to `ar`. |",
+    "description": "# TmsIntern API\n\nHand-documented Postman collection for the TmsIntern platform, built\nfrom version-controlled fragments under `postman/build/fragments`. Rebuild it\nwith `postman/build.sh` (bash) or `postman/build.ps1` (PowerShell).\n\n## Authentication\n\nAuth uses **Laravel Sanctum** with two token abilities:\n\n- `access` — used by virtually every protected endpoint.\n- `refresh` — used **only** by `POST /user/refresh`.\n\nThe collection default auth is **Bearer `{{access_token}}`**, so protected\nrequests inherit it automatically. Public requests override this with *No Auth*.\n\n`Verify OTP` and `Refresh access token` include test scripts that\ncapture the returned tokens into the `{{access_token}}` / `{{refresh_token}}`\ncollection variables, so you can log in once and then call protected endpoints.\n\n## Variables\n\n| Variable | Purpose |\n| --- | --- |\n| `base_url` | API root, e.g. `http://localhost:8000/api`. |\n| `access_token` | Auto-filled after verify-otp / refresh. |\n| `refresh_token` | Auto-filled after verify-otp / refresh. |\n| `lang` | Sent as the `lang` header (`ar` or `en`). Defaults to `ar`. |",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
@@ -31,9 +31,9 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/user/register",
+              "raw": "{{base_url}}/user/register",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url}}"
               ],
               "path": [
                 "user",
@@ -73,9 +73,9 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{baseUrl}}/user/register",
+                  "raw": "{{base_url}}/user/register",
                   "host": [
-                    "{{baseUrl}}"
+                    "{{base_url}}"
                   ],
                   "path": [
                     "user",
@@ -130,9 +130,9 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/user/verify-otp",
+              "raw": "{{base_url}}/user/verify-otp",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url}}"
               ],
               "path": [
                 "user",
@@ -172,9 +172,9 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{baseUrl}}/user/verify-otp",
+                  "raw": "{{base_url}}/user/verify-otp",
                   "host": [
-                    "{{baseUrl}}"
+                    "{{base_url}}"
                   ],
                   "path": [
                     "user",
@@ -213,10 +213,10 @@
                   "pm.test('Save access token', () => {",
                   "    let res = pm.response.json();",
                   "    if (res.success && res.data && res.data.access_token) {",
-                  "        pm.environment.set('accessToken', res.data.access_token);",
+                  "        pm.environment.set('access_token', res.data.access_token);",
                   "    }",
                   "    if (res.success && res.data && res.data.refresh_token) {",
-                  "        pm.environment.set('refreshToken', res.data.refresh_token);",
+                  "        pm.environment.set('refresh_token', res.data.refresh_token);",
                   "    }",
                   "});"
                 ]
@@ -248,9 +248,9 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/user/login",
+              "raw": "{{base_url}}/user/login",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url}}"
               ],
               "path": [
                 "user",
@@ -290,9 +290,9 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{baseUrl}}/user/login",
+                  "raw": "{{base_url}}/user/login",
                   "host": [
-                    "{{baseUrl}}"
+                    "{{base_url}}"
                   ],
                   "path": [
                     "user",
@@ -331,10 +331,10 @@
                   "pm.test('Save access token', () => {",
                   "    let res = pm.response.json();",
                   "    if (res.success && res.data && res.data.access_token) {",
-                  "        pm.environment.set('accessToken', res.data.access_token);",
+                  "        pm.environment.set('access_token', res.data.access_token);",
                   "    }",
                   "    if (res.success && res.data && res.data.refresh_token) {",
-                  "        pm.environment.set('refreshToken', res.data.refresh_token);",
+                  "        pm.environment.set('refresh_token', res.data.refresh_token);",
                   "    }",
                   "});"
                 ]
@@ -366,9 +366,9 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/user/guest",
+              "raw": "{{base_url}}/user/guest",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url}}"
               ],
               "path": [
                 "user",
@@ -396,7 +396,7 @@
                   "pm.test('Save access token', () => {",
                   "    let res = pm.response.json();",
                   "    if (res.success && res.data && res.data.access_token) {",
-                  "        pm.environment.set('accessToken', res.data.access_token);",
+                  "        pm.environment.set('access_token', res.data.access_token);",
                   "    }",
                   "});"
                 ]
@@ -428,9 +428,9 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/user/refresh",
+              "raw": "{{base_url}}/user/refresh",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url}}"
               ],
               "path": [
                 "user",
@@ -465,7 +465,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.request.auth.bearer.token = pm.environment.get('refreshToken');"
+                  "pm.request.auth.bearer.token = pm.environment.get('refresh_token');"
                 ]
               }
             },
@@ -477,7 +477,7 @@
                   "pm.test('Save access token', () => {",
                   "    let res = pm.response.json();",
                   "    if (res.success && res.data && res.data.access_token) {",
-                  "        pm.environment.set('accessToken', res.data.access_token);",
+                  "        pm.environment.set('access_token', res.data.access_token);",
                   "    }",
                   "});"
                 ]
@@ -515,9 +515,9 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/my-courses",
+              "raw": "{{base_url}}/my-courses",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url}}"
               ],
               "path": [
                 "my-courses"
@@ -557,9 +557,9 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/my-courses/:id",
+              "raw": "{{base_url}}/my-courses/:id",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url}}"
               ],
               "path": [
                 "my-courses",
@@ -624,9 +624,9 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/courses",
+              "raw": "{{base_url}}/courses",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url}}"
               ],
               "path": [
                 "courses"
@@ -673,9 +673,9 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/courses/:id",
+              "raw": "{{base_url}}/courses/:id",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url}}"
               ],
               "path": [
                 "courses",
@@ -720,9 +720,9 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/courses/enroll",
+              "raw": "{{base_url}}/courses/enroll",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url}}"
               ],
               "path": [
                 "courses",
@@ -782,9 +782,9 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/faqs",
+              "raw": "{{base_url}}/faqs",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url}}"
               ],
               "path": [
                 "faqs"
@@ -817,9 +817,9 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/faqs/:id",
+              "raw": "{{base_url}}/faqs/:id",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url}}"
               ],
               "path": [
                 "faqs",
@@ -870,9 +870,9 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/gallery",
+              "raw": "{{base_url}}/gallery",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url}}"
               ],
               "path": [
                 "gallery"
@@ -905,9 +905,9 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/gallery/:id",
+              "raw": "{{base_url}}/gallery/:id",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url}}"
               ],
               "path": [
                 "gallery",
@@ -958,9 +958,9 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/success-stories",
+              "raw": "{{base_url}}/success-stories",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url}}"
               ],
               "path": [
                 "success-stories"
@@ -985,17 +985,17 @@
   ],
   "variable": [
     {
-      "key": "baseUrl",
+      "key": "base_url",
       "value": "http://localhost:8000/api",
       "type": "string"
     },
     {
-      "key": "accessToken",
+      "key": "access_token",
       "value": "",
       "type": "string"
     },
     {
-      "key": "refreshToken",
+      "key": "refresh_token",
       "value": "",
       "type": "string"
     },

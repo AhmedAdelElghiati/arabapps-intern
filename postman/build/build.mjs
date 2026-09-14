@@ -31,7 +31,7 @@
  *   {
  *     "name": "Send OTP to phone number",
  *     "method": "POST",
- *     "path": "users/auth/send-otp",      // appended to {{baseUrl}}; "/" splits segments
+ *     "path": "users/auth/send-otp",      // appended to {{base_url}}; "/" splits segments
  *     "auth": "none",                      // "none" | "bearer" | "refresh" | omit=inherit
  *     "description": ["markdown", "lines"],// string OR array of lines (joined with \n)
  *     "headers": [ { "key": "X", "value": "y" } ], // optional; sensible defaults otherwise
@@ -182,8 +182,8 @@ function buildUrl(frag) {
     });
 
   const url = {
-    raw: `{{baseUrl}}/${segments.join('/')}${rawQuery ? `?${rawQuery}` : ''}`,
-    host: ['{{baseUrl}}'],
+    raw: `{{base_url}}/${segments.join('/')}${rawQuery ? `?${rawQuery}` : ''}`,
+    host: ['{{base_url}}'],
     path: segments,
   };
   if (query.length) url.query = query;
