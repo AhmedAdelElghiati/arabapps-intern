@@ -4,7 +4,8 @@ namespace Database\Factories;
 
 use App\Models\Enrollment;
 use Illuminate\Database\Eloquent\Factories\Factory;
-
+use App\Models\Student;
+use App\Models\Course;
 /**
  * @extends Factory<Enrollment>
  */
@@ -23,8 +24,8 @@ class EnrollmentFactory extends Factory
 
         return [
             'created_by' => $access_type === 'Granted' ? 1 : null,
-            'student_id' => fake()->numberBetween(1, 50),
-            'course_id' => fake()->numberBetween(1, 30),
+            'student_id' => Student::factory(),
+            'course_id' => Course::factory(),
             'access_type' => $access_type,
             'enrolled_at' => $enrolled_at,
             'expired_at' => $status === 'Pending' || $status === 'Cancelled'

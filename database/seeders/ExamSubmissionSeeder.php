@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use App\Models\ExamSubmission;
 use Illuminate\Database\Seeder;
+use App\Models\Exam;
+use App\Models\Student;
 
 class ExamSubmissionSeeder extends Seeder
 {
@@ -12,6 +14,11 @@ class ExamSubmissionSeeder extends Seeder
      */
     public function run(): void
     {
-        ExamSubmission::factory(150)->create();
+        $students= Student::all();
+        $exams = Exam::all();
+        ExamSubmission::factory(10)
+        ->recycle($students)
+        ->recycle($exams)
+        ->create();
     }
 }

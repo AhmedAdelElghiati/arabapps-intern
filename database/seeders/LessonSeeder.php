@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Models\Lesson;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-
+use App\Models\Course;
 class LessonSeeder extends Seeder
 {
     /**
@@ -13,6 +13,9 @@ class LessonSeeder extends Seeder
      */
     public function run(): void
     {
-        Lesson::factory(100)->create();
+        $courses = Course::all();
+        Lesson::factory(100)
+        ->recycle($courses)
+        ->create();
     }
 }

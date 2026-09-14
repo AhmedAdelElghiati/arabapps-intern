@@ -5,8 +5,9 @@ use App\Http\Controllers\User\AuthController;
 use App\Http\Controllers\User\SuccessStoryApiController;
 use App\Http\Controllers\User\FaqsController;
 use App\Http\Controllers\User\GalleryController;
+use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\User\MyCoursesController;
 Route::prefix('user')->group(function () {
     Route::post('/register', [AuthController::class, 'register'])
         ->middleware('throttle:6,1');
@@ -23,13 +24,16 @@ Route::prefix('user')->group(function () {
     Route::post('/refresh', [AuthController::class, 'refresh'])
         ->middleware(['auth:student', 'ability:' . TokenAbility::ISSUE_ACCESS_TOKEN->value]);
 });
-
-
+Route::prefix('my-courses')->group(function(){
+Route::get('/', [MyCoursesController::class, 'index'])
+    ->middleware(['auth:student', 'ability:' . TokenAbility::ISSUE_ACCESS_TOKEN->value]);
+Route::get('/{id}', [MyCoursesController::class, 'show'])
+    ->middleware(['auth:student', 'ability:' . TokenAbility::ISSUE_ACCESS_TOKEN->value]);
+});
 Route::controller(FaqsController::class)->prefix('faqs')->as('faqs.')->group(function () {
     Route::get('/', 'index');
     Route::get('/{id}', 'show');
 });
-
 
 
 Route::prefix('gallery')->group(
@@ -40,3 +44,5 @@ Route::prefix('gallery')->group(
 );
 
 Route::get('/success-stories', [SuccessStoryApiController::class, 'index']);
+
+
