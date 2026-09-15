@@ -12,7 +12,8 @@ use App\Http\Controllers\User\MyCoursesController;
 Route::prefix('user')->group(function () {
     Route::post('/register', [AuthController::class, 'register'])
         ->middleware('throttle:6,1');
-
+    Route::get('profile', [AuthController::class, 'student_profile'])
+        ->middleware(['auth:student','student.full']);
     Route::post('/verify-otp', [AuthController::class, 'verifyOtp'])
         ->middleware('throttle:6,1');
 
