@@ -110,4 +110,17 @@ class AuthController extends Controller
             ],
         ]);
     }
+    public function student_profile(Request $request)
+    {
+        $result = $this->userService->student_profile($request->user('student')->id);
+
+        return $this->respond([
+            'data' => [
+                'student'       => new UserResource($result['student']),
+            ],
+            'meta' => [
+                'message' => 'student profile retrieved successfully',
+            ],
+        ]);
+    }
 }

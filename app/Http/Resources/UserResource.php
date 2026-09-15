@@ -21,6 +21,12 @@ class UserResource extends JsonResource
             'status' => $this->status,
             'type' => $this->student_type,
             'is_guest' => $this->is_guest,
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name,
+            'email' => $this->email,
+            'parent_phone' => $this->parent_phone,
+            'parent_email' => $this->parent_email,
+            'school_name' => $this->school_name,
         ];
     }
 }

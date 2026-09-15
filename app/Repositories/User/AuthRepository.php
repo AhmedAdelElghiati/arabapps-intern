@@ -41,6 +41,10 @@ public function createOrUpdateOtp(array $data, string $otp, string $deviceId,str
             ['student_id' => $studentId]
         );
     }
+    public function findStudentById(int $studentId): ?Student
+    {
+        return Student::find($studentId);
+    }
 
     public function deleteOtp(Otp $otp): void
     {
@@ -63,7 +67,7 @@ public function createOrUpdateOtp(array $data, string $otp, string $deviceId,str
 
     public function createDevice(array $data)
     {
-        return Device::create($data);
+        return Device::createOrUpdate($data);
     }
 
     public function updateDevice($device, array $data)
