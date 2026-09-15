@@ -11,25 +11,5 @@
     "password": "password123",
     "password_confirmation": "password123",
     "device_id": "device_12345"
-  },
-  "responses": [
-    {
-      "name": "201 - Created",
-      "code": 201,
-      "body": {
-        "success": true,
-        "data": {
-          "user": {
-            "id": 1,
-            "name": "John Doe",
-            "email": "john@example.com",
-            "phone": "+1234567890"
-          }
-        },
-        "meta": {
-          "message": "Registered successfully"
-        }
-      }
-    }
-  ]
+  }
 }

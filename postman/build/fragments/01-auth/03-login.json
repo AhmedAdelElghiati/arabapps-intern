@@ -18,26 +18,5 @@
     "        pm.environment.set('refresh_token', res.data.refresh_token);",
     "    }",
     "});"
-  ],
-  "responses": [
-    {
-      "name": "200 - OK",
-      "code": 200,
-      "body": {
-        "success": true,
-        "data": {
-          "user": {
-            "id": 1,
-            "name": "John Doe",
-            "email": "john@example.com"
-          },
-          "access_token": "3|abcdefg...",
-          "refresh_token": "4|hijklmn..."
-        },
-        "meta": {
-          "message": "Logged in successfully"
-        }
-      }
-    }
   ]
 }
