@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Services\User;
-use App\Models\SuccessStory;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use App\Repositories\User\MyCoursesRepository;
 class MyCoursesService

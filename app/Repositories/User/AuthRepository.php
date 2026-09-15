@@ -5,6 +5,7 @@ use App\Models\Student;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Otp;
 use App\Models\Device;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class AuthRepository
 {
@@ -69,5 +70,8 @@ public function createOrUpdateOtp(array $data, string $otp, string $deviceId,str
     public function updateDevice($device, array $data)
     {
         return $device->update($data);
+    }
+    public function deleteTokens($request){
+        $request->user()->currentAccessToken()->delete();
     }
 }

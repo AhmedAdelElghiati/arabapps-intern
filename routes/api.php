@@ -24,7 +24,8 @@ Route::prefix('user')->group(function () {
 
     Route::post('/refresh', [AuthController::class, 'refresh'])
         ->middleware(['auth:student', 'ability:' . TokenAbility::ISSUE_ACCESS_TOKEN->value]);
-});
+    Route::post('/logout',[AuthController::class, 'logout']);
+        });
 Route::prefix('my-courses')->group(function(){
 Route::get('/', [MyCoursesController::class, 'index'])
     ->middleware(['auth:student', 'ability:' . TokenAbility::ISSUE_ACCESS_TOKEN->value]);

@@ -79,6 +79,10 @@ class AuthController extends Controller
             ],
         ]);
     }
+    public function logout(Request $request){
+        $this->userService->logout($request);
+        return $this->respondWithSuccess('Successfully logged out');
+    }
 
     public function refresh(Request $request)
     {

@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthService
 {
-    protected $userRepository;
+    protected AuthRepository $userRepository;
 
     public function __construct(AuthRepository $userRepository)
     {
@@ -21,11 +21,8 @@ class AuthService
     {
         $data['password'] = Hash::make($data['password']);
         $otp = (string) random_int(100000, 999999);
-        
         $otp = "123456";
-
         $this->userRepository->createOrUpdateOtp($data, $otp, $data['device_id'], $data['phone']);
-
         // Send SMS with the raw $otp code here
 
         return [
@@ -113,7 +110,9 @@ class AuthService
             $this->issueTokens($student)
         );
     }
-
+    public function logout($request){
+        $this->userRepository->deleteTokens($request);
+    }
     public function guest(array $data): array
     {
         return DB::transaction(function () use ($data) {
