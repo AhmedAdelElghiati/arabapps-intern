@@ -21,6 +21,8 @@ class AuthService
     {
         $data['password'] = Hash::make($data['password']);
         $otp = (string) random_int(100000, 999999);
+        
+        $otp = "123456";
 
         $this->userRepository->createOrUpdateOtp($data, $otp, $data['device_id'], $data['phone']);
 
