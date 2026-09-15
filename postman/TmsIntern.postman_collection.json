@@ -328,6 +328,92 @@
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           }
+        },
+        {
+          "id": "808baebf-4403-1ca6-4544-be464ff663f2",
+          "name": "Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "lang",
+                "value": "{{lang}}",
+                "description": "Response language: ar | en (defaults to ar)"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/user/profile",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "user",
+                "profile"
+              ]
+            },
+            "description": "Get the authenticated student's profile. Requires a full student account (guests not allowed).",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ecf43122-4cbb-7101-659a-cdc659fcf321",
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "lang",
+                "value": "{{lang}}",
+                "description": "Response language: ar | en (defaults to ar)"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/user/logout",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "user",
+                "logout"
+              ]
+            },
+            "description": "Log the current user out.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
         }
       ],
       "description": "User authentication endpoints (register, login, OTP, refresh)",
