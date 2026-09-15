@@ -43,7 +43,7 @@ Route::prefix('gallery')->group(
         Route::get('/{gallery}', [GalleryController::class, 'show']);
     }
 );
- 
+
 Route::get('/success-stories', [SuccessStoryApiController::class, 'index']);
 // api of courses
 Route::prefix('courses')->group(function () {

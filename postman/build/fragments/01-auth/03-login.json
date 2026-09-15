@@ -4,8 +4,9 @@
   "path": "user/login",
   "description": "Login to an existing account and receive tokens.",
   "body": {
-    "email": "john@example.com",
-    "password": "password123"
+    "phone": "+1234567890",
+    "password": "password123",
+    "device_id": "device_12345"
   },
   "test": [
     "pm.test('Save access token', () => {",

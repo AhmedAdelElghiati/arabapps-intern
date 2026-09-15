@@ -3,5 +3,8 @@
   "method": "GET",
   "path": "gallery",
   "description": "List all gallery items.",
-  "auth": "none"
+  "auth": "none",
+  "query": [
+    { "key": "q", "value": "example", "description": "Search by keyword", "disabled": true }
+  ]
 }
