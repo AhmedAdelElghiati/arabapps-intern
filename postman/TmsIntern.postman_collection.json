@@ -43,7 +43,7 @@
             "description": "Register a new student account",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\",\n  \"password_confirmation\": \"password123\",\n  \"phone\": \"+1234567890\"\n}",
+              "raw": "{\n  \"first_name\": \"John\",\n  \"last_name\": \"Doe\",\n  \"email\": \"john@example.com\",\n  \"phone\": \"+1234567890\",\n  \"password\": \"password123\",\n  \"password_confirmation\": \"password123\",\n  \"device_id\": \"device_12345\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -51,60 +51,7 @@
               }
             }
           },
-          "response": [
-            {
-              "id": "82a32015-d067-01e2-5e8b-fc84621ae1e8",
-              "name": "201 - Created",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "lang",
-                    "value": "{{lang}}",
-                    "description": "Response language: ar | en (defaults to ar)"
-                  }
-                ],
-                "url": {
-                  "raw": "{{base_url}}/user/register",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "user",
-                    "register"
-                  ]
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\",\n  \"password_confirmation\": \"password123\",\n  \"phone\": \"+1234567890\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Created",
-              "code": 201,
-              "_postman_previewlanguage": "json",
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "cookie": [],
-              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"user\": {\n      \"id\": 1,\n      \"name\": \"John Doe\",\n      \"email\": \"john@example.com\",\n      \"phone\": \"+1234567890\"\n    }\n  },\n  \"meta\": {\n    \"message\": \"Registered successfully\"\n  }\n}"
-            }
-          ],
+          "response": [],
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           }
@@ -142,7 +89,7 @@
             "description": "Verify the OTP and receive access and refresh tokens.",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"john@example.com\",\n  \"otp\": \"123456\"\n}",
+              "raw": "{\n  \"phone\": \"+1234567890\",\n  \"otp_code\": \"123456\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -150,60 +97,7 @@
               }
             }
           },
-          "response": [
-            {
-              "id": "97ad84e4-5b75-59ad-7059-20298d3cd347",
-              "name": "200 - OK",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "lang",
-                    "value": "{{lang}}",
-                    "description": "Response language: ar | en (defaults to ar)"
-                  }
-                ],
-                "url": {
-                  "raw": "{{base_url}}/user/verify-otp",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "user",
-                    "verify-otp"
-                  ]
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"email\": \"john@example.com\",\n  \"otp\": \"123456\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "_postman_previewlanguage": "json",
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "cookie": [],
-              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"user\": {\n      \"id\": 1,\n      \"name\": \"John Doe\",\n      \"email\": \"john@example.com\"\n    },\n    \"access_token\": \"1|abcdefg...\",\n    \"refresh_token\": \"2|hijklmn...\"\n  },\n  \"meta\": {\n    \"message\": \"OTP verified successfully\"\n  }\n}"
-            }
-          ],
+          "response": [],
           "event": [
             {
               "listen": "test",
@@ -260,7 +154,7 @@
             "description": "Login to an existing account and receive tokens.",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\"\n}",
+              "raw": "{\n  \"phone\": \"+1234567890\",\n  \"password\": \"password123\",\n  \"device_id\": \"device_12345\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -268,60 +162,7 @@
               }
             }
           },
-          "response": [
-            {
-              "id": "b4f553df-66bf-8652-34f9-3eba880e338f",
-              "name": "200 - OK",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "lang",
-                    "value": "{{lang}}",
-                    "description": "Response language: ar | en (defaults to ar)"
-                  }
-                ],
-                "url": {
-                  "raw": "{{base_url}}/user/login",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "user",
-                    "login"
-                  ]
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "_postman_previewlanguage": "json",
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "cookie": [],
-              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"user\": {\n      \"id\": 1,\n      \"name\": \"John Doe\",\n      \"email\": \"john@example.com\"\n    },\n    \"access_token\": \"3|abcdefg...\",\n    \"refresh_token\": \"4|hijklmn...\"\n  },\n  \"meta\": {\n    \"message\": \"Logged in successfully\"\n  }\n}"
-            }
-          ],
+          "response": [],
           "event": [
             {
               "listen": "test",
@@ -378,7 +219,7 @@
             "description": "Login anonymously as a guest student.",
             "body": {
               "mode": "raw",
-              "raw": "{}",
+              "raw": "{\n  \"device_id\": \"device_12345\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -443,7 +284,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "{{accessToken}}",
+                  "value": "{{access_token}}",
                   "type": "string"
                 }
               ]
@@ -484,6 +325,92 @@
               }
             }
           ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "808baebf-4403-1ca6-4544-be464ff663f2",
+          "name": "Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "lang",
+                "value": "{{lang}}",
+                "description": "Response language: ar | en (defaults to ar)"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/user/profile",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "user",
+                "profile"
+              ]
+            },
+            "description": "Get the authenticated student's profile. Requires a full student account (guests not allowed).",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ecf43122-4cbb-7101-659a-cdc659fcf321",
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "lang",
+                "value": "{{lang}}",
+                "description": "Response language: ar | en (defaults to ar)"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/user/logout",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "user",
+                "logout"
+              ]
+            },
+            "description": "Log the current user out.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": [],
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           }
@@ -529,7 +456,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "{{accessToken}}",
+                  "value": "{{access_token}}",
                   "type": "string"
                 }
               ]
@@ -579,7 +506,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "{{accessToken}}",
+                  "value": "{{access_token}}",
                   "type": "string"
                 }
               ]
@@ -597,7 +524,7 @@
         "bearer": [
           {
             "key": "token",
-            "value": "{{accessToken}}",
+            "value": "{{access_token}}",
             "type": "string"
           }
         ]
@@ -735,7 +662,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "{{accessToken}}",
+                  "value": "{{access_token}}",
                   "type": "string"
                 }
               ]
@@ -788,6 +715,14 @@
               ],
               "path": [
                 "faqs"
+              ],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "example",
+                  "description": "Search by keyword",
+                  "disabled": true
+                }
               ]
             },
             "description": "List all frequently asked questions.",
@@ -876,6 +811,14 @@
               ],
               "path": [
                 "gallery"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "example",
+                  "description": "Search by keyword",
+                  "disabled": true
+                }
               ]
             },
             "description": "List all gallery items.",
@@ -1010,7 +953,7 @@
     "bearer": [
       {
         "key": "token",
-        "value": "{{accessToken}}",
+        "value": "{{access_token}}",
         "type": "string"
       }
     ]

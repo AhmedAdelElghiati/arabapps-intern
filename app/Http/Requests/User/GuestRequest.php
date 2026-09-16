@@ -24,7 +24,7 @@ class GuestRequest extends FormRequest
     {
         return [
             //
-            'device_id' => ['required','string','unique:devices,device_id',],
+            'device_id' => ['required','string'],
         ];
     }
 }

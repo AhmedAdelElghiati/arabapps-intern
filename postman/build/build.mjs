@@ -97,10 +97,10 @@ function buildAuth(auth) {
   if (!auth || auth === 'inherit') return undefined; // inherit from parent/collection
   if (auth === 'none') return { type: 'noauth' };
   if (auth === 'bearer') {
-    return { type: 'bearer', bearer: [{ key: 'token', value: '{{accessToken}}', type: 'string' }] };
+    return { type: 'bearer', bearer: [{ key: 'token', value: '{{access_token}}', type: 'string' }] };
   }
   if (auth === 'refresh') {
-    return { type: 'bearer', bearer: [{ key: 'token', value: '{{refreshToken}}', type: 'string' }] };
+    return { type: 'bearer', bearer: [{ key: 'token', value: '{{refresh_token}}', type: 'string' }] };
   }
   // Allow a fully-specified Postman auth object to pass through untouched.
   if (typeof auth === 'object') return auth;

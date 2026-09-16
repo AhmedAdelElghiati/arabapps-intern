@@ -22,6 +22,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'ability'      => CheckForAnyAbility::class,
             'student.full' => \App\Http\Middleware\GuestMiddleware::class,
+            'api-lang'     => \App\Http\Middleware\LangApiMiddleware::class,
         ]);
         // $middleware->alias([
         //     'localization' => SetLocale::class
@@ -35,9 +36,6 @@ return Application::configure(basePath: dirname(__DIR__))
             }
             return route('admin.login');
         });
-                $middleware->alias([
-            'api-lang'=>\App\Http\Middleware\LangApiMiddleware::class,
-        ]);
 
     })
     ->withExceptions(function (Exceptions $exceptions): void {

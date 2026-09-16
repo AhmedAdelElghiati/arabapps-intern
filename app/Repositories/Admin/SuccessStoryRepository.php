@@ -2,7 +2,6 @@
 
 namespace App\Repositories\Admin;
 
-use App\Models\Gallery;
 use App\Models\SuccessStory;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
