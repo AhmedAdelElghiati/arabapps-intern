@@ -97,4 +97,47 @@ class ExamSubmissionService
 
         return $examSubmission;
     }
+    public function flagQuestion(array $data)
+    {
+        $examSubmission = $this->examSubmissionRepository->getActiveExamSubmission(
+            $data['student_id'],
+            $data['exam_id'],
+            $data['submission_id']
+        );
+
+        if (!$examSubmission) {
+            throw new ExamSubmissionException('No active exam submission found', 404);
+        }
+
+        if ($examSubmission->completed_at && now()->greaterThanOrEqualTo($examSubmission->completed_at)) {
+            throw new ExamSubmissionException('Exam submission time has expired', 400);
+        }
+
+        $examSubmission->flaggedQuestions()->updateOrCreate(
+            ['question_id' => $data['question_id']],
+            [
+                'choice_id' => $data['choice_id'] ?? null,
+                'is_flagged' => $data['is_flagged'],
+            ]
+        );
+    }
+
+    public function getFlaggedQuestions(array $data)
+    {
+        $examSubmission = $this->examSubmissionRepository->getActiveExamSubmission(
+            $data['student_id'],
+            $data['exam_id'],
+            $data['submission_id']
+        );
+
+        if (!$examSubmission) {
+            throw new ExamSubmissionException('No active exam submission found', 404);
+        }
+
+        return $this->examSubmissionRepository->getFlaggedQuestions(
+            $data['student_id'],
+            $data['exam_id'],
+            $data['submission_id']
+        );
+    }
 }
