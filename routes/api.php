@@ -7,6 +7,7 @@ use App\Http\Controllers\User\AuthController;
 use App\Http\Controllers\User\SuccessStoryApiController;
 use App\Http\Controllers\User\FaqsController;
 use App\Http\Controllers\User\GalleryController;
+use App\Http\Controllers\User\StudentAnswerController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('user')->group(function () {
@@ -45,6 +46,7 @@ Route::middleware('auth:student')->prefix('exams')->group(function () {
     Route::get('/', [ExamController::class, 'index']);
     Route::get('/{examId}', [ExamController::class, 'show']);
     Route::post('/{examId}/start', [ExamSubmissionController::class, 'createExamSubmission']);
+    Route::post('/{examId}/{submissionId}/{questionId}/answer', [StudentAnswerController::class, 'submitAnswer']);
     Route::post('/{examId}/submit', [ExamSubmissionController::class, 'submitExam']);
     Route::post('/{examId}/{submissionId}/{questionId}/flag', [ExamSubmissionController::class, 'flagQuestion']);
     Route::get('/{examId}/{submissionId}/flagged-questions', [ExamSubmissionController::class, 'getFlaggedQuestions']);
