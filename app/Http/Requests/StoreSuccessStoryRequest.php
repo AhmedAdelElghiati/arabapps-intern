@@ -9,7 +9,7 @@ class StoreSuccessStoryRequest extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      */
-    
+
 
     /**
      * Prepare the data for validation.
@@ -30,11 +30,15 @@ class StoreSuccessStoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'          => ['required', 'string', 'max:255'],
+            'name' => 'required|array',
+            'name.en' => 'required|string|max:255',
+            'name.ar' => 'required|string|max:255',
             'track'         => ['nullable', 'string', 'max:255'],
             'grade'         => ['nullable', 'string', 'max:50'],
             'display_order' => ['nullable', 'integer', 'min:0'],
-            'description'   => ['nullable', 'string'],
+            'description' => 'nullable|array',
+            'description.en' => 'required|string|max:600',
+            'description.ar' => 'required|string|max:600',
             'photo'         => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
             'is_top_scored' => ['boolean'],
             'is_active'     => ['boolean'],

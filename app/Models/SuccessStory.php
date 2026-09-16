@@ -6,10 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\Translatable\HasTranslations;
+use Spatie\Translatable\Attributes\Translatable;
 
+#[Translatable('name', 'description')]
 class SuccessStory extends Model
 {
-    use HasFactory;
+    use HasTranslations , HasFactory;
     protected $fillable = [
         'created_by',
         'name',
@@ -21,7 +24,7 @@ class SuccessStory extends Model
         'is_active',
         'track',
     ];
-
+    // public array $translatable = ['name', 'description'];
     public function creator(): BelongsTo
     {
         return $this->belongsTo(Admin::class, 'created_by');
@@ -40,6 +43,5 @@ class SuccessStory extends Model
     {
         return $query->orderBy('display_order', 'asc')->latest();
     }
-
 
 }

@@ -43,13 +43,13 @@ class SuccessStoriesController extends Controller
     $this->successStoryService->createStory($data);
 
     return redirect()
-        ->route('admin.success-stories.index')
+        ->route('success-stories.index')
         ->with('success', '');
 }
     public function edit(SuccessStory $successStory)
     {
 
-        return view('admin.success_stories.edit', compact('successStory'));
+        return view('success_stories.edit', compact('successStory'));
     }
 
     public function update(UpdateSuccessStoryRequest $request, SuccessStory $successStory)
@@ -66,7 +66,7 @@ class SuccessStoriesController extends Controller
     $this->successStoryService->updateStory($successStory, $data);
 
     return redirect()
-        ->route('admin.success-stories.index')
+        ->route('success-stories.index')
         ->with('success', __('pages/top_students.index.success'));
 }
 
@@ -78,7 +78,7 @@ class SuccessStoriesController extends Controller
     $this->successStoryService->deleteStory($successStory);
 
     return redirect()
-        ->route('admin.success-stories.index')
+        ->route('success-stories.index')
         ->with('success', __('pages/top_students.index.success'));
 }
 }
