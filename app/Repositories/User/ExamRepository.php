@@ -27,4 +27,13 @@ class ExamRepository
     {
         return Exam::with(['questions.examOptions'])->findOrFail($examId);
     }
+
+    public function isQuestionExist(int $examId, int $questionId): bool
+    {
+        return Exam::where('id', $examId)
+            ->whereHas('questions', function ($query) use ($questionId) {
+                $query->where('id', $questionId);
+            })
+            ->exists();
+    }
 }
