@@ -12,4 +12,16 @@ class StudentAnswerRepository
     {
         return StudentAnswer::create($data);
     }
+    public function submitAnswer(array $data)
+    {
+        return StudentAnswer::updateOrCreate(
+            [
+                'submission_id' => $data['submission_id'],
+                'question_id' => $data['question_id'],
+            ],
+            [
+                'choice_id' => $data['choice_id'],
+            ]
+        );
+    }
 }
