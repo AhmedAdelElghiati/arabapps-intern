@@ -46,6 +46,8 @@ Route::middleware('auth:student')->prefix('exams')->group(function () {
     Route::get('/{examId}', [ExamController::class, 'show']);
     Route::post('/{examId}/start', [ExamSubmissionController::class, 'createExamSubmission']);
     Route::post('/{examId}/submit', [ExamSubmissionController::class, 'submitExam']);
+    Route::post('/{examId}/{submissionId}/{questionId}/flag', [ExamSubmissionController::class, 'flagQuestion']);
+    Route::get('/{examId}/{submissionId}/flagged-questions', [ExamSubmissionController::class, 'getFlaggedQuestions']);
 });
 
 Route::get('/success-stories', [SuccessStoryApiController::class, 'index']);
