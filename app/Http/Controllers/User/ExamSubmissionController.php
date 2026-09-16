@@ -9,15 +9,16 @@ use App\Services\User\ExamSubmissionService;
 use App\Traits\ApiResponder;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\ExamSubmissionResource;
+use App\Http\Resources\FlaggedQuestionResource;
 
 class ExamSubmissionController extends Controller
 {
-    private ExamSubmissionService $examService;
+    private ExamSubmissionService $examSubmissionService;
 
     use ApiResponder;
-    public function __construct(ExamSubmissionService $examService)
+    public function __construct(ExamSubmissionService $examSubmissionService)
     {
-        $this->examService = $examService;
+        $this->examSubmissionService = $examSubmissionService;
     }
     public function createExamSubmission(int $examId)
     {
@@ -27,7 +28,7 @@ class ExamSubmissionController extends Controller
             'started_at' => now()
         ];
 
-        $examSubmission = $this->examService->createExamSubmission($data);
+        $examSubmission = $this->examSubmissionService->createExamSubmission($data);
 
         return $this->respond(new ExamSubmissionResource($examSubmission), ['Exam submission created successfully.']);
     }
@@ -41,8 +42,36 @@ class ExamSubmissionController extends Controller
             'answers' => $request->validated('answers'),
         ];
 
-        $examSubmission = $this->examService->submitExam($data);
+        $examSubmission = $this->examSubmissionService->submitExam($data);
 
         return $this->respond(new ExamSubmissionResource($examSubmission), ['Exam submitted successfully.']);
+    }
+
+    public function flagQuestion(int $examId, int $submissionId, int $questionId)
+    {
+        $data = [
+            'exam_id' => $examId,
+            'student_id' => Auth::id(),
+            'submission_id' => $submissionId,
+            'question_id' => $questionId,
+            'is_flagged' => true,
+        ];
+
+        $this->examSubmissionService->flagQuestion($data);
+
+        return $this->respondWithSuccess('Question flagged successfully');
+    }
+
+    public function getFlaggedQuestions(int $examId, int $submissionId)
+    {
+        $data = [
+            'exam_id' => $examId,
+            'student_id' => Auth::id(),
+            'submission_id' => $submissionId,
+        ];
+
+        $flaggedQuestions = $this->examSubmissionService->getFlaggedQuestions($data);
+
+        return $this->respondResource(FlaggedQuestionResource::collection($flaggedQuestions), ['Flagged questions retrieved successfully.']);
     }
 }
