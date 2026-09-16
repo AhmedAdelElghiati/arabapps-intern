@@ -19,6 +19,11 @@ class ExamSubmissionService
         $this->examRepository = $examRepository;
         $this->studentAnswerService = $studentAnswerService;
     }
+
+    public function getActiveExamSubmission(int $studentId, int $examId, int $submissionId)
+    {
+        return $this->examSubmissionRepository->getActiveExamSubmission($studentId, $examId, $submissionId);
+    }
     public function createExamSubmission(array $data)
     {
         $exam = $this->examRepository->getExamById($data['exam_id']);
