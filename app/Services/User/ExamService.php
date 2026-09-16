@@ -23,4 +23,9 @@ class ExamService
     {
         return $this->examRepository->getExamById($examId);
     }
+    
+    public function isQuestionExist(int $examId, int $questionId): bool
+    {
+        return $this->examRepository->isQuestionExist($examId, $questionId);
+    }
 }
