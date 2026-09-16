@@ -16,7 +16,7 @@ return new class extends Migration {
 
             $table->foreignId('question_id')->constrained('questions')->cascadeOnDelete();
 
-            $table->foreignId('choice_id')->constrained('exam_options')->cascadeOnDelete();
+            $table->foreignId('choice_id')->nullable()->constrained('exam_options')->cascadeOnDelete();
             $table->boolean('is_flagged')->default(false);
             $table->timestamps();
         });
