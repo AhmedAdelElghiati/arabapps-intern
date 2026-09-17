@@ -19,7 +19,10 @@ return [
         'no_records'       => 'No success stories found.',
         'create_first'     => 'Create First Story',
         'confirm_delete'   => 'Are you sure you want to delete this success story?',
-        'success'           => 'Success story created successfully.'
+        'success_create'   => 'Success story created successfully',
+        'success_delete'   => 'Success story deleted successfully',
+        'success_update'   => 'Success story updated successfully',
+        'show'             => 'Show'
     ],
     'create' => [
         'title'            => 'Create Success Story',
@@ -56,5 +59,6 @@ return [
         'updated_success'  => 'Success story updated successfully.',
         'deleted_success'  => 'Success story deleted successfully.',
         'fix_errors'       => 'Please fix the following errors:',
+        'not_found'        => 'Not found.'
     ],
 ];

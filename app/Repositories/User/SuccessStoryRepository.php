@@ -9,36 +9,19 @@ use Illuminate\Database\Eloquent\Collection;
 class SuccessStoryRepository
 {
 
-    public function all(): Collection
+    public function getAllSuccessStory(?string $search = null)
     {
-        // Using get() instead of all() because all() cannot be chained after orderBy
-        return SuccessStory::newQuery()->orderBy("created_at", "desc")->get();
-    }
+        // dd($search);
+        // echo $search;
+        $query = SuccessStory::query();
+        if ($search) {
+            $query->where('name', 'like', "%{$search}%");
+        }
 
-    public function paginate(?string $query = null, int $perPage = 15): LengthAwarePaginator
+        return $query->paginate(10)->withQueryString();
+    }
+    public function getSuccessStoryById($id)
     {
-        return SuccessStory::query()
-        ->when($query, function ($q) use ($query) {
-            $q->where('name', 'like', "%{$query}%");
-        })
-        ->paginate($perPage);
+        return  SuccessStory::find($id);
     }
-
-    public function getPaginated(int $perPage = 15): \Illuminate\Contracts\Pagination\LengthAwarePaginator
-    {
-        return SuccessStory::newQuery()
-            ->ordered()
-            ->paginate($perPage);
-    }
-
-    public function find(int $id)
-    {
-        return SuccessStory::newQuery()->find($id);
-    }
-
-    public function findById(int $id)
-    {
-        return SuccessStory::find($id);
-    }
-
 }

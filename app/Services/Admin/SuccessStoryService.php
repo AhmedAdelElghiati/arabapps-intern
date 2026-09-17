@@ -22,6 +22,10 @@ class SuccessStoryService
     {
         return $this->successStoryRepository->all();
     }
+    public function getSuccessStoryById($id)
+    {
+        return $this->successStoryRepository->find($id);
+    }
 
     public function createStory(array $data): SuccessStory
     {

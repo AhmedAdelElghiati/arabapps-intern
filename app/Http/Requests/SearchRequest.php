@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Override;
 
 class SearchRequest extends FormRequest
 {
@@ -27,4 +28,5 @@ class SearchRequest extends FormRequest
             'search' => ['nullable', 'string'],
         ];
     }
+
 }

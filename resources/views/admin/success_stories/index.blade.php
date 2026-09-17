@@ -31,7 +31,7 @@
                             <th class="text-center">{{ __('pages/top_students.index.order') }}</th>
                             <th class="text-center">{{ __('pages/top_students.index.top_scored') }}</th>
                             <th class="text-center">{{ __('pages/top_students.index.status') }}</th>
-                            <th class="text-end" style="width: 150px;">{{ __('pages/top_students.index.actions') }}</th>
+                            <th class="text-end" style="width: 200px;">{{ __('pages/top_students.index.actions') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -107,12 +107,21 @@
                                 <!-- Actions -->
                                 <td class="text-end">
                                     <div class="btn-group btn-group-sm" role="group">
+                                        <!-- Show Button -->
+                                        <a href="{{ route('success-stories.show', $story->id) }}"
+                                           class="btn btn-outline-info rounded-start"
+                                           title="{{ __('pages/top_students.index.show') ?? 'Show' }}">
+                                            <i class="bi bi-eye me-1"></i> {{ __('pages/top_students.index.show') ?? 'Show' }}
+                                        </a>
+
+                                        <!-- Edit Button -->
                                         <a href="{{ route('success-stories.edit', $story->id) }}"
                                            class="btn btn-outline-primary"
                                            title="{{ __('pages/top_students.index.edit') }}">
-                                            {{ __('pages/top_students.index.edit') }}
+                                            <i class="bi bi-pencil me-1"></i> {{ __('pages/top_students.index.edit') }}
                                         </a>
 
+                                        <!-- Delete Button -->
                                         <form action="{{ route('success-stories.destroy', $story->id) }}"
                                               method="POST"
                                               class="d-inline"
@@ -120,7 +129,7 @@
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-outline-danger rounded-end" title="{{ __('pages/top_students.index.delete') }}">
-                                                {{ __('pages/top_students.index.delete') }}
+                                                <i class="bi bi-trash me-1"></i> {{ __('pages/top_students.index.delete') }}
                                             </button>
                                         </form>
                                     </div>

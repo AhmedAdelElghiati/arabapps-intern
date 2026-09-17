@@ -9,6 +9,7 @@ use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\CourseController;
 use App\Http\Controllers\User\MyCoursesController;
+use App\Http\Middleware\LangApiMiddleware;
 // =========================================================================
 // PUBLIC & SPECIAL ROUTES
 // =========================================================================
@@ -26,8 +27,11 @@ Route::prefix('user')->group(function () {
 // =========================================================================
 // AUTHENTICATED ROUTES (Requires Valid Access Token)
 // =========================================================================
-Route::middleware(['auth:student', 'ability:' . TokenAbility::ACCESS_API->value])->group(function () {
-    
+Route::middleware([
+    // 'auth:student',
+//  'ability:' . TokenAbility::ACCESS_API->value
+ ])->group(function () {
+
     // User Profile & Actions
     Route::prefix('user')->group(function () {
         Route::get('/profile', [AuthController::class, 'student_profile'])->middleware('student.full');
@@ -53,8 +57,12 @@ Route::middleware(['auth:student', 'ability:' . TokenAbility::ACCESS_API->value]
     });
 
     // Success Stories
-    Route::get('/success-stories', [SuccessStoryApiController::class, 'index']);
-
+   Route::prefix('success-story')
+    ->middleware([LangApiMiddleware::class])
+    ->group(function () {
+        Route::get('/', [SuccessStoryApiController::class, 'index']);
+        Route::get('/{success_story}', [SuccessStoryApiController::class, 'show']);
+    });
     // Courses
     Route::prefix('courses')->group(function () {
         Route::get('/', [CourseController::class, 'index']);
