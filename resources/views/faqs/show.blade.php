@@ -42,10 +42,10 @@
                         #{{ __('messages.id') }}: {{ $faq->id }}
                     </span>
 
-                    @if($faq->category)
+                    @if($faq->getTranslation('category', app()->getLocale(), true))
                         <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-semibold">
                             <i class="bi bi-tag-fill me-1"></i>
-                            {{ __('messages.category') }}: {{ is_object($faq->category) ? $faq->category->value : $faq->category }}
+                            {{ __('messages.category') }}: {{ $faq->getTranslation('category', app()->getLocale(), true) }}
                         </span>
                     @endif
 
@@ -63,7 +63,7 @@
 
                     <h3 class="fw-bold text-dark lh-base">
                         <i class="bi bi-patch-question-fill text-primary me-2"></i>
-                        {{ $faq->question }}
+                        {{ $faq->getTranslation('question', app()->getLocale(), true) }}
                     </h3>
                 </div>
 
@@ -74,7 +74,7 @@
                     </label>
 
                     <p class="text-dark mb-0 fs-5 lh-lg" style="white-space: pre-line;">
-                        {{ $faq->answer }}
+                        {{ $faq->getTranslation('answer', app()->getLocale(), true) }}
                     </p>
                 </div>
 

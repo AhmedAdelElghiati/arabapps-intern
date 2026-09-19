@@ -4,8 +4,8 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
-use App\Enum\FaqsEnum;
 use Illuminate\Validation\Rule;
+use App\Enum\FaqsEnum;
 class FaqsRequest extends FormRequest
 {
     /**
@@ -24,11 +24,17 @@ class FaqsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'question'=>'required|string',
-            'answer'=>'required|string',
-            'category' => ['nullable','string',  Rule::enum(FaqsEnum::class)],
-            'display_order'=>'required|integer',
-            'publish_date'=>'nullable|date',    
+            'question' => ['required', 'array'],
+            'question.en' => ['required', 'string'],
+            'question.ar' => ['required', 'string'],
+            'answer' => ['required', 'array'],
+            'answer.en' => ['required', 'string'],
+            'answer.ar' => ['required', 'string'],
+            'category' => ['nullable', 'array'],
+            'category.en' => ['nullable', 'string', Rule::enum(FaqsEnum::class)],
+            'category.ar' => ['nullable', 'string'],
+            'display_order' => ['required', 'integer'],
+            'publish_date' => ['nullable', 'date'],
 
         ];
     }

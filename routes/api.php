@@ -34,7 +34,7 @@ Route::get('/{id}', [MyCoursesController::class, 'show'])
 Route::controller(FaqsController::class)->prefix('faqs')->as('faqs.')->group(function () {
     Route::get('/', 'index');
     Route::get('/{id}', 'show');
-});
+})->middleware('api-lang');
 
 
 Route::prefix('gallery')->group(

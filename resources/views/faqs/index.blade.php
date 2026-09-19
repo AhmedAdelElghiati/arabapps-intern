@@ -133,25 +133,25 @@
 
                                 
                                 <td class="fw-bold text-dark">
-                                    {{ \Illuminate\Support\Str::limit($faq->question, 10) }}
+                                    {{ \Illuminate\Support\Str::limit($faq->getTranslation('question', app()->getLocale(), true) ?? '', 10) }}
                                 </td>
 
 
                               
                                 <td class="text-secondary">
-                                    {{ \Illuminate\Support\Str::limit($faq->answer, 10) }}
+                                    {{ \Illuminate\Support\Str::limit($faq->getTranslation('answer', app()->getLocale(), true) ?? '', 10) }}
                                 </td>
 
 
                                 
                                 <td>
 
-                                    @if($faq->category)
+                                    @if($faq->getTranslation('category', app()->getLocale(), true))
 
                                         <span
                                             class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-semibold">
 
-                                            {{ $faq->category->value }}
+                                            {{ $faq->getTranslation('category', app()->getLocale(), true) }}
 
                                         </span>
 
@@ -505,25 +505,25 @@
 
                                 {{-- Question --}}
                                 <td class="fw-bold text-dark">
-                                    {{ \Illuminate\Support\Str::limit($faq->question, 10) }}
+                                    {{ \Illuminate\Support\Str::limit($faq->getTranslation('question', app()->getLocale(), true) ?? '', 10) }}
                                 </td>
 
 
                                 {{-- Answer --}}
                                 <td class="text-secondary">
-                                    {{ \Illuminate\Support\Str::limit($faq->answer, 10) }}
+                                    {{ \Illuminate\Support\Str::limit($faq->getTranslation('answer', app()->getLocale(), true) ?? '', 10) }}
                                 </td>
 
 
                                 {{-- Category --}}
                                 <td>
 
-                                    @if($faq->category)
+                                    @if($faq->getTranslation('category', app()->getLocale(), true))
 
                                         <span
                                             class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-semibold">
 
-                                            {{ $faq->category->value }}
+                                            {{ $faq->getTranslation('category', app()->getLocale(), true) }}
 
                                         </span>
 
