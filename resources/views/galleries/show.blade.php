@@ -4,7 +4,7 @@
             <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
                 <div>
                     <h1 class="app-page-title">
-                        {{ app()->getLocale() === 'ar' ? $gallery->title_ar : $gallery->title_en }}</h1>
+                        {{ $gallery->getTranslation('title', app()->getLocale()) }}</h1>
                 </div>
                 <div class="d-flex align-items-center gap-2">
                     <a href="{{ route('galleries.edit', $gallery->id) }}" class="btn btn-warning">
@@ -49,7 +49,7 @@
                             <div class="mb-4">
                                 @if ($gallery->image)
                                     <img src="{{ asset('storage/' . $gallery->image) }}"
-                                        alt="{{ app()->getLocale() === 'ar' ? $gallery->title_ar : $gallery->title_en }}"
+                                        alt="{{ $gallery->getTranslation('title', app()->getLocale()) }}"
                                         class="img-fluid rounded" style="max-width: 100%; height: auto;">
                                 @else
                                     <div class="alert alert-info">No image available</div>
@@ -63,7 +63,7 @@
                                     <dl class="row">
                                         <dt class="col-sm-4">Title:</dt>
                                         <dd class="col-sm-8">
-                                            {{ app()->getLocale() === 'ar' ? $gallery->title_ar : $gallery->title_en }}
+                                            {{ $gallery->getTranslation('title', app()->getLocale()) }}
                                         </dd>
 
                                         <dt class="col-sm-4">Created:</dt>

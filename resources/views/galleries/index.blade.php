@@ -50,11 +50,11 @@
                             <tbody>
                                 @forelse ($galleries as $gallery)
                                     <tr>
-                                        <td>{{ app()->getLocale() === 'ar' ? $gallery->title_ar : $gallery->title_en }}
+                                        <td>{{ $gallery->getTranslation('title', app()->getLocale()) }}
                                         </td>
                                         <td>
                                             <img src="{{ filter_var($gallery->image, FILTER_VALIDATE_URL) ? $gallery->image : asset('storage/' . $gallery->image) }}"
-                                                alt="{{ app()->getLocale() === 'ar' ? $gallery->title_ar : $gallery->title_en }}"
+                                                alt="{{ $gallery->getTranslation('title', app()->getLocale()) }}"
                                                 class="img-thumbnail">
                                         </td>
                                         <td>{{ $gallery->created_at->format('Y-m-d H:i') }}</td>
