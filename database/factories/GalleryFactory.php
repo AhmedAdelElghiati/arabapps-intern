@@ -31,8 +31,13 @@ class GalleryFactory extends Factory
         ];
 
         return [
-            'title_en' => fake()->sentence(5),
-            'title_ar' => fake()->randomElement($arabicTitles),
+            'title' => $this->translations(
+                ['ar', 'en'],
+                [
+                    fake()->randomElement($arabicTitles),
+                    fake()->sentence()
+                ]
+            ),
             'image' => 'https://picsum.photos/seed/' . fake()->uuid() . '/800/600',
         ];
     }
