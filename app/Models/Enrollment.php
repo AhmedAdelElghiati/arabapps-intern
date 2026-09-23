@@ -25,9 +25,17 @@ class Enrollment extends Model
     {
         return $this->belongsTo(Student::class);
     }
-
     public function course()
     {
         return $this->belongsTo(Course::class);
     }
+    public function scopeActive($query){ // use Active without scope 
+        return $query->where('status','active');
+    }
+    public function scopeNeedExpiration($query)
+    {
+        return $query->whereIn('status', ['active', 'pending'])
+        ->where('end_date', '<', now());
+    }
+
 }
