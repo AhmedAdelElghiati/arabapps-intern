@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+// TODO: Need to check if in the paid course we make the status pending not active 
 class Enrollment extends Model
 {
     use HasFactory;
@@ -29,7 +30,7 @@ class Enrollment extends Model
     {
         return $this->belongsTo(Course::class);
     }
-    public function scopeActive($query){ // use Active without scope 
+    public function scopeActive($query){ // use Active without scope
         return $query->where('status','active');
     }
     public function scopeNeedExpiration($query)
