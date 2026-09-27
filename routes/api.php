@@ -1,15 +1,18 @@
 <?php
 
+use App\Http\Controllers\User\ExamController;
+use App\Http\Controllers\User\ExamSubmissionController;
 use App\Enum\TokenAbility;
 use App\Http\Controllers\User\AuthController;
 use App\Http\Controllers\User\SuccessStoryApiController;
 use App\Http\Controllers\User\FaqsController;
 use App\Http\Controllers\User\GalleryController;
-use Illuminate\Foundation\Configuration\Middleware;
+use App\Http\Controllers\User\StudentAnswerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\CourseController;
 use App\Http\Controllers\User\MyCoursesController;
 use App\Http\Middleware\LangApiMiddleware;
+
 // =========================================================================
 // PUBLIC & SPECIAL ROUTES
 // =========================================================================
@@ -36,7 +39,7 @@ Route::middleware(['auth:student', 'ability:' . TokenAbility::ACCESS_API->value]
     });
 
     // My Courses (Full students only)
-    Route::prefix('my-courses')->middleware('student.full')->group(function(){
+    Route::prefix('my-courses')->middleware('student.full')->group(function () {
         Route::get('/', [MyCoursesController::class, 'index']);
         Route::get('/{id}', [MyCoursesController::class, 'show']);
     });
@@ -53,13 +56,23 @@ Route::middleware(['auth:student', 'ability:' . TokenAbility::ACCESS_API->value]
         Route::get('/{gallery}', [GalleryController::class, 'show']);
     });
 
+    // Exams
+    Route::prefix('exams')->group(function () {
+        Route::get('/', [ExamController::class, 'index']);
+        Route::get('/{examId}', [ExamController::class, 'show']);
+        Route::post('/{examId}/start', [ExamSubmissionController::class, 'createExamSubmission']);
+        Route::post('/{examId}/{submissionId}/{questionId}/answer', [StudentAnswerController::class, 'submitAnswer']);
+        Route::post('/{examId}/submit', [ExamSubmissionController::class, 'submitExam']);
+        Route::post('/{examId}/{submissionId}/{questionId}/flag', [ExamSubmissionController::class, 'flagQuestion']);
+        Route::get('/{examId}/{submissionId}/flagged-questions', [ExamSubmissionController::class, 'getFlaggedQuestions']);
+    });
+
     // Success Stories
-   Route::prefix('success-story')
-    ->middleware([LangApiMiddleware::class])
-    ->group(function () {
+    Route::prefix('success-story')->middleware([LangApiMiddleware::class])->group(function () {
         Route::get('/', [SuccessStoryApiController::class, 'index']);
         Route::get('/{success_story}', [SuccessStoryApiController::class, 'show']);
     });
+
     // Courses
     Route::prefix('courses')->group(function () {
         Route::get('/', [CourseController::class, 'index']);
