@@ -12,8 +12,7 @@ class FaqsRepository
         if ($search) {
             $query->where(function ($query) use ($search) {
                 foreach (['question', 'answer', 'category'] as $field) {
-                    $query->orWhere($field . '->en', 'like', "%{$search}%")
-                        ->orWhere($field . '->ar', 'like', "%{$search}%");
+                    $query->orWhere($field, 'like', "%{$search}%");
                 }
             });
         }
