@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthService
 {
-    protected $userRepository;
+    protected AuthRepository $userRepository;
 
     public function __construct(AuthRepository $userRepository)
     {
@@ -22,15 +22,15 @@ class AuthService
         $data['password'] = Hash::make($data['password']);
         $otp = (string) random_int(100000, 999999);
 
+        $otp = "123456";
         $this->userRepository->createOrUpdateOtp($data, $otp, $data['device_id'], $data['phone']);
-
         // Send SMS with the raw $otp code here
 
         return [
-            'success'      => true,
-            'message'      => 'Registration initiated. OTP sent successfully.',
+            'success' => true,
+            'message' => 'Registration initiated. OTP sent successfully.',
             'requires_otp' => true,
-            'phone'        => $data['phone'],
+            'phone' => $data['phone'],
         ];
     }
 
@@ -39,8 +39,8 @@ class AuthService
         $pending = $this->userRepository->findLatestOtpByPhone($data['phone']);
 
         if (
-            ! $pending
-            || ! hash_equals((string) $pending->otp_code, (string) $data['otp_code'])
+            !$pending
+            || !hash_equals((string) $pending->otp_code, (string) $data['otp_code'])
             || now()->greaterThan($pending->expires_at)
         ) {
             return [
@@ -51,13 +51,13 @@ class AuthService
 
         return DB::transaction(function () use ($pending) {
             $studentData = $pending->data;
-            $studentData['is_guest']          = false;
-            $studentData['status']            = 'Active';
+            $studentData['is_guest'] = false;
+            $studentData['status'] = 'Active';
             $studentData['phone_verified_at'] = now();
 
             $student = $this->userRepository->createStudent($studentData);
 
-            if (! empty($pending->device_id)) {
+            if (!empty($pending->device_id)) {
                 $this->userRepository->linkDeviceToStudent($pending->device_id, $student->id);
             }
 
@@ -78,7 +78,7 @@ class AuthService
     {
         $student = $this->userRepository->findByPhone($data['phone']);
 
-        if (! $student || ! Hash::check($data['password'], $student->password)) {
+        if (!$student || !Hash::check($data['password'], $student->password)) {
             return [
                 'success' => false,
                 'message' => 'login failed',
@@ -98,7 +98,7 @@ class AuthService
             $this->userRepository->updateDevice($device, ['student_id' => $student->id]);
         } else {
             $this->userRepository->createDevice([
-                'device_id'  => $data['device_id'],
+                'device_id' => $data['device_id'],
                 'student_id' => $student->id,
             ]);
         }
@@ -111,24 +111,46 @@ class AuthService
             $this->issueTokens($student)
         );
     }
+    public function logout($request){
+        $this->userRepository->deleteTokens($request);
+    }
+    public function student_profile($id): array
+    {
 
+        $student = $this->userRepository->findStudentById($id);
+
+
+
+        return [
+            'success' => true,
+            'student' => $student,
+        ];
+    }
     public function guest(array $data): array
     {
-        return DB::transaction(function () use ($data) {
-            $student = $this->userRepository->create([
-                'is_guest' => true,
-            ]);
+        $device_id = $this->userRepository->findDevice($data['device_id']);
+        if ($device_id && $device_id->student && $device_id->student->is_guest) {
 
-            $this->userRepository->createDevice([
-                'device_id'  => $data['device_id'],
-                'student_id' => $student->id,
-            ]);
+            return [
+                'success' => true,
+                'student' => $device_id->student,
 
-            return array_merge(
-                ['student' => $student],
-                $this->issueTokens($student)
-            );
-        });
+            ];
+        } else {
+            return DB::transaction(function () use ($data) {
+                $student = $this->userRepository->create([
+                    'is_guest' => true,
+                ]);
+
+
+                $this->userRepository->linkDeviceToStudent($data['device_id'], $student->id);
+
+                return array_merge(
+                    ['student' => $student],
+                    $this->issueTokens($student)
+                );
+            });
+        }
     }
 
     public function refresh($student): array

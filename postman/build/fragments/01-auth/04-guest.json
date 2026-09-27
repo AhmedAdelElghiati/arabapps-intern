@@ -3,7 +3,9 @@
   "method": "POST",
   "path": "user/guest",
   "description": "Login anonymously as a guest student.",
-  "body": {},
+  "body": {
+    "device_id": "device_12345"
+  },
   "test": [
     "pm.test('Save access token', () => {",
     "    let res = pm.response.json();",

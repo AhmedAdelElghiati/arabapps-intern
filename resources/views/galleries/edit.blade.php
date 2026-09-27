@@ -35,7 +35,8 @@
                                     class="text-danger">*</span></label>
                             <input type="text" id="title" name="title"
                                 class="form-control @error('title') is-invalid @enderror"
-                                value="{{ old('title', $gallery->title) }}" required>
+                                value="{{ old('title', $gallery->getTranslation('title', app()->getLocale())) }}"
+                                required>
                             @error('title')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror

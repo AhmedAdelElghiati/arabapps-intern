@@ -89,7 +89,7 @@ Only `method` and `path` are required. Full example:
 | --- | --- |
 | `path` | Appended to `{{baseUrl}}`; `/` splits URL segments. A segment starting with `:` (e.g. `:orderId`) becomes a Postman path variable. |
 | `pathVariables` | Map of `:segment` → example. Value can be a string, or `{ "value": "1", "description": "..." }`. |
-| `auth` | `"none"`, `"bearer"` (→ `{{accessToken}}`), `"refresh"` (→ `{{refreshToken}}`), or omit to inherit the collection default. A full Postman auth object also passes through. |
+| `auth` | `"none"`, `"bearer"` (→ `{{access_token}}`), `"refresh"` (→ `{{refresh_token}}`), or omit to inherit the collection default. A full Postman auth object also passes through. |
 | `description` | String, or an array of lines joined with `\n`. Markdown renders in Postman. |
 | `headers` | Optional. Omit to get sensible defaults: `Accept: application/json`, `lang: {{lang}}`, and `Content-Type: application/json` for a JSON body (skipped for form-data). |
 | `body` | Object/array → raw JSON. String → raw text. For files/multipart use an explicit body (below). |
