@@ -82,7 +82,8 @@ class ExamSubmissionService
             $questionId = (int) $answer['question_id'];
             $choiceId = (int) $answer['choice_id'];
 
-            $this->studentAnswerService->submitAnswers([
+            $this->studentAnswerService->submitAnswer([
+                'exam_id' => $data['exam_id'],
                 'submission_id' => $examSubmission->id,
                 'question_id' => $questionId,
                 'choice_id' => $choiceId,
@@ -118,13 +119,10 @@ class ExamSubmissionService
             throw new ExamSubmissionException('Exam submission time has expired', 400);
         }
 
-        $examSubmission->flaggedQuestions()->updateOrCreate(
-            ['question_id' => $data['question_id']],
-            [
-                'choice_id' => $data['choice_id'] ?? null,
-                'is_flagged' => $data['is_flagged'],
-            ]
+        $answer = $examSubmission->answers()->firstOrCreate(
+            ['question_id' => $data['question_id']]
         );
+        $answer->update(['is_flagged' => $data['is_flagged']]);
     }
 
     public function getFlaggedQuestions(array $data)
