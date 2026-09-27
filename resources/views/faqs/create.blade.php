@@ -23,7 +23,7 @@
     <div class="container-fluid mt-4 mb-5">
 
         <div class="d-flex align-items-center mb-4">
-            <a href="{{ route('exams.index') }}"
+            <a href="#"
                 class="btn btn-light shadow-sm text-secondary me-3 rounded-circle d-flex align-items-center justify-content-center"
                 style="width: 40px; height: 40px;">
                 <i class="bi bi-arrow-left"></i>
@@ -65,15 +65,15 @@
                     <div class="row gy-4 mb-5">
 
                         {{-- Question --}}
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <label class="form-label fw-medium text-dark">
-                                {{ __('messages.question') }} <span class="text-danger">*</span>
+                                {{ __('messages.question') }} (English) <span class="text-danger">*</span>
                             </label>
 
-                            <textarea class="form-control @error('question') is-invalid @enderror" name="question"
-                                rows="3" placeholder="{{ __('messages.enter_question') }}" required>{{ old('question') }}</textarea>
+                            <textarea class="form-control @error('question.en') is-invalid @enderror" name="question[en]"
+                                rows="3" placeholder="{{ __('messages.enter_question') }}" required>{{ old('question.en') }}</textarea>
 
-                            @error('question')
+                            @error('question.en')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
@@ -82,18 +82,45 @@
 
 
                         {{-- Answer --}}
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <label class="form-label fw-medium text-dark">
-                                {{ __('messages.answer') }} <span class="text-danger">*</span>
+                                {{ __('messages.question') }} (Arabic) <span class="text-danger">*</span>
                             </label>
 
-                            <textarea class="form-control @error('answer') is-invalid @enderror" name="answer" rows="5"
-                                placeholder="{{ __('messages.enter_answer') }}" required>{{ old('answer') }}</textarea>
+                            <textarea class="form-control @error('question.ar') is-invalid @enderror" name="question[ar]" rows="3"
+                                placeholder="{{ __('messages.enter_question') }}" required>{{ old('question.ar') }}</textarea>
 
-                            @error('answer')
+                            @error('question.ar')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
+                            @enderror
+                        </div>
+
+                        {{-- Answer --}}
+                        <div class="col-md-6">
+                            <label class="form-label fw-medium text-dark">
+                                {{ __('messages.answer') }} (English) <span class="text-danger">*</span>
+                            </label>
+
+                            <textarea class="form-control @error('answer.en') is-invalid @enderror" name="answer[en]" rows="5"
+                                placeholder="{{ __('messages.enter_answer') }}" required>{{ old('answer.en') }}</textarea>
+
+                            @error('answer.en')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-medium text-dark">
+                                {{ __('messages.answer') }} (Arabic) <span class="text-danger">*</span>
+                            </label>
+
+                            <textarea class="form-control @error('answer.ar') is-invalid @enderror" name="answer[ar]" rows="5"
+                                placeholder="{{ __('messages.enter_answer') }}" required>{{ old('answer.ar') }}</textarea>
+
+                            @error('answer.ar')
+                                <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
@@ -121,22 +148,31 @@
                                 {{ __('messages.category') }}
                             </label>
 
-                            <select name="category" class="form-select @error('category') is-invalid @enderror">
+                            <select name="category[en]" class="form-select @error('category.en') is-invalid @enderror">
 
                                 <option value="">{{ __('messages.select_category') }}</option>
 
                                 @foreach (\App\Enum\FaqsEnum::cases() as $category)
-                                    <option value="{{ $category->value }}" {{ old('category') === $category->value ? 'selected' : '' }}>
+                                    <option value="{{ $category->value }}" {{ old('category.en') === $category->value ? 'selected' : '' }}>
                                         {{ $category->value }}
                                     </option>
                                 @endforeach
 
                             </select>
 
-                            @error('category')
+                            @error('category.en')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
+                            @enderror
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-medium text-dark">{{ __('messages.category') }} (Arabic)</label>
+                            <input type="text" name="category[ar]" value="{{ old('category.ar') }}"
+                                class="form-control @error('category.ar') is-invalid @enderror">
+                            @error('category.ar')
+                                <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 

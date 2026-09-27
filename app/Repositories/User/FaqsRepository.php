@@ -10,9 +10,11 @@ class FaqsRepository
         $query = Faq::query();
 
         if ($search) {
-            $query->where('question', 'like', "%{$search}%")
-                ->orWhere('answer', 'like', "%{$search}%")
-                ->orWhere('category', 'like', "%{$search}%");
+            $query->where(function ($query) use ($search) {
+                foreach (['question', 'answer', 'category'] as $field) {
+                    $query->orWhere($field, 'like', "%{$search}%");
+                }
+            });
         }
 
         return $query->paginate(10)->withQueryString();
