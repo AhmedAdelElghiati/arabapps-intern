@@ -4,7 +4,7 @@
     <!-- Header -->
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="h3 text-dark mb-0">{{ __('pages/top_students.index.title') }}</h2>
-        <a href="{{ route('admin.success-stories.create') }}" class="btn btn-primary">
+        <a href="{{ route('success-stories.create') }}" class="btn btn-primary">
             <i class="bi bi-plus-lg me-1"></i> {{ __('pages/top_students.index.add_new') }}
         </a>
     </div>
@@ -31,7 +31,7 @@
                             <th class="text-center">{{ __('pages/top_students.index.order') }}</th>
                             <th class="text-center">{{ __('pages/top_students.index.top_scored') }}</th>
                             <th class="text-center">{{ __('pages/top_students.index.status') }}</th>
-                            <th class="text-end" style="width: 150px;">{{ __('pages/top_students.index.actions') }}</th>
+                            <th class="text-end" style="width: 200px;">{{ __('pages/top_students.index.actions') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -107,20 +107,29 @@
                                 <!-- Actions -->
                                 <td class="text-end">
                                     <div class="btn-group btn-group-sm" role="group">
-                                        <a href="{{ route('admin.success-stories.edit', $story->id) }}"
-                                           class="btn btn-outline-primary"
-                                           title="{{ __('pages/top_students.index.edit') }}">
-                                            {{ __('pages/top_students.index.edit') }}
+                                        <!-- Show Button -->
+                                        <a href="{{ route('success-stories.show', $story->id) }}"
+                                           class="btn btn-outline-info rounded-start"
+                                           title="{{ __('pages/top_students.index.show') ?? 'Show' }}">
+                                            <i class="bi bi-eye me-1"></i> {{ __('pages/top_students.index.show') ?? 'Show' }}
                                         </a>
 
-                                        <form action="{{ route('admin.success-stories.destroy', $story->id) }}"
+                                        <!-- Edit Button -->
+                                        <a href="{{ route('success-stories.edit', $story->id) }}"
+                                           class="btn btn-outline-primary"
+                                           title="{{ __('pages/top_students.index.edit') }}">
+                                            <i class="bi bi-pencil me-1"></i> {{ __('pages/top_students.index.edit') }}
+                                        </a>
+
+                                        <!-- Delete Button -->
+                                        <form action="{{ route('success-stories.destroy', $story->id) }}"
                                               method="POST"
                                               class="d-inline"
                                               onsubmit="return confirm('{{ __('pages/top_students.index.confirm_delete') }}');">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-outline-danger rounded-end" title="{{ __('pages/top_students.index.delete') }}">
-                                                {{ __('pages/top_students.index.delete') }}
+                                                <i class="bi bi-trash me-1"></i> {{ __('pages/top_students.index.delete') }}
                                             </button>
                                         </form>
                                     </div>
@@ -130,7 +139,7 @@
                             <tr>
                                 <td colspan="8" class="text-center py-5 text-muted">
                                     <p class="mb-2">{{ __('pages/top_students.index.no_records') }}</p>
-                                    <a href="{{ route('admin.success-stories.create') }}" class="btn btn-sm btn-outline-primary">
+                                    <a href="{{ route('success-stories.create') }}" class="btn btn-sm btn-outline-primary">
                                         {{ __('pages/top_students.index.create_first') }}
                                     </a>
                                 </td>

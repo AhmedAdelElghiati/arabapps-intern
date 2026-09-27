@@ -4,7 +4,8 @@
     <!-- Header -->
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="h3 text-dark mb-0">{{ __('pages/top_students.create.title') }}</h2>
-        <a href="{{ route('admin.success-stories.index') }}" class="btn btn-secondary">
+        <!-- 1. Header Back Button -->
+        <a href="{{ route('success-stories.index') }}" class="btn btn-secondary">
             {{ __('pages/top_students.create.back_to_list') }}
         </a>
     </div>
@@ -25,28 +26,108 @@
     <!-- Form Card -->
     <div class="card shadow-sm border-0">
         <div class="card-body p-4">
-            <form action="{{ route('admin.success-stories.store') }}" method="POST" enctype="multipart/form-data">
+            <!-- 2. Form Action -->
+            <form action="{{ route('success-stories.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
-                <div class="row">
-                    <!-- Student Name -->
-                    <div class="col-md-6 mb-3">
-                        <label for="name" class="form-label fw-semibold">
-                            {{ __('pages/top_students.form.name') }} <span class="text-danger">*</span>
-                        </label>
-                        <input type="text"
-                               name="name"
-                               id="name"
-                               class="form-control @error('name') is-invalid @enderror"
-                               value="{{ old('name') }}"
-                               placeholder="{{ __('pages/top_students.form.name_placeholder') }}"
-                               required>
-                        @error('name')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                <!-- Language Tabs Navigation -->
+                <ul class="nav nav-tabs mb-4" id="languageTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active fw-semibold" id="en-tab" data-bs-toggle="tab" data-bs-target="#lang-en" type="button" role="tab">
+                            English 🇬🇧
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link fw-semibold" id="ar-tab" data-bs-toggle="tab" data-bs-target="#lang-ar" type="button" role="tab">
+                            العربية 🇪🇬
+                        </button>
+                    </li>
+                </ul>
+
+                <!-- Translatable Fields Tab Contents -->
+                <div class="tab-content mb-4" id="languageTabsContent">
+
+                    <!-- English Tab -->
+                    <div class="tab-pane fade show active" id="lang-en" role="tabpanel" aria-labelledby="en-tab">
+                        <div class="row">
+                            <!-- Name (EN) -->
+                            <div class="col-12 mb-3">
+                                <label for="name_en" class="form-label fw-semibold">
+                                    {{ __('pages/top_students.form.name') }} (English) <span class="text-danger">*</span>
+                                </label>
+                                <input type="text"
+                                       name="name[en]"
+                                       id="name_en"
+                                       class="form-control @error('name.en') is-invalid @enderror"
+                                       value="{{ old('name.en') }}"
+                                       placeholder="{{ __('pages/top_students.form.name_placeholder') }}"
+                                       required>
+                                @error('name.en')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Description (EN) -->
+                            <div class="col-12 mb-3">
+                                <label for="description_en" class="form-label fw-semibold">
+                                    {{ __('pages/top_students.form.description') }} (English)
+                                </label>
+                                <textarea name="description[en]"
+                                          id="description_en"
+                                          rows="3"
+                                          class="form-control @error('description.en') is-invalid @enderror"
+                                          placeholder="{{ __('pages/top_students.form.desc_placeholder') }}">{{ old('description.en') }}</textarea>
+                                @error('description.en')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- Track -->
+                    <!-- Arabic Tab -->
+                    <div class="tab-pane fade" id="lang-ar" role="tabpanel" aria-labelledby="ar-tab">
+                        <div class="row" dir="rtl">
+                            <!-- Name (AR) -->
+                            <div class="col-12 mb-3">
+                                <label for="name_ar" class="form-label fw-semibold">
+                                    {{ __('pages/top_students.form.name') }} (بالعربية) <span class="text-danger">*</span>
+                                </label>
+                                <input type="text"
+                                       name="name[ar]"
+                                       id="name_ar"
+                                       class="form-control @error('name.ar') is-invalid @enderror"
+                                       value="{{ old('name.ar') }}"
+                                       placeholder="{{ __('pages/top_students.form.name_placeholder') }}"
+                                       required>
+                                @error('name.ar')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Description (AR) -->
+                            <div class="col-12 mb-3">
+                                <label for="description_ar" class="form-label fw-semibold">
+                                    {{ __('pages/top_students.form.description') }} (بالعربية)
+                                </label>
+                                <textarea name="description[ar]"
+                                          id="description_ar"
+                                          rows="3"
+                                          class="form-control @error('description.ar') is-invalid @enderror"
+                                          placeholder="{{ __('pages/top_students.form.desc_placeholder') }}">{{ old('description.ar') }}</textarea>
+                                @error('description.ar')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <hr class="my-4">
+
+                <!-- Non-Translatable Fields -->
+                <div class="row">
+                    <!-- Single Track Field -->
                     <div class="col-md-6 mb-3">
                         <label for="track" class="form-label fw-semibold">{{ __('pages/top_students.form.track') }}</label>
                         <input type="text"
@@ -89,7 +170,7 @@
                     </div>
 
                     <!-- Student Photo -->
-                    <div class="col-12 mb-3">
+                    <div class="col-md-6 mb-3">
                         <label for="photo" class="form-label fw-semibold">{{ __('pages/top_students.form.photo') }}</label>
                         <input type="file"
                                name="photo"
@@ -99,19 +180,6 @@
                         <small class="text-muted">{{ __('pages/top_students.form.photo_hint') }}</small>
                         @error('photo')
                             <div class="invalid-feedback d-block">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <!-- Description / Quote -->
-                    <div class="col-12 mb-3">
-                        <label for="description" class="form-label fw-semibold">{{ __('pages/top_students.form.description') }}</label>
-                        <textarea name="description"
-                                  id="description"
-                                  rows="4"
-                                  class="form-control @error('description') is-invalid @enderror"
-                                  placeholder="{{ __('pages/top_students.form.desc_placeholder') }}">{{ old('description') }}</textarea>
-                        @error('description')
-                            <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
 
@@ -150,7 +218,8 @@
                 <hr class="my-4">
 
                 <div class="d-flex justify-content-end gap-2">
-                    <a href="{{ route('admin.success-stories.index') }}" class="btn btn-light border">
+                    <!-- 3. Form Bottom Cancel Button -->
+                    <a href="{{ route('success-stories.index') }}" class="btn btn-light border">
                         {{ __('pages/top_students.create.cancel') }}
                     </a>
                     <button type="submit" class="btn btn-primary px-4">

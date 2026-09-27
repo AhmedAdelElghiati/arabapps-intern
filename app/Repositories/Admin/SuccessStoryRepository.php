@@ -8,34 +8,30 @@ use Illuminate\Database\Eloquent\Collection;
 
 class SuccessStoryRepository
 {
-    public function __construct(
-        protected SuccessStory $model
-    ) {}
 
     public function all(): Collection
     {
         // Using get() instead of all() because all() cannot be chained after orderBy
-        return $this->model->newQuery()->orderBy("created_at", "desc")->get();
+        return SuccessStory::query()->orderBy("created_at", "desc")->get();
     }
 
     public function paginate(?string $query = null, int $perPage = 15): LengthAwarePaginator
     {
-        return $this->model->newQuery()->when($query, function ($q) use ($query) {
-            $q->where('title', 'like', "%{$query}%");
-        })->paginate($perPage);
+        return SuccessStory::query()->paginate($perPage);
+        // dd($x);
+        //  $x;
     }
 
     public function getPaginated(int $perPage = 15): \Illuminate\Contracts\Pagination\LengthAwarePaginator
     {
-        return $this->model
-            ->newQuery()
+        return SuccessStory::query()
             ->ordered()
             ->paginate($perPage);
     }
 
     public function find(int $id): ?SuccessStory
     {
-        return $this->model->newQuery()->find($id);
+        return SuccessStory::query()->find($id);
     }
 
     public function findById(int $id): ?SuccessStory
@@ -45,7 +41,7 @@ class SuccessStoryRepository
 
     public function create(array $data): SuccessStory
     {
-        return $this->model->newQuery()->create($data);
+        return SuccessStory::create($data);
     }
 
     public function update(SuccessStory $successStory, array $data): bool

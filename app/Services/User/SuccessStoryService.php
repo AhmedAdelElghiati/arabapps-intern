@@ -11,14 +11,15 @@ class SuccessStoryService
     ) {
         $this->successStoryRepository=$successStoryRepository;
     }
-    public function getPaginatedStories(int $perPage = 15): LengthAwarePaginator
+    public function getPaginatedStories($query ): LengthAwarePaginator
     {
-        return $this->successStoryRepository->paginate($perPage);
+        // dd($query);
+        return $this->successStoryRepository->getAllSuccessStory($query);
     }
 
     public function findById(int $id)
     {
-        return $this->successStoryRepository->findById($id);
+        return $this->successStoryRepository->getSuccessStoryById($id);
     }
 
 }
