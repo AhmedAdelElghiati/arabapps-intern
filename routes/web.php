@@ -26,10 +26,7 @@ Route::middleware('auth:admin')->group(function () {
 
     Route::delete('/logout', [AuthController::class, 'destroy'])->name('admin.logout');
 
-    Route::prefix('success-stories')->name('success-stories.')->group(function () {
-        Route::resource('/', SuccessStoriesController::class);
-    });
-
+    Route::resource('success-stories', SuccessStoriesController::class);
     Route::prefix('galleries')->group(function () {
         Route::get('/', [GalleryController::class, 'index'])->name('galleries.index');
         Route::get('/create', [GalleryController::class, 'create'])->name('galleries.create');

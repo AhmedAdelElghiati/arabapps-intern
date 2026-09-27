@@ -4,7 +4,9 @@ namespace Database\Factories;
 
 use App\Models\StudentAnswer;
 use Illuminate\Database\Eloquent\Factories\Factory;
-
+use App\Models\ExamSubmission;
+use App\Models\Question;
+use App\Models\ExamOption;
 /**
  * @extends Factory<StudentAnswer>
  */
@@ -18,9 +20,9 @@ class StudentAnswerFactory extends Factory
     public function definition(): array
     {
         return [
-            'submission_id' => fake()->numberBetween(2, 150),
-            'question_id' => fake()->numberBetween(1, 200),
-            'choice_id' => fake()->numberBetween(1, 800),
+            'submission_id' => ExamSubmission::factory(),
+            'question_id' => Question::factory(),
+            'choice_id' => ExamOption::factory(),
         ];
     }
 }

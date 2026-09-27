@@ -1,0 +1,7 @@
+{
+  "name": "Logout",
+  "method": "POST",
+  "path": "user/logout",
+  "description": "Log the current user out.",
+  "auth": "bearer"
+}

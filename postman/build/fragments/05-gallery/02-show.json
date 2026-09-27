@@ -1,0 +1,13 @@
+{
+  "name": "Show Gallery Item",
+  "method": "GET",
+  "path": "gallery/:id",
+  "description": "Show details of a specific gallery item.",
+  "auth": "none",
+  "pathVariables": {
+    "id": {
+      "value": "1",
+      "description": "Gallery ID"
+    }
+  }
+}

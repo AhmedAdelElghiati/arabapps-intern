@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use App\Models\CourseMaterial;
 use Illuminate\Database\Eloquent\Factories\Factory;
-
+use App\Models\Course;
 /**
  * @extends Factory<CourseMaterial>
  */
@@ -18,7 +18,7 @@ class CourseMaterialFactory extends Factory
     public function definition(): array
     {
         return [
-            'course_id' => fake()->numberBetween(1, 30),
+            'course_id' => Course::factory(),
             'title' => fake()->sentence(4),
             'url' => fake()->optional()->url(),
             'created_by' => 1,

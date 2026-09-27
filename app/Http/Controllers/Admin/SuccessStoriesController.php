@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreSuccessStoryRequest;
 use App\Http\Requests\UpdateSuccessStoryRequest;
-use App\Models\Course;
 use App\Models\SuccessStory;
 use App\Services\Admin\SuccessStoryService;
 use Illuminate\Http\RedirectResponse;
@@ -16,8 +15,7 @@ class SuccessStoriesController extends Controller
 {
     public function __construct(
         protected SuccessStoryService $successStoryService
-    ) {
-    }
+    ) {}
 
     public function index(): View
     {
@@ -32,53 +30,64 @@ class SuccessStoriesController extends Controller
     }
 
     public function store(StoreSuccessStoryRequest $request): RedirectResponse
-{   $data = $request->validated();
-    $data['is_top_scored'] = $request->has('is_top_scored');
-    if ($request->hasFile('photo')) {
-            $data['photo_path'] = $request->file('photo')->store('success_stories', 'public');
-    }
-    $data['created_by'] = 1;
-    $this->successStoryService->createStory($data);
+    {
+        $data = $request->validated();
+        $data['is_top_scored'] = $request->boolean('is_top_scored');
 
-    return redirect()
-        ->route('admin.success-stories.index')
-        ->with('success', 'Success story created successfully.');
-}
+        if ($request->hasFile('photo')) {
+            $data['photo_url'] = $request->file('photo')->store('success_stories', 'public');
+        }
+
+        $data['created_by'] = auth()->id() ?? 1;
+        $this->successStoryService->createStory($data);
+
+        return redirect()
+            ->route('success-stories.index')
+            ->with('success', __('pages/top_students.messages.created_success') ?? 'Success story created.');
+    }
+
+    public function show(SuccessStory $successStory): View
+    {
+        return view('admin.success_stories.show', compact('successStory'));
+    }
+
     public function edit(SuccessStory $successStory): View
     {
-
         return view('admin.success_stories.edit', compact('successStory'));
     }
 
     public function update(UpdateSuccessStoryRequest $request, SuccessStory $successStory): RedirectResponse
-{
-    $data = $request->validated();
+    {
+        $data = $request->validated();
+        $data['is_top_scored'] = $request->boolean('is_top_scored');
+        $data['is_active'] = $request->boolean('is_active');
 
-        // Handle Image Replacement
         if ($request->hasFile('photo')) {
-            // Delete existing image if present
+            // Delete old photo if it exists
             if ($successStory->photo_url && Storage::disk('public')->exists($successStory->photo_url)) {
                 Storage::disk('public')->delete($successStory->photo_url);
             }
 
             $data['photo_url'] = $request->file('photo')->store('success_stories', 'public');
         }
-    $this->successStoryService->updateStory($successStory, $data);
 
-    return redirect()
-        ->route('admin.success-stories.index')
-        ->with('success', 'Success story updated successfully.');
-}
+        $this->successStoryService->updateStory($successStory, $data);
 
-   public function destroy(SuccessStory $successStory): RedirectResponse
-{
-    if ($successStory->photo_path && Storage::disk('public')->exists($successStory->photo_path)) {
-            Storage::disk('public')->delete($successStory->photo_path);
+        return redirect()
+            ->route('success-stories.index')
+            ->with('success', __('pages/top_students.index.success_update'));
+    }
+
+    public function destroy(SuccessStory $successStory): RedirectResponse
+    {
+        if ($successStory->photo_url && Storage::disk('public')->exists($successStory->photo_url)) {
+            Storage::disk('public')->delete($successStory->photo_url);
         }
-    $this->successStoryService->deleteStory($successStory);
 
-    return redirect()
-        ->route('admin.success-stories.index')
-        ->with('success', 'Success story deleted successfully.');
-}
+        $this->successStoryService->deleteStory($successStory);
+
+        return redirect()
+            ->route('success-stories.index')
+            ->with('success', __('pages/top_students.index.success_delete'));
+    }
 }

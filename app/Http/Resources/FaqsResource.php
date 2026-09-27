@@ -18,6 +18,9 @@ class FaqsResource extends JsonResource
             'id'=>$this->id,
             'question'=>$this->question,
             'answer'=>$this->answer,
+            'category'=>$this->category,
+            'display_order'=>$this->display_order,
+            'publish_date'=>$this->publish_date,
             'created_at'=>$this->created_at,
         ];
     }

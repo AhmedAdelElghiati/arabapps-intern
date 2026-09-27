@@ -34,7 +34,9 @@
 
             </a>
 
-            <h4 class="mb-0 fw-bold">Update FAQ</h4>
+            <h4 class="mb-0 fw-bold">
+                {{ __('messages.update_faq') }}
+            </h4>
 
         </div>
 
@@ -52,7 +54,7 @@
 
                     </div>
 
-                    FAQ Details
+                    {{ __('messages.faq_details') }}
 
                 </h5>
 
@@ -70,29 +72,30 @@
 
 
                     <h6 class="section-title">
-                        FAQ Information
+                        {{ __('messages.faq_information') }}
                     </h6>
 
 
                     <div class="row gy-4 mb-5">
 
                         {{-- Question --}}
-                        <div class="col-md-12">
+                        <div class="col-md-6">
 
                             <label class="form-label fw-medium text-dark">
 
-                                Question <span class="text-danger">*</span>
+                                {{ __('messages.question') }} (English)
+                                <span class="text-danger">*</span>
 
                             </label>
 
                             <textarea
-                                class="form-control @error('question') is-invalid @enderror"
-                                name="question"
+                                class="form-control @error('question.en') is-invalid @enderror"
+                                name="question[en]"
                                 rows="3"
-                                placeholder="Enter question..."
-                                required>{{ old('question', $faq->question) }}</textarea>
+                                placeholder="{{ __('messages.enter_question') }}"
+                                required>{{ old('question.en', $faq->getTranslation('question', 'en', false)) }}</textarea>
 
-                            @error('question')
+                            @error('question.en')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
@@ -102,22 +105,23 @@
 
 
                         {{-- Answer --}}
-                        <div class="col-md-12">
+                        <div class="col-md-6">
 
                             <label class="form-label fw-medium text-dark">
 
-                                Answer <span class="text-danger">*</span>
+                                {{ __('messages.question') }} (Arabic)
+                                <span class="text-danger">*</span>
 
                             </label>
 
                             <textarea
-                                class="form-control @error('answer') is-invalid @enderror"
-                                name="answer"
-                                rows="5"
-                                placeholder="Enter answer..."
-                                required>{{ old('answer', $faq->answer) }}</textarea>
+                                class="form-control @error('question.ar') is-invalid @enderror"
+                                name="question[ar]"
+                                rows="3"
+                                placeholder="{{ __('messages.enter_question') }}"
+                                required>{{ old('question.ar', $faq->getTranslation('question', 'ar', false)) }}</textarea>
 
-                            @error('answer')
+                            @error('question.ar')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
@@ -125,12 +129,24 @@
 
                         </div>
 
+                        <div class="col-md-6">
+                            <label class="form-label fw-medium text-dark">{{ __('messages.answer') }} (English) <span class="text-danger">*</span></label>
+                            <textarea class="form-control @error('answer.en') is-invalid @enderror" name="answer[en]" rows="5" required>{{ old('answer.en', $faq->getTranslation('answer', 'en', false)) }}</textarea>
+                            @error('answer.en') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-medium text-dark">{{ __('messages.answer') }} (Arabic) <span class="text-danger">*</span></label>
+                            <textarea class="form-control @error('answer.ar') is-invalid @enderror" name="answer[ar]" rows="5" required>{{ old('answer.ar', $faq->getTranslation('answer', 'ar', false)) }}</textarea>
+                            @error('answer.ar') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        </div>
+
 
                         {{-- Publish Date --}}
                         <div class="col-md-6">
 
                             <label class="form-label fw-medium text-dark">
-                                Publish Date
+                                {{ __('messages.publish_date') }}
                             </label>
 
                             <input
@@ -152,22 +168,22 @@
                         <div class="col-md-6">
 
                             <label class="form-label fw-medium text-dark">
-                                Category
+                                {{ __('messages.category') }}
                             </label>
 
                             <select
-                                name="category"
-                                class="form-select @error('category') is-invalid @enderror">
+                                name="category[en]"
+                                                       class="form-select @error('category.en') is-invalid @enderror">
 
                                 <option value="">
-                                    Select Category
+                                    {{ __('messages.select_category') }}
                                 </option>
 
                                 @foreach (\App\Enum\FaqsEnum::cases() as $category)
 
                                     <option
                                         value="{{ $category->value }}"
-                                        @selected(old('category', $faq->category?->value) === $category->value)>
+                                        @selected(old('category.en', $faq->getTranslation('category', 'en', false)) === $category->value)>
 
                                         {{ $category->value }}
 
@@ -177,12 +193,19 @@
 
                             </select>
 
-                            @error('category')
+                            @error('category.en')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
                             @enderror
 
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-medium text-dark">{{ __('messages.category') }} (Arabic)</label>
+                            <input type="text" name="category[ar]" value="{{ old('category.ar', $faq->getTranslation('category', 'ar', false)) }}"
+                                class="form-control @error('category.ar') is-invalid @enderror">
+                            @error('category.ar') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
 
 
@@ -191,7 +214,8 @@
 
                             <label class="form-label fw-medium text-dark">
 
-                                Display Order <span class="text-danger">*</span>
+                                {{ __('messages.display_order') }}
+                                <span class="text-danger">*</span>
 
                             </label>
 
@@ -206,6 +230,7 @@
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
+
                             @enderror
 
                         </div>
@@ -223,7 +248,7 @@
                             href="{{ route('faqs.index') }}"
                             class="btn btn-light border fw-medium px-4">
 
-                            Cancel
+                            {{ __('messages.cancel') }}
 
                         </a>
 
@@ -234,7 +259,7 @@
 
                             <i class="bi bi-check2-circle fs-5"></i>
 
-                            Update FAQ
+                            {{ __('messages.update_faq') }}
 
                         </button>
 
