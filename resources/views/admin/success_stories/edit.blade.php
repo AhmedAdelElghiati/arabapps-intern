@@ -3,9 +3,9 @@
 <div class="container py-4">
     <!-- Header -->
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="h3 text-dark mb-0">{{ __('pages/top_students.create.title') ?? 'Create Success Story' }}</h2>
+        <h2 class="h3 text-dark mb-0">{{ __('pages/top_students.edit.title') ?? 'Edit Success Story' }}</h2>
         <a href="{{ route('success-stories.index') }}" class="btn btn-secondary">
-            {{ __('pages/top_students.create.back_to_list') ?? 'Back to List' }}
+            {{ __('pages/top_students.edit.back_to_list') ?? 'Back to List' }}
         </a>
     </div>
 
@@ -25,8 +25,9 @@
     <!-- Form Card -->
     <div class="card shadow-sm border-0">
         <div class="card-body p-4">
-            <form action="{{ route('success-stories.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('success-stories.update', $successStory->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
+                @method('PUT')
 
                 <!-- Translatable Fields Side by Side -->
                 <div class="row mb-4">
@@ -40,7 +41,7 @@
                                    name="name[en]"
                                    id="name_en"
                                    class="form-control @error('name.en') is-invalid @enderror"
-                                   value="{{ old('name.en') }}"
+                                   value="{{ old('name.en', $successStory->getTranslation('name', 'en', false)) }}"
                                    placeholder="e.g., Sarah Ahmed"
                                    required>
                             @error('name.en')
@@ -56,7 +57,7 @@
                                       id="description_en"
                                       rows="3"
                                       class="form-control @error('description.en') is-invalid @enderror"
-                                      placeholder="e.g., Achieved top ranking nationally with 98.5% score in STEM examinations.">{{ old('description.en') }}</textarea>
+                                      placeholder="e.g., Achieved top ranking nationally with 98.5% score in STEM examinations.">{{ old('description.en', $successStory->getTranslation('description', 'en', false)) }}</textarea>
                             @error('description.en')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -73,7 +74,7 @@
                                    name="name[ar]"
                                    id="name_ar"
                                    class="form-control @error('name.ar') is-invalid @enderror"
-                                   value="{{ old('name.ar') }}"
+                                   value="{{ old('name.ar', $successStory->getTranslation('name', 'ar', false)) }}"
                                    placeholder="مثال: سارة أحمد"
                                    required>
                             @error('name.ar')
@@ -89,7 +90,7 @@
                                       id="description_ar"
                                       rows="3"
                                       class="form-control @error('description.ar') is-invalid @enderror"
-                                      placeholder="مثال: حصلت على المركز الأول على مستوى الجمهورية بنسبة ٩٨.٥٪ في امتحانات STEM.">{{ old('description.ar') }}</textarea>
+                                      placeholder="مثال: حصلت على المركز الأول على مستوى الجمهورية بنسبة ٩٨.٥٪ في امتحانات STEM.">{{ old('description.ar', $successStory->getTranslation('description', 'ar', false)) }}</textarea>
                             @error('description.ar')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -108,7 +109,7 @@
                                name="track"
                                id="track"
                                class="form-control @error('track') is-invalid @enderror"
-                               value="{{ old('track') }}"
+                               value="{{ old('track', $successStory->track) }}"
                                placeholder="e.g., Computer Science / Scientific">
                         @error('track')
                             <div class="invalid-feedback">{{ $message }}</div>
@@ -122,7 +123,7 @@
                                name="grade"
                                id="grade"
                                class="form-control @error('grade') is-invalid @enderror"
-                               value="{{ old('grade') }}"
+                               value="{{ old('grade', $successStory->grade) }}"
                                placeholder="e.g., 98.5% or Grade 12">
                         @error('grade')
                             <div class="invalid-feedback">{{ $message }}</div>
@@ -136,7 +137,7 @@
                                name="display_order"
                                id="display_order"
                                class="form-control @error('display_order') is-invalid @enderror"
-                               value="{{ old('display_order', 0) }}"
+                               value="{{ old('display_order', $successStory->display_order) }}"
                                min="0"
                                placeholder="1">
                         @error('display_order')
@@ -147,6 +148,11 @@
                     <!-- Photo Upload -->
                     <div class="col-md-6 mb-3">
                         <label for="photo" class="form-label fw-semibold">{{ __('pages/top_students.form.photo') }}</label>
+                        @if($successStory->photo_url)
+                            <div class="mb-2">
+                                <img src="{{ Storage::url($successStory->photo_url) }}" alt="Current Photo" class="img-thumbnail" style="max-height: 100px;">
+                            </div>
+                        @endif
                         <input type="file"
                                name="photo"
                                id="photo"
@@ -167,7 +173,7 @@
                                    name="is_top_scored"
                                    id="is_top_scored"
                                    value="1"
-                                   {{ old('is_top_scored') ? 'checked' : '' }}>
+                                   {{ old('is_top_scored', $successStory->is_top_scored) ? 'checked' : '' }}>
                             <label class="form-check-label fw-semibold" for="is_top_scored">
                                 {{ __('pages/top_students.form.is_top_scored') }}
                             </label>
@@ -182,7 +188,7 @@
                                    name="is_active"
                                    id="is_active"
                                    value="1"
-                                   {{ old('is_active', true) ? 'checked' : '' }}>
+                                   {{ old('is_active', $successStory->is_active) ? 'checked' : '' }}>
                             <label class="form-check-label fw-semibold" for="is_active">
                                 {{ __('pages/top_students.form.is_active') }}
                             </label>
@@ -194,10 +200,10 @@
 
                 <div class="d-flex justify-content-end gap-2">
                     <a href="{{ route('success-stories.index') }}" class="btn btn-light border">
-                        {{ __('pages/top_students.create.cancel') ?? 'Cancel' }}
+                        {{ __('pages/top_students.edit.cancel') ?? 'Cancel' }}
                     </a>
                     <button type="submit" class="btn btn-primary px-4">
-                        {{ __('pages/top_students.create.submit') ?? 'Save Story' }}
+                        {{ __('pages/top_students.edit.update') ?? 'Update Story' }}
                     </button>
                 </div>
             </form>

@@ -41,17 +41,7 @@ class SuccessStoryRepository
 
     public function create(array $data): SuccessStory
     {
-        return SuccessStory::create([
-            'name' => $data['name'],               // ['en' => '...', 'ar' => '...']
-            'track' => $data['track'] ?? null,     // ['en' => '...', 'ar' => '...']
-            'description' => $data['description'] ?? null,
-            'grade' => $data['grade'] ?? null,
-            'display_order' => $data['display_order'] ?? 0,
-            'is_top_scored' => $data['is_top_scored'] ?? false,
-            'is_active' => $data['is_active'] ?? true,
-            'photo' => $data['photo'] ?? null,
-        ]);
-        return $this->model->newQuery()->create($data);
+        return SuccessStory::create($data);
     }
 
     public function update(SuccessStory $successStory, array $data): bool

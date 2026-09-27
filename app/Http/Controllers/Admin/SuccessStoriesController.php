@@ -35,7 +35,7 @@ class SuccessStoriesController extends Controller
         $data['is_top_scored'] = $request->boolean('is_top_scored');
 
         if ($request->hasFile('photo')) {
-            $data['photo_path'] = $request->file('photo')->store('success_stories', 'public');
+            $data['photo_url'] = $request->file('photo')->store('success_stories', 'public');
         }
 
         $data['created_by'] = auth()->id() ?? 1;
@@ -64,11 +64,11 @@ class SuccessStoriesController extends Controller
 
         if ($request->hasFile('photo')) {
             // Delete old photo if it exists
-            if ($successStory->photo_path && Storage::disk('public')->exists($successStory->photo_path)) {
-                Storage::disk('public')->delete($successStory->photo_path);
+            if ($successStory->photo_url && Storage::disk('public')->exists($successStory->photo_url)) {
+                Storage::disk('public')->delete($successStory->photo_url);
             }
 
-            $data['photo_path'] = $request->file('photo')->store('success_stories', 'public');
+            $data['photo_url'] = $request->file('photo')->store('success_stories', 'public');
         }
 
         $this->successStoryService->updateStory($successStory, $data);
@@ -80,8 +80,8 @@ class SuccessStoriesController extends Controller
 
     public function destroy(SuccessStory $successStory): RedirectResponse
     {
-        if ($successStory->photo_path && Storage::disk('public')->exists($successStory->photo_path)) {
-            Storage::disk('public')->delete($successStory->photo_path);
+        if ($successStory->photo_url && Storage::disk('public')->exists($successStory->photo_url)) {
+            Storage::disk('public')->delete($successStory->photo_url);
         }
 
         $this->successStoryService->deleteStory($successStory);

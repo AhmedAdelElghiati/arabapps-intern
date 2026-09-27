@@ -27,10 +27,7 @@ Route::prefix('user')->group(function () {
 // =========================================================================
 // AUTHENTICATED ROUTES (Requires Valid Access Token)
 // =========================================================================
-Route::middleware([
-    // 'auth:student',
-//  'ability:' . TokenAbility::ACCESS_API->value
- ])->group(function () {
+Route::middleware(['auth:student', 'ability:' . TokenAbility::ACCESS_API->value])->group(function () {
 
     // User Profile & Actions
     Route::prefix('user')->group(function () {
