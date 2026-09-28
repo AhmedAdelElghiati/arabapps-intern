@@ -1,0 +1,7 @@
+{
+  "name": "List Enrolled Courses",
+  "method": "GET",
+  "path": "my-courses",
+  "description": "List all courses the student is enrolled in with progress details.",
+  "auth": "bearer"
+}

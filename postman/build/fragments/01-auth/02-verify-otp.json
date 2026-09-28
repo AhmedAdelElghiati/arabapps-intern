@@ -1,0 +1,21 @@
+{
+  "name": "Verify OTP",
+  "method": "POST",
+  "path": "user/verify-otp",
+  "description": "Verify the OTP and receive access and refresh tokens.",
+  "body": {
+    "phone": "+1234567890",
+    "otp_code": "123456"
+  },
+  "test": [
+    "pm.test('Save access token', () => {",
+    "    let res = pm.response.json();",
+    "    if (res.success && res.data && res.data.access_token) {",
+    "        pm.environment.set('access_token', res.data.access_token);",
+    "    }",
+    "    if (res.success && res.data && res.data.refresh_token) {",
+    "        pm.environment.set('refresh_token', res.data.refresh_token);",
+    "    }",
+    "});"
+  ]
+}

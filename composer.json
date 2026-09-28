@@ -16,7 +16,8 @@
         "laravel/framework": "^12.0",
         "laravel/sanctum": "^4.3",
         "laravel/tinker": "^2.10.1",
-        "opcodesio/log-viewer": "^3.19"
+        "opcodesio/log-viewer": "^3.19",
+        "spatie/laravel-translatable": "^6.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "*",

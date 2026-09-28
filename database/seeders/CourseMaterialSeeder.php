@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\CourseMaterial;
 use Illuminate\Database\Seeder;
-
+use App\Models\Course;
 class CourseMaterialSeeder extends Seeder
 {
     /**
@@ -12,6 +12,9 @@ class CourseMaterialSeeder extends Seeder
      */
     public function run(): void
     {
-        CourseMaterial::factory(60)->create();
+        $courses = Course::all();
+        CourseMaterial::factory(100)
+        ->recycle($courses)
+        ->create();
     }
 }

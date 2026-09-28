@@ -1,0 +1,7 @@
+{
+  "name": "Profile",
+  "method": "GET",
+  "path": "user/profile",
+  "description": "Get the authenticated student's profile. Requires a full student account (guests not allowed).",
+  "auth": "bearer"
+}

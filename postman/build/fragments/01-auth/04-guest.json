@@ -1,0 +1,17 @@
+{
+  "name": "Guest",
+  "method": "POST",
+  "path": "user/guest",
+  "description": "Login anonymously as a guest student.",
+  "body": {
+    "device_id": "device_12345"
+  },
+  "test": [
+    "pm.test('Save access token', () => {",
+    "    let res = pm.response.json();",
+    "    if (res.success && res.data && res.data.access_token) {",
+    "        pm.environment.set('access_token', res.data.access_token);",
+    "    }",
+    "});"
+  ]
+}

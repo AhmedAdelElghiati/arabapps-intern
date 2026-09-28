@@ -1,0 +1,10 @@
+{
+  "name": "Enroll in Course",
+  "method": "POST",
+  "path": "courses/enroll",
+  "description": "Enroll in a free course.",
+  "auth": "bearer",
+  "body": {
+    "course_id": 1
+  }
+}

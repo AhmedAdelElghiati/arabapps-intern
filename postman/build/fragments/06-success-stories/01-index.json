@@ -1,0 +1,7 @@
+{
+  "name": "List Success Stories",
+  "method": "GET",
+  "path": "success-stories",
+  "description": "List all success stories.",
+  "auth": "none"
+}

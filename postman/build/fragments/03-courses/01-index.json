@@ -1,0 +1,11 @@
+{
+  "name": "List All Courses",
+  "method": "GET",
+  "path": "courses",
+  "description": "List all courses available in the public catalog.",
+  "auth": "none",
+  "query": [
+    { "key": "free", "value": "1", "description": "Filter by free courses", "disabled": true },
+    { "key": "paid", "value": "1", "description": "Filter by paid courses", "disabled": true }
+  ]
+}

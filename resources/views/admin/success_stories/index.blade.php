@@ -3,9 +3,9 @@
 <div class="container py-4">
     <!-- Header -->
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="h3 text-dark mb-0">Success Stories</h2>
-        <a href="{{ route('admin.success-stories.create') }}" class="btn btn-primary">
-            <i class="bi bi-plus-lg me-1"></i> Add New Story
+        <h2 class="h3 text-dark mb-0">{{ __('pages/top_students.index.title') }}</h2>
+        <a href="{{ route('success-stories.create') }}" class="btn btn-primary">
+            <i class="bi bi-plus-lg me-1"></i> {{ __('pages/top_students.index.add_new') }}
         </a>
     </div>
 
@@ -24,14 +24,14 @@
                 <table class="table table-hover align-middle mb-0">
                     <thead class="table-light">
                         <tr>
-                            <th style="width: 80px;">Photo</th>
-                            <th>Name</th>
-                            <th>Track</th>
-                            <th>Grade</th>
-                            <th class="text-center">Order</th>
-                            <th class="text-center">Top Scored</th>
-                            <th class="text-center">Status</th>
-                            <th class="text-end" style="width: 150px;">Actions</th>
+                            <th style="width: 80px;">{{ __('pages/top_students.index.photo') }}</th>
+                            <th>{{ __('pages/top_students.index.name') }}</th>
+                            <th>{{ __('pages/top_students.index.track') }}</th>
+                            <th>{{ __('pages/top_students.index.grade') }}</th>
+                            <th class="text-center">{{ __('pages/top_students.index.order') }}</th>
+                            <th class="text-center">{{ __('pages/top_students.index.top_scored') }}</th>
+                            <th class="text-center">{{ __('pages/top_students.index.status') }}</th>
+                            <th class="text-end" style="width: 200px;">{{ __('pages/top_students.index.actions') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -48,7 +48,7 @@
                                     @else
                                         <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center"
                                              style="width: 45px; height: 45px; font-size: 14px;">
-                                            {{ strtoupper(substr($story->name, 0, 2)) }}
+                                            {{ strtoupper(mb_substr($story->name, 0, 2)) }}
                                         </div>
                                     @endif
                                 </td>
@@ -84,7 +84,7 @@
                                 <td class="text-center">
                                     @if ($story->is_top_scored)
                                         <span class="badge bg-warning text-dark">
-                                            <i class="bi bi-star-fill me-1"></i> Top Scored
+                                            <i class="bi bi-star-fill me-1"></i> {{ __('pages/top_students.index.top_scored') }}
                                         </span>
                                     @else
                                         <span class="text-muted">—</span>
@@ -95,11 +95,11 @@
                                 <td class="text-center">
                                     @if ($story->is_active)
                                         <span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1">
-                                            Active
+                                            {{ __('pages/top_students.index.active') }}
                                         </span>
                                     @else
                                         <span class="badge bg-secondary-subtle text-secondary border border-secondary-subtle px-2 py-1">
-                                            Inactive
+                                            {{ __('pages/top_students.index.inactive') }}
                                         </span>
                                     @endif
                                 </td>
@@ -107,20 +107,29 @@
                                 <!-- Actions -->
                                 <td class="text-end">
                                     <div class="btn-group btn-group-sm" role="group">
-                                        <a href="{{ route('admin.success-stories.edit', $story->id) }}"
-                                           class="btn btn-outline-primary"
-                                           title="Edit Story">
-                                            Edit
+                                        <!-- Show Button -->
+                                        <a href="{{ route('success-stories.show', $story->id) }}"
+                                           class="btn btn-outline-info rounded-start"
+                                           title="{{ __('pages/top_students.index.show') ?? 'Show' }}">
+                                            <i class="bi bi-eye me-1"></i> {{ __('pages/top_students.index.show') ?? 'Show' }}
                                         </a>
 
-                                        <form action="{{ route('admin.success-stories.destroy', $story->id) }}"
+                                        <!-- Edit Button -->
+                                        <a href="{{ route('success-stories.edit', $story->id) }}"
+                                           class="btn btn-outline-primary"
+                                           title="{{ __('pages/top_students.index.edit') }}">
+                                            <i class="bi bi-pencil me-1"></i> {{ __('pages/top_students.index.edit') }}
+                                        </a>
+
+                                        <!-- Delete Button -->
+                                        <form action="{{ route('success-stories.destroy', $story->id) }}"
                                               method="POST"
                                               class="d-inline"
-                                              onsubmit="return confirm('Are you sure you want to delete this success story?');">
+                                              onsubmit="return confirm('{{ __('pages/top_students.index.confirm_delete') }}');">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-outline-danger rounded-end" title="Delete Story">
-                                                Delete
+                                            <button type="submit" class="btn btn-outline-danger rounded-end" title="{{ __('pages/top_students.index.delete') }}">
+                                                <i class="bi bi-trash me-1"></i> {{ __('pages/top_students.index.delete') }}
                                             </button>
                                         </form>
                                     </div>
@@ -129,9 +138,9 @@
                         @empty
                             <tr>
                                 <td colspan="8" class="text-center py-5 text-muted">
-                                    <p class="mb-2">No success stories found.</p>
-                                    <a href="{{ route('admin.success-stories.create') }}" class="btn btn-sm btn-outline-primary">
-                                        Create First Story
+                                    <p class="mb-2">{{ __('pages/top_students.index.no_records') }}</p>
+                                    <a href="{{ route('success-stories.create') }}" class="btn btn-sm btn-outline-primary">
+                                        {{ __('pages/top_students.index.create_first') }}
                                     </a>
                                 </td>
                             </tr>

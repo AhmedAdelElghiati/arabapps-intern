@@ -79,6 +79,10 @@ class AuthController extends Controller
             ],
         ]);
     }
+    public function logout(Request $request){
+        $this->userService->logout($request);
+        return $this->respondWithSuccess('Successfully logged out');
+    }
 
     public function refresh(Request $request)
     {
@@ -107,6 +111,19 @@ class AuthController extends Controller
             ],
             'meta' => [
                 'message' => 'guest created successfully',
+            ],
+        ]);
+    }
+    public function student_profile(Request $request)
+    {
+        $result = $this->userService->student_profile($request->user('student')->id);
+
+        return $this->respond([
+            'data' => [
+                'student'       => new UserResource($result['student']),
+            ],
+            'meta' => [
+                'message' => 'student profile retrieved successfully',
             ],
         ]);
     }

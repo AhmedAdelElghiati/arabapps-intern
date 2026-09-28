@@ -24,7 +24,7 @@ class ExamSubmissionController extends Controller
     {
         $data = [
             'exam_id' => $examId,
-            'student_id' => Auth::id(),
+            'student_id' => Auth::guard('student')->id(),
             'started_at' => now()
         ];
 
@@ -37,7 +37,7 @@ class ExamSubmissionController extends Controller
     {
         $data = [
             'exam_id' => $examId,
-            'student_id' => Auth::id(),
+            'student_id' => Auth::guard('student')->id(),
             'submission_id' => $request->validated('submission_id'),
             'answers' => $request->validated('answers'),
         ];
@@ -51,7 +51,7 @@ class ExamSubmissionController extends Controller
     {
         $data = [
             'exam_id' => $examId,
-            'student_id' => Auth::id(),
+            'student_id' => Auth::guard('student')->id(),
             'submission_id' => $submissionId,
             'question_id' => $questionId,
             'is_flagged' => true,
@@ -66,7 +66,7 @@ class ExamSubmissionController extends Controller
     {
         $data = [
             'exam_id' => $examId,
-            'student_id' => Auth::id(),
+            'student_id' => Auth::guard('student')->id(),
             'submission_id' => $submissionId,
         ];
 

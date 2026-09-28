@@ -10,21 +10,22 @@
                             <div class="bg-primary bg-opacity-10 text-primary p-2 rounded-3 me-3 d-flex">
                                 <i class="bi bi-question-circle-fill fs-5"></i>
                             </div>
-                            FAQ Details
+                            {{ __('messages.faq_details') }}
                         </h4>
                     </div>
 
                     <div class="col-md-6 d-flex justify-content-md-end align-items-center gap-2">
+
                         {{-- زر العودة للقائمة --}}
                         <a href="{{ route('faqs.index') }}" class="btn btn-outline-secondary d-flex align-items-center gap-2 px-3 fw-medium">
                             <i class="bi bi-arrow-right"></i>
-                        Back to FAQs List
+                            {{ __('messages.back_to_faqs_list') }}
                         </a>
 
                         {{-- زر التعديل --}}
-                        <a href="{{ route('faqs.edit', $faq->id) }}" class="btn btn-warning text-white d-flex align-items-center gap-2 px-3 fw-medium shadow-sm">
+                        <a href="{{ route('faqs.edit', $faq->id) }}" class="btn btn-warning text-white d-flex align-items-center gap-2 px-3 fw-medium">
                             <i class="bi bi-pencil-fill"></i>
-                            Edit
+                            {{ __('messages.edit') }}
                         </a>
                     </div>
                 </div>
@@ -38,36 +39,42 @@
                 {{-- Badges Header --}}
                 <div class="d-flex flex-wrap align-items-center gap-2 mb-4 pb-3 border-bottom">
                     <span class="badge bg-secondary bg-opacity-10 text-secondary px-3 py-2 rounded-pill fw-semibold">
-                        #ID: {{ $faq->id }}
+                        #{{ __('messages.id') }}: {{ $faq->id }}
                     </span>
 
-                    @if($faq->category)
+                    @if($faq->getTranslation('category', app()->getLocale(), true))
                         <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-semibold">
                             <i class="bi bi-tag-fill me-1"></i>
-                            Category: {{ is_object($faq->category) ? $faq->category->value : $faq->category }}
+                            {{ __('messages.category') }}: {{ $faq->getTranslation('category', app()->getLocale(), true) }}
                         </span>
                     @endif
 
                     <span class="badge bg-info bg-opacity-10 text-info px-3 py-2 rounded-pill fw-semibold">
                         <i class="bi bi-sort-numeric-down me-1"></i>
-                        Display Order: {{ $faq->display_order ?? 0 }}
+                        {{ __('messages.display_order') }}: {{ $faq->display_order ?? 0 }}
                     </span>
                 </div>
 
                 {{-- Question --}}
                 <div class="mb-4">
-                    <label class="text-muted small fw-bold text-uppercase mb-2">َQuestion :</label>
+                    <label class="text-muted small fw-bold text-uppercase mb-2">
+                        {{ __('messages.question') }} :
+                    </label>
+
                     <h3 class="fw-bold text-dark lh-base">
                         <i class="bi bi-patch-question-fill text-primary me-2"></i>
-                        {{ $faq->question }}
+                        {{ $faq->getTranslation('question', app()->getLocale(), true) }}
                     </h3>
                 </div>
 
                 {{-- Answer --}}
                 <div class="mb-4 bg-light p-4 rounded-3 border-start border-primary border-4">
-                    <label class="text-muted small fw-bold text-uppercase mb-2">ِAnswer :</label>
+                    <label class="text-muted small fw-bold text-uppercase mb-2">
+                        {{ __('messages.answer') }} :
+                    </label>
+
                     <p class="text-dark mb-0 fs-5 lh-lg" style="white-space: pre-line;">
-                        {{ $faq->answer }}
+                        {{ $faq->getTranslation('answer', app()->getLocale(), true) }}
                     </p>
                 </div>
 
@@ -79,8 +86,13 @@
                         <div class="d-flex align-items-center gap-2">
                             <i class="bi bi-person-circle fs-5 text-secondary"></i>
                             <div>
-                                <span class="d-block small">Created by</span>
-                                <strong class="text-dark">{{ $faq->created_by ?? 'System' }}</strong>
+                                <span class="d-block small">
+                                    {{ __('messages.created_by') }}
+                                </span>
+
+                                <strong class="text-dark">
+                                    {{ $faq->created_by ?? __('messages.system') }}
+                                </strong>
                             </div>
                         </div>
                     </div>
@@ -89,8 +101,13 @@
                         <div class="d-flex align-items-center gap-2 justify-content-md-end">
                             <i class="bi bi-calendar-event fs-5 text-secondary"></i>
                             <div>
-                                <span class="d-block small"> Publish Date</span>
-                                <strong class="text-dark">{{ $faq->publish_date ?? '-' }}</strong>
+                                <span class="d-block small">
+                                    {{ __('messages.publish_date') }}
+                                </span>
+
+                                <strong class="text-dark">
+                                    {{ $faq->publish_date ?? __('messages.empty_value') }}
+                                </strong>
                             </div>
                         </div>
                     </div>
