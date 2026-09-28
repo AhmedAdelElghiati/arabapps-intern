@@ -20,7 +20,7 @@ class CourseRepository
     }
     public function getCourseById($id)
     {
-        return Course::with(['lessons.lessonItems'])->findOrFail($id);
+        return Course::with(['lessons.lessonItems','materials'])->findOrFail($id);
     }
     public function getEnrollment($courseId,$studentId )
     {
