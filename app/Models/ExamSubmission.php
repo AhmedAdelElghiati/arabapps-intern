@@ -40,4 +40,18 @@ class ExamSubmission extends Model
             ->whereNotNull('completed_at')
             ->where('completed_at', '<=', now());
     }
+    public function toSubmitPayload(): array
+    {
+        return [
+            'student_id'    => $this->student_id,
+            'exam_id'       => $this->exam_id,
+            'submission_id' => $this->id,
+            'answers'       => $this->answers
+                ->map(fn($a) => [
+                    'question_id' => $a->question_id,
+                    'choice_id'   => $a->choice_id,
+                ])
+                ->all(),
+        ];
+    }
 }
