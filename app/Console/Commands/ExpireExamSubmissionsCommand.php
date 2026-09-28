@@ -27,7 +27,7 @@ class ExpireExamSubmissionsCommand extends Command
      */
     public function handle(ExamSubmissionService $examSubmissionService)
     {
-        $expiredSubmissions = ExamSubmission::Expired()->get();
+        $expiredSubmissions = ExamSubmission::expired()->get();
 
         if ($expiredSubmissions->isEmpty()) {
             $this->info('No expired exams found.');
