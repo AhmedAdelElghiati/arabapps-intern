@@ -10,6 +10,7 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
 
+Schedule::command('examsubmissions:expire')->everyMinute()->withoutOverlapping();
 Artisan::command('student:count',function(){
     $count = \App\Models\Student::count();
     $this->info("Total Students: $count");
