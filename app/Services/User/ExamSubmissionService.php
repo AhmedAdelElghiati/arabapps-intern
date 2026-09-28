@@ -50,7 +50,7 @@ class ExamSubmissionService
     }
 
 
-    public function submitExam(array $data)
+    public function submitExam(array $data, bool $forceExpired = false)
     {
         $examSubmission = $this->examSubmissionRepository->getActiveExamSubmission(
             $data['student_id'],
@@ -62,7 +62,7 @@ class ExamSubmissionService
             throw new ExamSubmissionException('No active exam submission found', 404);
         }
 
-        if ($examSubmission->completed_at && now()->greaterThanOrEqualTo($examSubmission->completed_at)) {
+        if (!$forceExpired && $examSubmission->completed_at && now()->greaterThanOrEqualTo($examSubmission->completed_at)) {
             throw new ExamSubmissionException('Exam submission time has expired', 400);
         }
 
