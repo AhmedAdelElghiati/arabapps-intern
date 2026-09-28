@@ -8,7 +8,9 @@ class LessonItemResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
-        $completion = $this->whenLoaded('completedItems')?->first();
+        $completion = $this->relationLoaded('completedItems')
+        ? $this->completedItems->first()
+        : null;
 
         return [
             'id'            => $this->id,
