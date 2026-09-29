@@ -25,6 +25,7 @@ Route::prefix('user')->group(function () {
     // Refresh token uses a specific ability separate from standard endpoints
     Route::post('/refresh', [AuthController::class, 'refresh'])
         ->middleware(['auth:student', 'ability:' . TokenAbility::ISSUE_ACCESS_TOKEN->value]);
+    Route::post('/reset-password', [AuthController::class, 'resetPassword']);
 });
 
 // =========================================================================
