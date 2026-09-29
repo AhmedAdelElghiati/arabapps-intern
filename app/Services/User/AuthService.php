@@ -7,7 +7,7 @@ use App\Repositories\User\AuthRepository;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Validation\ValidationException;
 class AuthService
 {
     protected AuthRepository $userRepository;
@@ -72,8 +72,28 @@ class AuthService
                 $this->issueTokens($student)
             );
         });
-    }
 
+    }
+    public function resetPassword(string $phone, string $resetToken, string $newPassword): void
+    {
+
+        $record = $this->userRepository->findByPhoneForReset($phone);
+
+        if (!$record || !$record->reset_token || $record->isExpired()) {
+            throw ValidationException::withMessages([
+                'reset_token' => ['The session has expired. Please request a new OTP.'],
+            ]);
+        }
+
+        if (!Hash::check($resetToken, $record->reset_token)) {
+            throw ValidationException::withMessages([
+                'reset_token' => ['Invalid authorization token.'],
+            ]);
+        }
+
+        $this->userRepository->updatePasswordByPhone($phone, $newPassword);
+        $this->userRepository->deleteByPhone($phone);
+    }
     public function login(array $data): array
     {
         $student = $this->userRepository->findByPhone($data['phone']);

@@ -5,6 +5,7 @@ use App\Models\Student;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Otp;
 use App\Models\Device;
+use App\Models\ResetPassword;
 use Laravel\Sanctum\PersonalAccessToken;
 
 class AuthRepository
@@ -51,7 +52,7 @@ public function createOrUpdateOtp(array $data, string $otp, string $deviceId,str
     {
         $otp->delete();
     }
-        public function findByPhone(string $phone)
+    public function findByPhone(string $phone)
     {
         return Student::where('phone', $phone)->first();
     }
@@ -77,5 +78,36 @@ public function createOrUpdateOtp(array $data, string $otp, string $deviceId,str
     }
     public function deleteTokens($request){
         $request->user()->currentAccessToken()->delete();
+    }
+
+    public function findByPhoneForReset(string $phone)
+    {
+        return ResetPassword::where('phone', $phone)->first();
+    }
+    public function createResetToken(string $phone, string $token, int $expiresInMinutes = 15)
+    {
+        ResetPassword::
+            where('phone', $phone)
+            ->update([
+                'otp' => null, // Clear used OTP
+                'reset_token' => Hash::make($token),
+                'expires_at' => now()->addMinutes($expiresInMinutes),
+            ]);
+    }
+
+    public function updatePasswordByPhone(string $phone, string $newPassword)
+    {
+        $user = Student::where('phone', $phone)->first();
+
+        if ($user) {
+            $user->forceFill([
+                'password' => Hash::make($newPassword),
+            ])->save();
+        }
+    }
+
+    public function deleteByPhone(string $phone)
+    {
+        ResetPassword::where('phone', $phone)->delete();
     }
 }

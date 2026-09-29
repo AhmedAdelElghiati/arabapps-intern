@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\User\GuestRequest;
 use App\Http\Requests\User\LoginRequest;
 use App\Http\Requests\User\OtpRequest;
+use App\Http\Requests\PasswordRequest;
 use App\Http\Requests\User\RegisterRequest;
 use App\Http\Resources\UserResource;
 use App\Services\User\AuthService;
@@ -57,8 +58,18 @@ class AuthController extends Controller
             ],
         ]);
     }
+    public function resetPassword(PasswordRequest $request)
+    {
+        $this->userService->resetPassword(
+            $request->phone,
+            $request->reset_token,
+            $request->password
+        );
 
-    public function login(LoginRequest $request)
+        return response()->json([
+            'message' => 'Password reset successfully.',
+        ]);
+    }    public function login(LoginRequest $request)
     {
         $result = $this->userService->login($request->validated());
 
