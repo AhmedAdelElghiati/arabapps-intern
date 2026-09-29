@@ -6,10 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class ResetPassword extends Model
 {
-    
+
     protected $fillable = [
         'phone',
-        'otp',
         'reset_token',
         'created_at',
         'expires_at',

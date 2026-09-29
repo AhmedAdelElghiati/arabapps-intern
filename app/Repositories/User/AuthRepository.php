@@ -89,7 +89,6 @@ public function createOrUpdateOtp(array $data, string $otp, string $deviceId,str
         ResetPassword::
             where('phone', $phone)
             ->update([
-                'otp' => null, // Clear used OTP
                 'reset_token' => Hash::make($token),
                 'expires_at' => now()->addMinutes($expiresInMinutes),
             ]);
