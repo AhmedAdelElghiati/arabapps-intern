@@ -18,9 +18,18 @@ class FaqFactory extends Factory
     public function definition(): array
     {
         return [
-            'question' => fake()->sentence() . '?',
-            'answer' => fake()->paragraph(),
-            'category' => fake()->randomElement(['General', 'Courses', 'Payments', 'Technical', null]),
+            'question' => [
+                'en' => fake()->sentence() . '?',
+                'ar' => 'كيف يمكنني التسجيل؟',
+            ],
+            'answer' => [
+                'en' => fake()->paragraph(),
+                'ar' => 'يمكنك التسجيل من صفحة الكورس.',
+            ],
+            'category' => fake()->boolean(80) ? [
+                'en' => fake()->randomElement(['General', 'Courses', 'Payments', 'Technical']),
+                'ar' => 'عام',
+            ] : null,
             'display_order' => fake()->numberBetween(1, 30),
             'publish_date' => fake()->boolean(70) ? fake()->dateTimeBetween('-1 year', 'now') : null,
             'created_by' => 1,

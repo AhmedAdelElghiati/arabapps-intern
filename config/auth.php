@@ -1,6 +1,7 @@
 <?php
 
-use App\Models\User;
+use App\Models\Admin;
+use App\Models\Student;
 
 return [
 
@@ -16,8 +17,8 @@ return [
     */
 
     'defaults' => [
-        'guard' => env('AUTH_GUARD', 'web'),
-        'passwords' => env('AUTH_PASSWORD_BROKER', 'users'),
+        'guard' => env('AUTH_GUARD', 'admin'),
+        'passwords' => env('AUTH_PASSWORD_BROKER', null),
     ],
 
     /*
@@ -38,9 +39,14 @@ return [
     */
 
     'guards' => [
-        'web' => [
+        'admin' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'admins',
+        ],
+
+        'student' => [
+            'driver' => 'sanctum',
+            'provider' => 'students',
         ],
     ],
 
@@ -62,15 +68,15 @@ return [
     */
 
     'providers' => [
-        'users' => [
+        'admins' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', User::class),
+            'model' => env('AUTH_ADMIN_MODEL', Admin::class),
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'students' => [
+            'driver' => 'eloquent',
+            'model' => Student::class,
+        ],
     ],
 
     /*
@@ -93,12 +99,8 @@ return [
     */
 
     'passwords' => [
-        'users' => [
-            'provider' => 'users',
-            'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
-            'expire' => 60,
-            'throttle' => 60,
-        ],
+        // No broker configured — password reset goes through the OTP flow
+        // (otp_codes table) instead of Laravel's default token broker.
     ],
 
     /*

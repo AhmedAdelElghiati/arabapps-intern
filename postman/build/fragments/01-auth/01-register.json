@@ -1,0 +1,15 @@
+{
+  "name": "Register",
+  "method": "POST",
+  "path": "user/register",
+  "description": "Register a new student account",
+  "body": {
+    "first_name": "John",
+    "last_name": "Doe",
+    "email": "john@example.com",
+    "phone": "+1234567890",
+    "password": "password123",
+    "password_confirmation": "password123",
+    "device_id": "device_12345"
+  }
+}

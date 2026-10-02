@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Lesson;
 use Illuminate\Database\Eloquent\Factories\Factory;
-
+use App\Models\Course;
 /**
  * @extends Factory<Lesson>
  */
@@ -18,7 +18,7 @@ class LessonFactory extends Factory
     public function definition(): array
     {
         return [
-            'course_id' => fake()->numberBetween(1, 30),
+            'course_id' => Course::factory(),
             'title' => fake()->sentence(),
             'description' => fake()->paragraph(),
             'is_free' => fake()->boolean(),

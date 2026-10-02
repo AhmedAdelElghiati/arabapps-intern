@@ -1,0 +1,6 @@
+{
+  "name": "03. Courses",
+  "order": 3,
+  "description": "Public catalog of all courses and enrollment endpoints.",
+  "auth": "none"
+}

@@ -1,0 +1,13 @@
+{
+  "name": "Show Course",
+  "method": "GET",
+  "path": "courses/:id",
+  "description": "Show details of a specific course from the catalog.",
+  "auth": "none",
+  "pathVariables": {
+    "id": {
+      "value": "1",
+      "description": "Course ID"
+    }
+  }
+}

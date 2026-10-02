@@ -1,0 +1,10 @@
+{
+  "name": "List FAQs",
+  "method": "GET",
+  "path": "faqs",
+  "description": "List all frequently asked questions.",
+  "auth": "none",
+  "query": [
+    { "key": "search", "value": "example", "description": "Search by keyword", "disabled": true }
+  ]
+}

@@ -10,11 +10,14 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
-        "laravel/framework": "^12.0",
-        "laravel/tinker": "^2.10.1",
+        "almasaeed2010/adminlte": "4.0.0",
         "guzzlehttp/guzzle": "^7.9",
         "intervention/image": "^2.7",
-        "opcodesio/log-viewer": "^3.19"
+        "laravel/framework": "^12.0",
+        "laravel/sanctum": "^4.3",
+        "laravel/tinker": "^2.10.1",
+        "opcodesio/log-viewer": "^3.19",
+        "spatie/laravel-translatable": "^6.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "*",

@@ -19,7 +19,15 @@ class SuccessStoryFactory extends Factory
     {
         return [
             'created_by' => 1,
-            'name' => fake()->name(),
+            'name' => [
+                'en'=>fake('en_US')->sentence(4),
+                'ar'=>fake('ar_SA')->sentence(4),
+
+            ],
+            'description' => [
+                'en'=>fake('en_US')->paragraph(),
+                'ar'=>fake('ar_SA')->paragraph(),
+            ],
             'photo_url' =>  fake()->imageUrl(300, 300, 'people'),
             'grade' => fake()->randomElement(['10', '11', '12', null]),
             'is_top_scored' => fake()->boolean(60),
